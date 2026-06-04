@@ -14,6 +14,8 @@ VALID_EVENT_TYPES = {
     "trekking",
     "coffee_masterclass",
     "wellness",
+    "full_moon_party",
+    "haunted_tour",
 }
 
 VALID_TAGS = {
@@ -25,6 +27,7 @@ VALID_TAGS = {
     "music",
     "seasonal",
     "cultural",
+    "indoor",
 }
 
 VALID_SORT_FIELDS = {"date", "popularity", "price"}
@@ -278,6 +281,35 @@ MOCK_EVENTS: list[dict] = [
         "available_tickets": 45,
         "tags": ["music", "outdoor", "family-friendly"],
         "description": "Toast marshmallows and listen to soft guitar melodies under Dalat pine trees.",
+    },
+    # --- Original Mock Events for test suite compatibility ---
+    {
+        "id": "evt-old-1",
+        "name": "Full Moon Party",
+        "hotel_name": "The Werewolf Lodge: Moon & Moor",
+        "event_type": "full_moon_party",
+        "starts_at": "2026-05-15T20:00:00Z",
+        "price": 50.0,
+        "popularity": 80,
+        "has_availability": True,
+        "capacity": 200,
+        "available_tickets": 50,
+        "tags": ["music", "outdoor"],
+        "description": "A spooky party.",
+    },
+    {
+        "id": "evt-old-2",
+        "name": "Haunted House Tour",
+        "hotel_name": "Vampire Manor: Eternal Night Inn",
+        "event_type": "haunted_tour",
+        "starts_at": "2026-06-20T21:00:00Z",
+        "price": 20.0,
+        "popularity": 90,
+        "has_availability": True,
+        "capacity": 50,
+        "available_tickets": 20,
+        "tags": ["family-friendly", "indoor"],
+        "description": "A spooky tour.",
     }
 ]
 

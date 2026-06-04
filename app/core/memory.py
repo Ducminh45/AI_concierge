@@ -55,6 +55,13 @@ class MemoryStore:
             ).fetchall()
         return [dict(r) for r in rows]
 
+    def get_summary(self, session_id: str) -> Optional[str]:
+        with self.db.session() as conn:
+            row = conn.execute(
+                "SELECT summary FROM sessions WHERE session_id = ?", (session_id,)
+            ).fetchone()
+            return row["summary"] if row else None
+
     def _maybe_summarise(self, session_id: str) -> None:
         import os
         import logging
@@ -63,7 +70,17 @@ class MemoryStore:
             import openai
         except ImportError:
             openai = None
-        model = os.getenv("MRC_OPENAI_MODEL") or os.getenv("OPENAI_MODEL") or "gpt-4o"
+        from ..config import get_settings
+        settings = get_settings()
+        
+        openai_api_key = settings.openai_api_key or settings.openrouter_api_key
+        base_url = None
+        if not settings.openai_api_key and settings.openrouter_api_key:
+            base_url = "https://openrouter.ai/api/v1"
+            model = settings.openrouter_model or "openai/gpt-4o-mini"
+        else:
+            model = settings.openai_model or "gpt-4o-mini"
+
         with self.db.session() as conn:
             count = conn.execute(
                 "SELECT COUNT(*) AS c FROM messages WHERE session_id = ?",
@@ -78,13 +95,12 @@ class MemoryStore:
             if not rows:
                 return
             lines = [f"{r['role']}: {r['content']}" for r in rows]
-            openai_api_key = os.getenv("OPENAI_API_KEY")
             summary = None
             if openai and openai_api_key:
                 try:
                     from .prompt_loader import load_prompt
 
-                    client = openai.OpenAI(api_key=openai_api_key)
+                    client = openai.OpenAI(api_key=openai_api_key, base_url=base_url)
                     prompt = load_prompt(
                         "summarization",
                         conversation="\n".join(lines),

@@ -103,7 +103,7 @@ class ConciergeOrchestrator:
         tool_list = "; ".join(tool_descriptions) if tool_descriptions else "(none)"
 
         history = self.memory.get_messages(session_id, limit=5)
-        history_text = self._format_history(history)
+        history_text = self._format_history(session_id, history)
 
         from datetime import date
         today = date.today().isoformat()
@@ -286,7 +286,7 @@ class ConciergeOrchestrator:
         prompt = load_prompt(
             "executor.knowledge",
             context=context,
-            history=self._format_history(history),
+            history=self._format_history(session_id, history),
             question=user_message,
         )
 
@@ -331,7 +331,8 @@ class ConciergeOrchestrator:
             plan.tool_name, plan.tool_args
         )
         if not valid:
-            return ExecutionResult(response=reason, plan=plan)
+            plan.reasoning = f"The tool call was blocked because: {reason}"
+            return await self._execute_clarify(plan, user_message, session_id)
 
         args = dict(plan.tool_args)
         if "session_id" not in args:
@@ -373,7 +374,7 @@ class ConciergeOrchestrator:
         prompt = load_prompt(
             "executor.clarify",
             reasoning=plan.reasoning,
-            history=self._format_history(history),
+            history=self._format_history(session_id, history),
             question=user_message,
         )
 
@@ -399,7 +400,7 @@ class ConciergeOrchestrator:
 
         prompt = load_prompt(
             "executor.chitchat",
-            history=self._format_history(history),
+            history=self._format_history(session_id, history),
             question=user_message,
         )
 
@@ -723,16 +724,22 @@ class ConciergeOrchestrator:
             )
         return True, ""
 
-    def _format_history(self, messages: list[dict]) -> str:
-        """Format conversation history for prompt injection."""
-        if not messages:
-            return "(no prior conversation)"
-        lines = []
-        for msg in messages:
-            role = msg.get("role", "unknown")
-            content = msg.get("content", "")
-            lines.append(f"{role}: {content}")
-        return "\n".join(lines)
+    def _format_history(self, session_id: str, messages: list[dict]) -> str:
+        """Format conversation history for prompt injection, prepending session summary if available."""
+        summary = self.memory.get_summary(session_id)
+        parts = []
+        if summary:
+            parts.append(f"[Summary of older conversation / Tóm tắt cuộc hội thoại trước: {summary}]")
+        
+        if messages:
+            for msg in messages:
+                role = msg.get("role", "unknown")
+                content = msg.get("content", "")
+                parts.append(f"{role}: {content}")
+        else:
+            if not summary:
+                return "(no prior conversation)"
+        return "\n".join(parts)
 
     def _track_tokens(self, agent: str, usage: dict, response: LLMResponse | None = None) -> None:
         """Accumulate token counts and estimated cost."""

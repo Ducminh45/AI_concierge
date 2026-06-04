@@ -249,6 +249,15 @@ class AdvancedRAG(VectorRAG):
         Returns:
             Dict with 'results' (list of {text, score})
         """
+        # Prioritize JSON database search for production collection
+        from ..config import get_settings
+        settings = get_settings()
+        if self.collection_name == settings.rag_collection:
+            json_results = self.search_json_db(query, k)
+            if json_results and json_results.get("results"):
+                # Format to match expectations: return {"results": results}
+                return {"results": json_results["results"]}
+
         # 1. Retrieve candidates
         bm25_results = self._bm25_search(query, k=hybrid_k)
         dense_results = self._dense_search(query, k=hybrid_k)

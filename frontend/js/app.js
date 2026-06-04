@@ -48,7 +48,7 @@ function clearAuthState() {
 const routes = {
     '#login':    { view: 'login-page',    auth: false, init: () => {} },
     '#register': { view: 'register-page', auth: false, init: () => {} },
-    '#chat':     { view: 'chat-page',     auth: true,  init: () => initChatView() },
+    '#chat':     { view: 'chat-page',     auth: false, init: () => initChatView() },
     '#services': { view: 'services-page', auth: true,  init: () => loadServicesView() },
     '#admin':    { view: 'admin-page',    auth: true,  init: () => loadAdminView() }
 };
@@ -65,29 +65,42 @@ function updateNavigation() {
     const topbar = document.getElementById('topbar');
     const user = getUser();
 
-    if (!isAuthenticated() || !user) {
-        navbar.classList.add('hidden');
-        topbar.classList.add('hidden');
-        return;
-    }
+    // Always show topbar and navbar
+    if (navbar) navbar.classList.remove('hidden');
+    if (topbar) topbar.classList.remove('hidden');
 
-    navbar.classList.remove('hidden');
-    topbar.classList.remove('hidden');
-
-    // Topbar user name
-    const un = document.getElementById('topbar-user-name');
-    if (un) un.innerText = `${user.full_name || user.username} (${user.role.toUpperCase()})`;
-
-    // Hide login link when authenticated
-    const ll = document.getElementById('topbar-login-link');
-    if (ll) ll.style.display = 'none';
-
-    // Admin tab
+    const logoutBtn = document.getElementById('logout-btn');
+    const loginLink = document.getElementById('topbar-login-link');
+    const userNameSpan = document.getElementById('topbar-user-name');
+    const servicesTab = document.getElementById('nav-services');
     const adminTab = document.getElementById('nav-admin');
-    if (user.role === 'admin' || user.role === 'staff') {
-        adminTab.classList.remove('hidden');
+
+    if (!isAuthenticated() || !user) {
+        // Guest mode
+        if (userNameSpan) userNameSpan.innerText = 'Guest';
+        if (logoutBtn) logoutBtn.classList.add('hidden');
+        if (loginLink) {
+            loginLink.style.display = 'inline-flex';
+            loginLink.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Đăng nhập';
+            loginLink.href = '#login';
+            loginLink.style.textDecoration = 'none';
+            loginLink.style.color = '#c9a84c';
+            loginLink.style.fontWeight = '600';
+        }
+        if (servicesTab) servicesTab.classList.add('hidden');
+        if (adminTab) adminTab.classList.add('hidden');
     } else {
-        adminTab.classList.add('hidden');
+        // Authenticated user mode
+        if (userNameSpan) userNameSpan.innerText = `${user.full_name || user.username} (${user.role.toUpperCase()})`;
+        if (logoutBtn) logoutBtn.classList.remove('hidden');
+        if (loginLink) loginLink.style.display = 'none';
+        if (servicesTab) servicesTab.classList.remove('hidden');
+        
+        if (user.role === 'admin' || user.role === 'staff') {
+            if (adminTab) adminTab.classList.remove('hidden');
+        } else {
+            if (adminTab) adminTab.classList.add('hidden');
+        }
     }
 
     // Active nav
@@ -103,7 +116,7 @@ async function router() {
     const route = routes[hash];
     if (!route) { navigateTo('#chat'); return; }
     if (route.auth && !isAuthenticated()) { navigateTo('#login'); return; }
-    if (!route.auth && isAuthenticated()) { navigateTo('#chat'); return; }
+    if ((hash === '#login' || hash === '#register') && isAuthenticated()) { navigateTo('#chat'); return; }
     showPage(route.view);
     updateNavigation();
     route.init();

@@ -273,6 +273,30 @@ class DatabaseManager:
                         {"version": SCHEMA_VERSION, "applied_at": datetime.now(timezone.utc).isoformat()},
                     )
             logger.info("Database initialized (%s)", "PostgreSQL" if self._is_postgres else "SQLite")
+
+            # Populate mock bookings if empty
+            try:
+                with self.get_connection() as conn:
+                    cur = conn.execute("SELECT COUNT(*) as count FROM bookings")
+                    row = cur.fetchone()
+                    if row and row["count"] == 0:
+                        logger.info("Populating mock bookings in database")
+                        mock_bookings = [
+                            ("BOOK-101", "session_mock_1", "Nguyễn Văn A", "Phú Quốc Paradise (Phú Quốc)", "Deluxe Ocean View", "2026-06-10", "2026-06-15", 2, "Gần hồ bơi, tầng cao"),
+                            ("BOOK-102", "session_mock_2", "John Doe", "Azure Bay Resort & Spa (Đà Nẵng)", "Executive Suite", "2026-06-12", "2026-06-18", 1, "Yêu cầu thanh toán trước"),
+                            ("BOOK-103", "session_mock_3", "Mina", "Hội An Pearl Resort (Hội An)", "Family Villa", "2026-06-15", "2026-06-20", 4, "Cần 1 nôi em bé")
+                        ]
+                        for ref, sess, name, hotel, room, check_in, check_out, guests, reqs in mock_bookings:
+                            conn.execute(
+                                """INSERT INTO bookings (
+                                    booking_reference, session_id, guest_name, hotel_name,
+                                    room_type, check_in, check_out, guests, special_requests, created_at
+                                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                                (ref, sess, name, hotel, room, check_in, check_out, guests, reqs, datetime.now(timezone.utc).isoformat())
+                            )
+            except Exception as mock_err:
+                logger.warning(f"Failed to populate mock bookings: {mock_err}")
+
         except Exception as e:
             logger.error(f"Database initialization failed: {e}")
             raise DatabaseError(f"Database initialization failed: {e}")

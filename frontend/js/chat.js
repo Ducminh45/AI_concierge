@@ -88,8 +88,10 @@ function appendMessage(role, content, confidence = null, sources = null) {
     const bubbleDiv = document.createElement('div');
     bubbleDiv.className = 'message-bubble';
 
-    // Format bold markdown or linebreaks dynamically
+    // Format bold markdown, linebreaks, images, and links dynamically
     let formattedText = content
+        .replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="chat-img" style="max-width: 100%; border-radius: 8px; margin-top: 8px; display: block; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">')
+        .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" style="color: #0284c7; text-decoration: underline; font-weight: 500;">$1</a>')
         .replace(/\n/g, '<br>')
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
         .replace(/\*(.*?)\*/g, '<em>$1</em>');
@@ -233,54 +235,26 @@ function initChatView() {
     // Initialize Voice Input
     initVoiceInput(chatInput, chatForm);
 
-    // Attachment Input
-    const attachBtn = document.getElementById('attach-btn');
-    const fileUpload = document.getElementById('chat-file-upload');
-    let selectedFile = null;
-
-    if (attachBtn && fileUpload) {
-        attachBtn.addEventListener('click', () => {
-            fileUpload.click();
-        });
-
-        fileUpload.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                selectedFile = e.target.files[0];
-                attachBtn.style.color = '#1e3a8a'; // highlight
-                chatInput.placeholder = `Đã đính kèm: ${selectedFile.name}`;
-            } else {
-                selectedFile = null;
-                attachBtn.style.color = '#94a3b8';
-                chatInput.placeholder = 'Nhập tin nhắn... (đa ngôn ngữ)';
-            }
-        });
-    }
+    // Attachment Input removed
 
     // Chat submit
     if (chatForm) {
         chatForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const text = chatInput.value.trim();
-            if (!text && !selectedFile) return; // Allow empty text if file attached
+            if (!text) return;
 
             // Stop recording if active
             if (isRecording && recognition) {
                 recognition.stop();
             }
 
-            // Clear input and file
+            // Clear input
             chatInput.value = '';
             chatInput.placeholder = 'Nhập tin nhắn... (đa ngôn ngữ)';
-            if (attachBtn) attachBtn.style.color = '#94a3b8';
             
             // Append User message
-            let msgText = text;
-            if (selectedFile) {
-                msgText += ` <br><small><i>[Đã đính kèm tệp: ${selectedFile.name}]</i></small>`;
-                selectedFile = null; // reset
-                if (fileUpload) fileUpload.value = '';
-            }
-            appendMessage('user', msgText);
+            appendMessage('user', text);
             
             // Show Typing indicator
             showTypingIndicator(true);
@@ -293,7 +267,7 @@ function initChatView() {
 
                 showTypingIndicator(false);
 
-                if (response.ok) {
+                if (response && (response.ok || response.reply)) {
                     appendMessage('bot', response.reply, response.confidence, response.sources);
                 } else {
                     appendMessage('bot', 'Xin lỗi quý khách, trợ lý gặp lỗi kết nối hệ thống. Xin hãy thử lại.');

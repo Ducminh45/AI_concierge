@@ -294,11 +294,116 @@ class VectorRAG:
             logger.error(f"Failed to ingest texts from folder {folder}: {e}")
             raise AIServiceError(f"Failed to ingest texts from folder {folder}: {e}")
 
+    def search_json_db(self, query: str, k: int = 5) -> Optional[dict]:
+        """
+        Search the structured JSON database using normalized keyword overlap.
+        """
+        import json
+        import os
+        
+        json_db_path = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
+            "data",
+            "vietnam_luxury_resorts_db.json"
+        )
+        
+        if not os.path.exists(json_db_path):
+            return None
+            
+        try:
+            with open(json_db_path, "r", encoding="utf-8") as f:
+                db_data = json.load(f)
+            
+            # Normalization helper
+            def normalize(t: str) -> str:
+                t = t.lower().strip()
+                accents = {
+                    'a': 'áàảãạâấầẩẫậăắằẳẵặ',
+                    'e': 'éèẻẽẹêếềểễệ',
+                    'i': 'íìỉĩị',
+                    'o': 'óòỏõọôốồổỗộơớờởỡợ',
+                    'u': 'úùủũụưứừửữự',
+                    'y': 'ýỳỷỹỵ',
+                    'd': 'đ'
+                }
+                for char, replacements in accents.items():
+                    for r in replacements:
+                        t = t.replace(r, char)
+                t = re.sub(r'[^\w\s]', ' ', t)
+                return re.sub(r'\s+', ' ', t).strip()
+
+            norm_query = normalize(query)
+            query_words = set(norm_query.split())
+            if not query_words:
+                return None
+                
+            scored_entries = []
+            for entry in db_data:
+                score = 0.0
+                
+                # Multi-word exact phrase matching on keywords
+                keywords = entry.get("keywords", [])
+                for kw in keywords:
+                    norm_kw = normalize(kw)
+                    if norm_kw and norm_kw in norm_query:
+                        score += 5.0  # High weight for matching a predefined taxonomy keyword
+                
+                # Word-level intersection with keywords
+                for kw in keywords:
+                    norm_kw_words = set(normalize(kw).split())
+                    intersection = query_words.intersection(norm_kw_words)
+                    score += 1.0 * len(intersection)
+                
+                # Word-level matches in item title
+                item_words = set(normalize(entry.get("item", "")).split())
+                item_intersection = query_words.intersection(item_words)
+                score += 0.5 * len(item_intersection)
+                
+                # Word-level matches in category
+                cat_words = set(normalize(entry.get("category", "")).split())
+                cat_intersection = query_words.intersection(cat_words)
+                score += 0.2 * len(cat_intersection)
+
+                # Word-level matches in content
+                content_words = set(normalize(entry.get("content", "")).split())
+                content_intersection = query_words.intersection(content_words)
+                score += 0.05 * len(content_intersection)
+                
+                if score > 0:
+                    scored_entries.append((score, entry))
+            
+            if scored_entries:
+                scored_entries.sort(key=lambda x: x[0], reverse=True)
+                top_matches = scored_entries[:k]
+                
+                out = []
+                for score, entry in top_matches:
+                    category = entry.get("category", "")
+                    item = entry.get("item", "")
+                    content = entry.get("content", "")
+                    
+                    text = f"### {category} - {item}\n{content}"
+                    meta = {
+                        "source": "vietnam_luxury_resorts_db.json",
+                        "category": category,
+                        "id": entry.get("id", ""),
+                        "content_hash": hashlib.sha256(text.encode()).hexdigest(),
+                        "ingested_at": time.time()
+                    }
+                    distance = 1.0 / (1.0 + score)
+                    out.append({"text": text, "meta": meta, "score": distance})
+                
+                return {"ok": True, "query": query, "results": out}
+        except Exception as e:
+            logger.warning(f"Failed to search JSON database: {e}")
+            
+        return None
+
     @profile
     @cache_response(ttl=300)
     def search(self, query: str, k: int = 5) -> dict:
         """
-        Search the vector database for relevant documents.
+        Search the vector database for relevant documents, prioritizing JSON database.
 
         Args:
             query: Search query string
@@ -307,6 +412,16 @@ class VectorRAG:
         Returns:
             Dictionary with search results
         """
+        # Prioritize JSON database search for production collection
+        from ..config import get_settings
+        settings = get_settings()
+        if self.collection_name == settings.rag_collection:
+            json_results = self.search_json_db(query, k)
+            if json_results and json_results.get("results"):
+                RAG_HIT_COUNT.inc()
+                return json_results
+
+        # Fallback to ChromaDB query
         try:
             results = self.collection.query(query_texts=[query], n_results=k)
             docs = results.get("documents", [[]])[0]

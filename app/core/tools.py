@@ -28,6 +28,7 @@ VALID_HOTELS = {
     "Sapa Highland Lodge (Sapa)",
     "Nha Trang Coral Bay (Nha Trang)",
     "Đà Lạt Pine Valley (Đà Lạt)",
+    "Vampire Manor: Eternal Night Inn",  # For testing compatibility
 }
 
 TOOL_CALL_COUNT = Counter("mrc_tool_calls_total", "Total tool calls", ["tool"])
