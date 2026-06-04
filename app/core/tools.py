@@ -9,6 +9,7 @@ import uuid
 from ..database.db import DatabaseManager
 from ..monitoring.logging_utils import logger, MonsterResortError
 from ..monitoring.metrics import Counter
+from .vinpearl_search import is_vinpearl_query
 
 logger.info("tool_module_initialized")
 
@@ -48,6 +49,22 @@ class Tool:
             return {
                 "name": "search_amenities",
                 "description": "Search resort knowledge base for amenities and info.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {"query": {"type": "string"}},
+                    "required": ["query"],
+                },
+            }
+
+        elif self.name == "search_vinpearl_web":
+            return {
+                "name": "search_vinpearl_web",
+                "description": (
+                    "Search official Vinpearl web pages via Tavily for "
+                    "current, live, contact, phone, promotion, offer, "
+                    "pricing, or facts not found in the local knowledge base. "
+                    "Only official vinpearl.com sources are returned."
+                ),
                 "parameters": {
                     "type": "object",
                     "properties": {"query": {"type": "string"}},
@@ -324,6 +341,7 @@ class ToolRegistry:
 def make_registry(
     db: DatabaseManager,
     rag_search_fn: Callable,
+    vinpearl_web_search_fn: Callable | None = None,
 ) -> ToolRegistry:
     logger.info("initializing_tool_registry")
 
@@ -350,6 +368,37 @@ def make_registry(
         )
 
         return result
+
+    if vinpearl_web_search_fn is not None:
+        @registry.register(
+            "search_vinpearl_web",
+            "Search official Vinpearl web pages for current or missing information.",
+        )
+        async def search_vinpearl_web(query: str, request_id: str):
+            search_query = query if is_vinpearl_query(query) else f"Vinpearl {query}"
+            logger.info(
+                "search_vinpearl_web_called",
+                extra={
+                    "request_id": request_id,
+                    "query": search_query,
+                },
+            )
+
+            result = await vinpearl_web_search_fn(search_query)
+
+            logger.info(
+                "search_vinpearl_web_completed",
+                extra={
+                    "request_id": request_id,
+                    "result_count": (
+                        len(result.get("results", []))
+                        if isinstance(result, dict)
+                        else None
+                    ),
+                },
+            )
+
+            return result
 
     from ..data.events import search_events as _search_events_fn
 

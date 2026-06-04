@@ -7,6 +7,8 @@ import pytest
 
 from app.core.llm_providers import LLMMessage, LLMResponse, LLMToolCall
 from app.core.orchestrator import ConciergeOrchestrator, IntentType, Plan
+from app.core.guardrails import InputGuard
+from app.core.prompt_loader import load_prompt
 from app.core.tools import ToolRegistry
 
 
@@ -56,6 +58,63 @@ def _memory():
             self.saved.append((session_id, role, content))
 
     return Memory()
+
+
+def test_system_prompts_define_vinpearl_travel_scope_and_refusals():
+    planner_prompt = load_prompt(
+        "planner",
+        tool_list="search_amenities: Search resort knowledge",
+        today_date="2026-06-04",
+    )
+    agent_prompt = load_prompt(
+        "executor.agent",
+        tools="search_amenities",
+        history="",
+        question="What can I do at Vinpearl Phu Quoc?",
+    )
+
+    combined = f"{planner_prompt}\n{agent_prompt}"
+
+    assert "specialized chatbot for Vinpearl Travel only" in combined
+    assert "You must not answer questions outside Vinpearl Travel" in combined
+    assert "General travel advice not related to Vinpearl" in combined
+    assert (
+        "Xin lỗi, mình chỉ có thể hỗ trợ các câu hỏi liên quan đến Vinpearl Travel"
+        in combined
+    )
+    assert "Sorry, I can only help with Vinpearl Travel questions" in combined
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    ("message", "expected"),
+    [
+        (
+            "Viết giúp mình một đoạn code Python sắp xếp danh sách",
+            "Xin lỗi, mình chỉ có thể hỗ trợ các câu hỏi liên quan đến Vinpearl Travel",
+        ),
+        (
+            "Can you explain my school homework?",
+            "Sorry, I can only help with Vinpearl Travel questions",
+        ),
+    ],
+)
+async def test_handle_refuses_out_of_scope_with_vinpearl_travel_message(
+    message,
+    expected,
+):
+    orch = ConciergeOrchestrator(
+        llm_provider=FakeReActProvider(),
+        rag=None,
+        tool_registry=ToolRegistry(),
+        memory_store=_memory(),
+        input_guard=InputGuard(),
+    )
+
+    result = await orch.handle(message, "session-1")
+
+    assert result.guardrail == "off_topic"
+    assert result.response.startswith(expected)
 
 
 @pytest.mark.asyncio
@@ -215,6 +274,47 @@ async def test_handle_routes_resort_question_through_agentic_tool_loop_not_direc
 
 
 @pytest.mark.asyncio
+async def test_plan_repairs_bare_vinpearl_entity_clarify_to_knowledge_tool():
+    class ClarifyProvider(FakeReActProvider):
+        supports_response_format = True
+
+        async def chat(self, messages, tools=None, model=None, response_format=None):
+            self.calls.append({
+                "messages": messages,
+                "tools": tools,
+                "response_format": response_format,
+            })
+            return LLMResponse(
+                content=json.dumps({
+                    "intent": "clarify",
+                    "tool_name": None,
+                    "tool_args": {},
+                    "search_query": None,
+                    "reasoning": "The user did not ask a specific question.",
+                }),
+            )
+
+    registry = ToolRegistry()
+
+    @registry.register("search_amenities", "Search resort knowledge")
+    async def search_amenities(query: str, request_id: str):
+        return {"ok": True, "results": []}
+
+    orch = ConciergeOrchestrator(
+        llm_provider=ClarifyProvider(),
+        rag=None,
+        tool_registry=registry,
+        memory_store=_memory(),
+    )
+
+    plan = await orch.plan("Vinpearl Phu Quoc", "session-1")
+
+    assert plan.intent == IntentType.TOOL
+    assert plan.tool_name == "search_amenities"
+    assert plan.tool_args == {"query": "Vinpearl Phu Quoc"}
+
+
+@pytest.mark.asyncio
 async def test_search_amenities_empty_result_falls_back_to_tavily_for_vinpearl_query():
     registry = ToolRegistry()
 
@@ -261,3 +361,200 @@ async def test_search_amenities_empty_result_falls_back_to_tavily_for_vinpearl_q
             "score": 0.0,
         }
     ]
+
+
+@pytest.mark.asyncio
+async def test_search_amenities_irrelevant_shuttle_result_falls_back_to_tavily():
+    registry = ToolRegistry()
+
+    @registry.register("search_amenities", "Search resort knowledge")
+    async def search_amenities(query: str, request_id: str):
+        return {
+            "ok": True,
+            "query": query,
+            "results": [
+                {
+                    "text": "Vinpearl Phú Quốc has beach villas and pools.",
+                    "meta": {"source": "overview"},
+                    "score": 0.8,
+                }
+            ],
+        }
+
+    web_search = AsyncMock()
+    web_search.search.return_value = {
+        "ok": True,
+        "results": [
+            {
+                "text": "Có xe shuttle/xe bus miễn phí từ sân bay cho khách đặt phòng Vinpearl.",
+                "source": "https://vinpearl.com/vi/hotels-phu-quoc",
+            }
+        ],
+    }
+    orch = ConciergeOrchestrator(
+        llm_provider=FakeReActProvider(),
+        rag=None,
+        tool_registry=registry,
+        memory_store=_memory(),
+        web_search=web_search,
+    )
+
+    result = await orch._run_react_tool_call(
+        LLMToolCall(
+            id="call-1",
+            name="search_amenities",
+            arguments=json.dumps({"query": "xe đưa đón sân bay"}),
+        ),
+        user_message="Vinpearl có xe đưa đón sân bay không?",
+    )
+
+    web_search.search.assert_awaited_once_with(
+        "Vinpearl có xe đưa đón sân bay không?"
+    )
+    assert result["fallback"] == "tavily"
+    assert "shuttle" in result["results"][0]["text"]
+
+
+@pytest.mark.asyncio
+async def test_search_amenities_irrelevant_cancellation_result_falls_back_to_tavily():
+    registry = ToolRegistry()
+
+    @registry.register("search_amenities", "Search resort knowledge")
+    async def search_amenities(query: str, request_id: str):
+        return {
+            "ok": True,
+            "query": query,
+            "results": [
+                {
+                    "text": "Vinpearl has restaurants and pools.",
+                    "meta": {"source": "overview"},
+                    "score": 0.8,
+                }
+            ],
+        }
+
+    web_search = AsyncMock()
+    web_search.search.return_value = {
+        "ok": True,
+        "results": [
+            {
+                "text": "Chính sách hoàn hủy Vinpearl phụ thuộc vào từng gói đặt phòng.",
+                "source": "https://vinpearl.com/vi",
+            }
+        ],
+    }
+    orch = ConciergeOrchestrator(
+        llm_provider=FakeReActProvider(),
+        rag=None,
+        tool_registry=registry,
+        memory_store=_memory(),
+        web_search=web_search,
+    )
+
+    result = await orch._run_react_tool_call(
+        LLMToolCall(
+            id="call-1",
+            name="search_amenities",
+            arguments=json.dumps({"query": "chính sách hủy phòng"}),
+        ),
+        user_message="Chính sách hủy phòng Vinpearl thế nào?",
+    )
+
+    web_search.search.assert_awaited_once_with(
+        "Chính sách hủy phòng Vinpearl thế nào?"
+    )
+    assert result["fallback"] == "tavily"
+    assert "hoàn hủy" in result["results"][0]["text"]
+
+
+@pytest.mark.asyncio
+async def test_web_tool_for_stable_vinpearl_query_tries_vector_first():
+    registry = ToolRegistry()
+    local_queries: list[str] = []
+    web_queries: list[str] = []
+
+    @registry.register("search_amenities", "Search resort knowledge")
+    async def search_amenities(query: str, request_id: str):
+        local_queries.append(query)
+        return {
+            "ok": True,
+            "query": query,
+            "results": [
+                {
+                    "text": "Vinpearl Phú Quốc is at Bãi Dài.",
+                    "meta": {"source": "knowledge"},
+                    "score": 0.9,
+                }
+            ],
+        }
+
+    @registry.register("search_vinpearl_web", "Search official Vinpearl web")
+    async def search_vinpearl_web(query: str, request_id: str):
+        web_queries.append(query)
+        return {"ok": True, "results": [{"text": "web", "source": "web"}]}
+
+    orch = ConciergeOrchestrator(
+        llm_provider=FakeReActProvider(),
+        rag=None,
+        tool_registry=registry,
+        memory_store=_memory(),
+    )
+
+    result = await orch._run_react_tool_call(
+        LLMToolCall(
+            id="call-web",
+            name="search_vinpearl_web",
+            arguments=json.dumps({"query": "Vinpearl Phu Quoc"}),
+        ),
+        user_message="Vinpearl Phu Quoc",
+    )
+
+    assert local_queries == ["Vinpearl Phu Quoc"]
+    assert web_queries == []
+    assert result["web_skipped"] == "vector_first"
+    assert result["results"][0]["text"] == "Vinpearl Phú Quốc is at Bãi Dài."
+
+
+@pytest.mark.asyncio
+async def test_web_tool_for_live_vinpearl_query_does_not_try_vector_first():
+    registry = ToolRegistry()
+    local_queries: list[str] = []
+    web_queries: list[str] = []
+
+    @registry.register("search_amenities", "Search resort knowledge")
+    async def search_amenities(query: str, request_id: str):
+        local_queries.append(query)
+        return {"ok": True, "results": [{"text": "local", "source": "knowledge"}]}
+
+    @registry.register("search_vinpearl_web", "Search official Vinpearl web")
+    async def search_vinpearl_web(query: str, request_id: str):
+        web_queries.append(query)
+        return {
+            "ok": True,
+            "results": [
+                {
+                    "text": "Hotline Vinpearl Phú Quốc is available online.",
+                    "source": "https://vinpearl.com/vi/hotels-phu-quoc",
+                }
+            ],
+        }
+
+    orch = ConciergeOrchestrator(
+        llm_provider=FakeReActProvider(),
+        rag=None,
+        tool_registry=registry,
+        memory_store=_memory(),
+    )
+
+    result = await orch._run_react_tool_call(
+        LLMToolCall(
+            id="call-web",
+            name="search_vinpearl_web",
+            arguments=json.dumps({"query": "Số điện thoại Vinpearl Phú Quốc?"}),
+        ),
+        user_message="Số điện thoại Vinpearl Phú Quốc?",
+    )
+
+    assert local_queries == []
+    assert web_queries == ["Số điện thoại Vinpearl Phú Quốc?"]
+    assert result["results"][0]["source"] == "https://vinpearl.com/vi/hotels-phu-quoc"

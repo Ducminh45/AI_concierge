@@ -133,6 +133,24 @@ def _serialise_optional(value: Any) -> Any:
     return value
 
 
+def _ensure_knowledge_ingested(
+    rag,
+    settings,
+    knowledge_folder: str = "./data/knowledge",
+) -> int:
+    if rag.collection.count() > 0:
+        return 0
+
+    folder = Path(knowledge_folder)
+    if not folder.exists():
+        return 0
+
+    return rag.ingest_folder(
+        str(folder),
+        token=settings.rag_ingestion_token,
+    )
+
+
 def _configure_state(app: FastAPI) -> None:
     if hasattr(app.state, "db"):
         return
@@ -145,12 +163,7 @@ def _configure_state(app: FastAPI) -> None:
         embedding_model=settings.embedding_model,
         ingestion_token=settings.rag_ingestion_token,
     )
-    registry = make_registry(
-        db=db,
-        rag_search_fn=lambda query, k=5: rag.search(query, k),
-    )
-    memory = MemoryStore(db=db)
-    llm = _build_llm_provider(settings)
+    _ensure_knowledge_ingested(rag, settings)
     vinpearl_domains = tuple(
         domain.strip().lower()
         for domain in settings.tavily_include_domains.split(",")
@@ -163,6 +176,13 @@ def _configure_state(app: FastAPI) -> None:
         max_results=settings.tavily_max_results,
         timeout_seconds=settings.tavily_timeout_seconds,
     )
+    registry = make_registry(
+        db=db,
+        rag_search_fn=lambda query, k=5: rag.search(query, k),
+        vinpearl_web_search_fn=web_search.search,
+    )
+    memory = MemoryStore(db=db)
+    llm = _build_llm_provider(settings)
 
     app.state.settings = settings
     app.state.db = db

@@ -240,6 +240,14 @@ class VectorRAG:
 
         # Hash-based IDs for deduplication
         ids = [hashlib.sha256(t.encode()).hexdigest()[:16] for t in text_list]
+        unique_rows = {}
+        for doc_id, text, meta in zip(ids, text_list, metadatas):
+            if doc_id not in unique_rows:
+                unique_rows[doc_id] = (text, meta)
+
+        ids = list(unique_rows.keys())
+        text_list = [row[0] for row in unique_rows.values()]
+        metadatas = [row[1] for row in unique_rows.values()]
 
         try:
             self.collection.upsert(documents=text_list, metadatas=metadatas, ids=ids)

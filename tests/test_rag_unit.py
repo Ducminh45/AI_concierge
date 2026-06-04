@@ -68,6 +68,21 @@ def test_rag_empty_folder(tmp_path):
     assert count == 0, "Should have ingested 0 documents from empty folder"
 
 
+def test_rag_ingest_texts_deduplicates_identical_chunks(tmp_path):
+    rag = VectorRAG(str(tmp_path / ".rag_store"), "dedupe_test")
+
+    count = rag.ingest_texts(
+        [
+            "Vinpearl Phu Quoc has a beach resort.",
+            "Vinpearl Phu Quoc has a beach resort.",
+        ],
+        sources=["a.txt", "b.txt"],
+    )
+
+    assert count == 1
+    assert rag.collection.count() == 1
+
+
 def test_rag_search_no_results(tmp_path):
     """Test RAG search when no matching results exist."""
     folder = tmp_path / "knowledge"

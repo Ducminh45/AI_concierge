@@ -44,6 +44,28 @@ class TestSearchAmenities:
         assert ok is True
 
 
+class TestSearchVinpearlWeb:
+    def test_valid_query(self):
+        ok, reason = _validate_tool_call("search_vinpearl_web", {
+            "query": "Số điện thoại Vinpearl Phú Quốc",
+        })
+        assert ok is True
+
+    def test_empty_query(self):
+        ok, reason = _validate_tool_call("search_vinpearl_web", {
+            "query": "",
+        })
+        assert ok is False
+        assert "empty" in reason.lower()
+
+    def test_query_too_long(self):
+        ok, reason = _validate_tool_call("search_vinpearl_web", {
+            "query": "x" * 501,
+        })
+        assert ok is False
+        assert "500" in reason
+
+
 class TestUnknownTool:
     def test_unknown_tool_passes(self):
         ok, reason = _validate_tool_call("nonexistent_tool", {})

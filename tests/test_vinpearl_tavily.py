@@ -6,6 +6,7 @@ import pytest
 
 from app.core.llm_providers import LLMResponse
 from app.core.orchestrator import ConciergeOrchestrator, IntentType, Plan
+from app.core.tools import make_registry
 from app.core.vinpearl_search import VinpearlTavilySearch
 
 
@@ -191,3 +192,68 @@ async def test_orchestrator_does_not_treat_local_location_match_as_vinpearl_answ
     assert result.rag_contexts == [
         "Vinpearl Nha Trang has beachfront resort services."
     ]
+
+
+@pytest.mark.asyncio
+async def test_registry_exposes_vinpearl_web_search_tool_when_configured():
+    seen_queries: list[str] = []
+
+    async def web_search(query: str):
+        seen_queries.append(query)
+        return {
+            "ok": True,
+            "results": [
+                {
+                    "text": "Official Vinpearl promotion details.",
+                    "source": "https://vinpearl.com/vi/uu-dai",
+                }
+            ],
+        }
+
+    registry = make_registry(
+        db=None,
+        rag_search_fn=lambda query, k=5: {"ok": True, "results": []},
+        vinpearl_web_search_fn=web_search,
+    )
+
+    tool_names = {tool.name for tool in registry.list()}
+    schemas = registry.get_openai_tool_schemas()
+
+    assert "search_vinpearl_web" in tool_names
+    assert any(
+        schema["function"]["name"] == "search_vinpearl_web"
+        for schema in schemas
+    )
+
+    result = await registry.async_execute_with_timing(
+        "search_vinpearl_web",
+        query="Ưu đãi Vinpearl mới nhất",
+        request_id="test-request",
+    )
+
+    assert result["ok"] is True
+    assert seen_queries == ["Ưu đãi Vinpearl mới nhất"]
+    assert result["results"][0]["source"] == "https://vinpearl.com/vi/uu-dai"
+
+
+@pytest.mark.asyncio
+async def test_registry_prefixes_vinpearl_for_web_queries_missing_brand():
+    seen_queries: list[str] = []
+
+    async def web_search(query: str):
+        seen_queries.append(query)
+        return {"ok": True, "results": []}
+
+    registry = make_registry(
+        db=None,
+        rag_search_fn=lambda query, k=5: {"ok": True, "results": []},
+        vinpearl_web_search_fn=web_search,
+    )
+
+    await registry.async_execute_with_timing(
+        "search_vinpearl_web",
+        query="latest promotions",
+        request_id="test-request",
+    )
+
+    assert seen_queries == ["Vinpearl latest promotions"]

@@ -6,6 +6,7 @@ import json
 import logging
 import re
 import time
+import unicodedata
 import uuid
 from dataclasses import dataclass, field
 from enum import Enum
@@ -27,6 +28,138 @@ from ..validation.hallucination import (
 )
 
 logger = logging.getLogger(__name__)
+
+_VINPEARL_TRAVEL_REFUSAL_VI = (
+    "Xin lỗi, mình chỉ có thể hỗ trợ các câu hỏi liên quan đến Vinpearl Travel "
+    "như điểm đến, khách sạn/resort, phòng, combo, lịch trình, dịch vụ và đặt "
+    "phòng. Bạn đang muốn tư vấn chuyến đi Vinpearl nào?"
+)
+_VINPEARL_TRAVEL_REFUSAL_EN = (
+    "Sorry, I can only help with Vinpearl Travel questions such as destinations, "
+    "hotels/resorts, rooms, packages, itineraries, services, and booking support. "
+    "Which Vinpearl trip would you like help with?"
+)
+_LIVE_WEB_KEYWORDS = (
+    "availability",
+    "available",
+    "con phong",
+    "contact",
+    "current",
+    "dat phong",
+    "deal",
+    "bang gia",
+    "bao nhieu tien",
+    "gia bao nhieu",
+    "gia phong",
+    "gia ve",
+    "hien tai",
+    "hom nay",
+    "hotline",
+    "khuyen mai",
+    "latest",
+    "lien he",
+    "live",
+    "moi nhat",
+    "offer",
+    "phone",
+    "price",
+    "promotion",
+    "rate",
+    "so dien thoai",
+    "uu dai",
+)
+_VIETNAMESE_SIGNAL_RE = re.compile(
+    r"[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡ"
+    r"ùúụủũưừứựửữỳýỵỷỹđ]",
+    re.IGNORECASE,
+)
+_GREETING_KEYWORDS = ("chao", "hello", "hi ", "hey", "xin chao")
+_VECTOR_EVIDENCE_GROUPS = (
+    (
+        ("cancel", "cancellation", "huy", "huy phong"),
+        ("cancel", "cancellation", "huy", "huy phong", "hoan huy"),
+    ),
+    (
+        ("airport", "dua don", "san bay", "shuttle", "xe bus"),
+        ("airport", "dua don", "san bay", "shuttle", "vinbus", "xe bus"),
+    ),
+)
+
+
+def _normalize_query_text(text: str) -> str:
+    lowered = (text or "").lower().replace("đ", "d")
+    normalized = unicodedata.normalize("NFD", lowered)
+    return "".join(
+        char for char in normalized
+        if unicodedata.category(char) != "Mn"
+    )
+
+
+def _looks_vietnamese(text: str) -> bool:
+    normalized = f" {_normalize_query_text(text)} "
+    return bool(_VIETNAMESE_SIGNAL_RE.search(text)) or any(
+        marker in normalized
+        for marker in (
+            " ban ",
+            " cho minh ",
+            " giup ",
+            " khach san ",
+            " lich trinh ",
+            " minh ",
+            " phong ",
+            " toi ",
+        )
+    )
+
+
+def _vinpearl_travel_refusal(text: str) -> str:
+    return (
+        _VINPEARL_TRAVEL_REFUSAL_VI
+        if _looks_vietnamese(text)
+        else _VINPEARL_TRAVEL_REFUSAL_EN
+    )
+
+
+def _should_try_vector_before_web(query: str) -> bool:
+    if not is_vinpearl_query(query):
+        return False
+
+    normalized = f" {_normalize_query_text(query)} "
+    return not any(f" {keyword} " in normalized for keyword in _LIVE_WEB_KEYWORDS)
+
+
+def _should_force_vinpearl_overview(message: str) -> bool:
+    if not is_vinpearl_query(message):
+        return False
+
+    normalized = f" {_normalize_query_text(message)} "
+    return not any(f" {keyword} " in normalized for keyword in _GREETING_KEYWORDS)
+
+
+def _vector_result_missing_expected_evidence(
+    query: str,
+    result: dict,
+) -> bool:
+    normalized_query = _normalize_query_text(query)
+    expected_keywords: tuple[str, ...] = ()
+    for triggers, evidence_keywords in _VECTOR_EVIDENCE_GROUPS:
+        if any(trigger in normalized_query for trigger in triggers):
+            expected_keywords = evidence_keywords
+            break
+
+    if not expected_keywords:
+        return False
+
+    result_text_parts = []
+    for item in result.get("results", []):
+        if isinstance(item, dict):
+            result_text_parts.append(str(item.get("text", "")))
+            result_text_parts.append(str(item.get("meta", "")))
+    normalized_result_text = _normalize_query_text(" ".join(result_text_parts))
+    return not any(
+        keyword in normalized_result_text
+        for keyword in expected_keywords
+    )
 
 
 class IntentType(str, Enum):
@@ -136,6 +269,7 @@ class ConciergeOrchestrator:
             self._track_tokens("planner", response.usage, response)
 
             plan = self._parse_plan(response.content)
+            plan = self._repair_vinpearl_overview_plan(plan, user_message)
 
             elapsed_ms = (time.monotonic() - start) * 1000
             logger.info(
@@ -160,6 +294,24 @@ class ConciergeOrchestrator:
                 intent=IntentType.CHITCHAT,
                 reasoning=f"Planner failed ({exc}), falling back to chitchat",
             )
+
+    def _repair_vinpearl_overview_plan(
+        self,
+        plan: Plan,
+        user_message: str,
+    ) -> Plan:
+        if (
+            plan.intent in (IntentType.CLARIFY, IntentType.CHITCHAT)
+            and self.tools.get("search_amenities") is not None
+            and _should_force_vinpearl_overview(user_message)
+        ):
+            return Plan(
+                intent=IntentType.TOOL,
+                tool_name="search_amenities",
+                tool_args={"query": user_message},
+                reasoning="Vinpearl entity mention should return a knowledge-base overview.",
+            )
+        return plan
 
     def _parse_plan(self, raw: str) -> Plan:
         """Parse planner JSON into a Plan; falls back to keyword heuristic."""
@@ -356,7 +508,10 @@ class ConciergeOrchestrator:
             )
 
             for tool_call in response.tool_calls:
-                tool_result = await self._run_react_tool_call(tool_call)
+                tool_result = await self._run_react_tool_call(
+                    tool_call,
+                    user_message=user_message,
+                )
                 observations[tool_call.name] = tool_result
                 observation_text = json.dumps(
                     tool_result,
@@ -533,10 +688,7 @@ class ConciergeOrchestrator:
         if not self.input_guard.check_topic_boundary(text):
             logger.info("input_guard_off_topic")
             return text, [], ExecutionResult(
-                response=(
-                    "I am the Vinpearl AI Concierge. I can only assist "
-                    "with Vinpearl resort and hospitality inquiries."
-                ),
+                response=_vinpearl_travel_refusal(text),
                 plan=Plan(intent=IntentType.CHITCHAT),
                 guardrail="off_topic",
             )
@@ -659,7 +811,7 @@ class ConciergeOrchestrator:
         tool_name: str, tool_args: dict
     ) -> tuple[bool, str]:
         """Validate tool call arguments before execution."""
-        if tool_name == "search_amenities":
+        if tool_name in ("search_amenities", "search_vinpearl_web"):
             query = tool_args.get("query", "")
             if not query or not query.strip():
                 return False, "Blocked: search query cannot be empty."
@@ -697,7 +849,7 @@ class ConciergeOrchestrator:
             )
         return True, ""
 
-    async def _run_react_tool_call(self, tool_call) -> dict:
+    async def _run_react_tool_call(self, tool_call, user_message: str = "") -> dict:
         tool = self.tools.get(tool_call.name)
         if not tool:
             return {
@@ -726,12 +878,63 @@ class ConciergeOrchestrator:
                 "error": reason,
             }
 
+        if (
+            tool_call.name == "search_vinpearl_web"
+            and self.tools.get("search_amenities") is not None
+        ):
+            vector_query = user_message or str(raw_args.get("query", ""))
+            if _should_try_vector_before_web(vector_query):
+                local_result = await self.tools.async_execute_with_timing(
+                    "search_amenities",
+                    request_id=str(uuid.uuid4()),
+                    query=vector_query,
+                )
+                if isinstance(local_result, dict) and local_result.get("results"):
+                    local_result = dict(local_result)
+                    local_result.setdefault("query", vector_query)
+                    local_result["web_skipped"] = "vector_first"
+                    return local_result
+
         result = await self.tools.async_execute_with_timing(
             tool_call.name,
             request_id=str(uuid.uuid4()),
             **raw_args,
         )
-        return result if isinstance(result, dict) else {"result": result}
+        if not isinstance(result, dict):
+            return {"result": result}
+
+        if (
+            tool_call.name == "search_amenities"
+            and self.web_search is not None
+        ):
+            fallback_query = user_message or str(raw_args.get("query", ""))
+            should_fallback = (
+                not result.get("results")
+                or _vector_result_missing_expected_evidence(fallback_query, result)
+            )
+            if should_fallback and is_vinpearl_query(fallback_query):
+                web_result = await self.web_search.search(fallback_query)
+                web_docs = [
+                    {
+                        "text": item.get("text", ""),
+                        "meta": {
+                            "source": item.get("source", ""),
+                            "retrieval": "tavily",
+                        },
+                        "score": 0.0,
+                    }
+                    for item in web_result.get("results", [])
+                    if item.get("text") and item.get("source")
+                ]
+                if web_docs:
+                    return {
+                        "ok": True,
+                        "query": fallback_query,
+                        "results": web_docs,
+                        "fallback": "tavily",
+                    }
+
+        return result
 
     def _format_history(self, messages: list[dict]) -> str:
         """Format conversation history for prompt injection."""

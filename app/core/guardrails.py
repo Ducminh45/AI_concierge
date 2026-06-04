@@ -81,12 +81,17 @@ _INJECTION_PATTERNS: list[re.Pattern] = [
 _OFFTOPIC_PATTERNS: list[re.Pattern] = [
     re.compile(p, re.IGNORECASE)
     for p in [
-        r"write\s+(?:me\s+)?(?:a\s+)?(?:python|javascript|code|script|program)",
+        r"(?:write|vi[eế]t)\s+(?:me\s+|gi[uú]p\s+(?:m[iì]nh|t[oô]i)\s+)?(?:a\s+|m[oộ]t\s+)?(?:python|javascript|code|script|program|đo[aạ]n\s+code)",
         r"help\s+me\s+hack",
         r"how\s+(?:do\s+I|to)\s+(?:hack|exploit|crack)",
         r"generate\s+(?:a\s+)?(?:malware|virus|exploit)",
         r"create\s+(?:a\s+)?(?:phishing|scam)",
         r"(?:sql|xss|csrf)\s+injection\s+(?:tutorial|example|guide)",
+        r"\b(?:coding|programming)\b",
+        r"\b(?:homework|schoolwork|assignment)\b",
+        r"\b(?:politics|political|election|finance|stock|religious)\b",
+        r"(?:b[aà]i\s+t[aậ]p|b[aà]i\s+lu[aậ]n|l[aà]m\s+b[aà]i|trường\s+h[oọ]c)",
+        r"(?:ch[ií]nh\s+tr[iị]|t[aà]i\s+ch[ií]nh|ch[uứ]ng\s+kho[aá]n|t[oô]n\s+gi[aá]o)",
     ]
 ]
 
