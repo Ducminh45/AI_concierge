@@ -18,6 +18,8 @@ services:
         value: Asia/Ho_Chi_Minh
       - key: RC_OPENAI_API_KEY
         sync: false
+      - key: RC_TAVILY_API_KEY
+        sync: false
       - key: RC_JWT_SECRET
         generateValue: true
       - key: RC_API_KEY
