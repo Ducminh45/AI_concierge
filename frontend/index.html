@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vietnam Luxury Resorts — AI Concierge 24/7</title>
+    <meta name="description" content="Hệ sinh thái nghỉ dưỡng cao cấp Việt Nam với AI Concierge thông minh phục vụ 24/7.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="app">
+
+        <!-- ========== UTILITY TOP BAR ========== -->
+        <div id="topbar" class="topbar hidden">
+            <div class="topbar-inner">
+                <div class="topbar-left">
+                    <span class="topbar-greeting"><i class="fa-regular fa-bell"></i> Xin chào, <strong id="topbar-user-name">Guest</strong></span>
+                </div>
+                <div class="topbar-right">
+                    <a href="#" id="topbar-login-link" class="topbar-link"><i class="fa-solid fa-magnifying-glass"></i></a>
+                    <span class="topbar-sep">·</span>
+                    <span class="topbar-lang">🇻🇳 VIE ›</span>
+                    <span class="topbar-sep">·</span>
+                    <button id="logout-btn" class="topbar-link topbar-btn" title="Đăng xuất"><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== MAIN NAVBAR — Vinpearl centered logo ========== -->
+        <nav id="navbar" class="hidden">
+            <div class="nav-inner">
+                <button class="nav-hamburger" id="nav-hamburger-btn" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+
+                <div class="nav-left">
+                    <a href="#chat" id="nav-chat" class="nav-link active">Trò chuyện</a>
+                    <a href="#services" id="nav-services" class="nav-link">Dịch vụ</a>
+                    <a href="#admin" id="nav-admin" class="nav-link hidden">Quản trị</a>
+                </div>
+
+                <a href="#" class="nav-brand">
+                    <svg class="brand-icon" viewBox="0 0 64 52" fill="none">
+                        <path d="M32 2C26 10 12 16 4 30c4-6 14-14 28-16 14 2 24 10 28 16C52 16 38 10 32 2z" fill="url(#gGrad)" stroke="url(#gGrad)" stroke-width=".5"/>
+                        <path d="M32 2C28 8 18 14 12 24c3-4 10-10 20-12 10 2 17 8 20 12C46 14 36 8 32 2z" fill="url(#gGrad2)" opacity=".5"/>
+                        <defs>
+                            <linearGradient id="gGrad" x1="4" y1="2" x2="60" y2="30"><stop stop-color="#C8973E"/><stop offset="1" stop-color="#E8C56D"/></linearGradient>
+                            <linearGradient id="gGrad2" x1="12" y1="2" x2="52" y2="24"><stop stop-color="#F0D888"/><stop offset="1" stop-color="#C8973E"/></linearGradient>
+                        </defs>
+                    </svg>
+                    <div class="brand-name">
+                        <span class="brand-main">VIETNAM LUXURY</span>
+                        <span class="brand-sub">RESORTS &amp; SPA</span>
+                    </div>
+                </a>
+
+                <div class="nav-right">
+                    <a href="#" class="nav-link nav-link-secondary">Ưu đãi khuyến mãi</a>
+                    <a href="#" class="nav-link nav-link-secondary">VinClub</a>
+                    <a href="#chat" class="nav-cta" id="btn-book-now">Đặt Ngay</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- ========== PAGES ========== -->
+        <main id="main-content">
+
+            <!-- ===== 1. LOGIN PAGE — Full-screen Hero ===== -->
+            <section id="login-page" class="page-view">
+                <div class="hero">
+                    <div class="hero-img"></div>
+                    <div class="hero-dim"></div>
+
+                    <div class="hero-text">
+                        <p class="hero-eyebrow">Welcome to</p>
+                        <h1 class="hero-heading"><em>Chào mừng đến với</em><br>Vietnam Luxury Resorts</h1>
+                        <p class="hero-desc">Đánh thức mọi giác quan với hệ sinh thái nghỉ dưỡng ven biển đẳng cấp của Vietnam Luxury Resorts</p>
+                        <a href="#login" class="hero-btn" id="hero-explore-btn">Khám phá<span class="hero-btn-arrow">→</span></a>
+                    </div>
+
+                    <!-- Booking-bar style login -->
+                    <div class="hero-bottom-bar">
+                        <div class="bottom-bar-wrap">
+                            <div class="login-card">
+                                <div class="login-card-header">
+                                    <div class="login-icon-ring"><i class="fa-solid fa-hotel"></i></div>
+                                    <div>
+                                        <h2>AI Concierge 24/7</h2>
+                                        <p>Đăng nhập để trải nghiệm dịch vụ cao cấp</p>
+                                    </div>
+                                </div>
+                                <form id="login-form" class="login-form">
+                                    <div class="field">
+                                        <label for="login-username">Tên đăng nhập</label>
+                                        <div class="field-input">
+                                            <i class="fa-regular fa-user"></i>
+                                            <input type="text" id="login-username" required placeholder="Nhập tên đăng nhập...">
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <label for="login-password">Mật khẩu</label>
+                                        <div class="field-input">
+                                            <i class="fa-solid fa-lock"></i>
+                                            <input type="password" id="login-password" required placeholder="Nhập mật khẩu...">
+                                        </div>
+                                    </div>
+                                    <div id="login-error" class="alert-error hidden"></div>
+                                    <button type="submit" class="btn-primary">Đăng Nhập</button>
+                                </form>
+                                <p class="login-card-footer">Chưa có tài khoản? <a href="#register">Đăng ký ngay</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== 2. REGISTER PAGE ===== -->
+            <section id="register-page" class="page-view hidden">
+                <div class="hero">
+                    <div class="hero-img"></div>
+                    <div class="hero-dim"></div>
+                    <div class="hero-text">
+                        <p class="hero-eyebrow">Create Account</p>
+                        <h1 class="hero-heading"><em>Tạo tài khoản</em><br>Trải nghiệm đẳng cấp</h1>
+                        <p class="hero-desc">Đăng ký để sử dụng AI Concierge &amp; đặt dịch vụ 5 sao</p>
+                    </div>
+                    <div class="hero-bottom-bar">
+                        <div class="bottom-bar-wrap">
+                            <div class="login-card register-card">
+                                <div class="login-card-header">
+                                    <div class="login-icon-ring"><i class="fa-solid fa-key"></i></div>
+                                    <div>
+                                        <h2>Đăng Ký Tài Khoản</h2>
+                                        <p>Tạo tài khoản mới</p>
+                                    </div>
+                                </div>
+                                <form id="register-form" class="login-form">
+                                    <div class="field-row">
+                                        <div class="field">
+                                            <label for="register-username">Tên đăng nhập *</label>
+                                            <div class="field-input">
+                                                <i class="fa-regular fa-user"></i>
+                                                <input type="text" id="register-username" required minlength="3" placeholder="Từ 3 ký tự...">
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="register-fullname">Họ và tên</label>
+                                            <div class="field-input">
+                                                <i class="fa-regular fa-id-card"></i>
+                                                <input type="text" id="register-fullname" placeholder="Họ và tên...">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="field-row">
+                                        <div class="field">
+                                            <label for="register-email">Email</label>
+                                            <div class="field-input">
+                                                <i class="fa-regular fa-envelope"></i>
+                                                <input type="email" id="register-email" placeholder="example@resort.com">
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="register-password">Mật khẩu *</label>
+                                            <div class="field-input">
+                                                <i class="fa-solid fa-lock"></i>
+                                                <input type="password" id="register-password" required minlength="6" placeholder="Từ 6 ký tự...">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="register-error" class="alert-error hidden"></div>
+                                    <button type="submit" class="btn-primary">Đăng Ký &amp; Đăng Nhập</button>
+                                </form>
+                                <p class="login-card-footer">Đã có tài khoản? <a href="#login">Đăng nhập</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== 3. CHAT PAGE (Light Theme Redesign) ===== -->
+            <section id="chat-page" class="page-view hidden">
+                <div class="chat-light-wrap">
+                    <header class="chat-light-header">
+                        <div class="chat-header-left">
+                            <div class="header-avatar"><i class="fa-solid fa-robot"></i></div>
+                            <div class="header-info">
+                                <h2>AI Concierge</h2>
+                                <span class="status-text"><span class="status-dot"></span> Trực tuyến · phản hồi tức thì</span>
+                            </div>
+                        </div>
+                        <div class="chat-header-right">
+                            <select class="lang-select">
+                                <option>VN Tiếng Việt</option>
+                                <option>EN English</option>
+                            </select>
+                        </div>
+                    </header>
+
+                    <div id="chat-messages" class="chat-light-body">
+                        <div class="chat-date-separator">Hôm nay · Phòng 1208</div>
+                        
+                        <div class="message-row bot">
+                            <div class="avatar"><i class="fa-solid fa-robot"></i></div>
+                            <div class="message-content-wrapper">
+                                <div class="message-bubble">
+                                    <p>Xin chào! Tôi là trợ lý concierge của resort. Tôi có thể giúp bạn đặt nhà hàng, spa, dọn phòng, hỏi giờ tiện ích hay gợi ý hoạt động. Bạn cần gì ạ?</p>
+                                </div>
+                                <div class="quick-actions-row">
+                                    <button class="qa-chip" data-msg="Tôi muốn đặt nhà hàng tối nay">🍽️ Đặt nhà hàng</button>
+                                    <button class="qa-chip" data-msg="Hồ bơi mở cửa mấy giờ?">🏊 Giờ hồ bơi</button>
+                                    <button class="qa-chip" data-msg="Tôi muốn đặt lịch spa">💆 Đặt spa</button>
+                                    <button class="qa-chip" data-msg="Cho tôi xin thêm 2 khăn tắm">🧺 Xin thêm khăn</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chat-light-footer">
+                        <form id="chat-form" class="chat-input-container">
+                            <input type="file" id="chat-file-upload" style="display:none">
+                            <button type="button" id="attach-btn" class="btn-attach" title="Đính kèm"><i class="fa-solid fa-paperclip"></i></button>
+                            <input type="text" id="chat-input" placeholder="Nhập tin nhắn... (đa ngôn ngữ)" required autocomplete="off">
+                            <button type="button" id="voice-btn" class="btn-voice" title="Ghi âm giọng nói"><i class="fa-solid fa-microphone"></i></button>
+                            <button type="submit" class="btn-send"><i class="fa-solid fa-paper-plane"></i></button>
+                        </form>
+                        <p class="chat-disclaimer">AI có thể sai sót. Yêu cầu quan trọng sẽ được chuyển tới nhân viên.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== 4. SERVICES PAGE ===== -->
+            <section id="services-page" class="page-view hidden">
+                <div class="services-container">
+                    <div class="services-form-section">
+                        <div class="section-title-card">
+                            <h2><i class="fa-solid fa-bell-concierge gold-color"></i> Đặt Dịch Vụ</h2>
+                            <p>Yêu cầu dịch vụ dọn phòng, giặt là, đưa đón hoặc ẩm thực trực tiếp lên hệ thống.</p>
+                        </div>
+                        <form id="service-request-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="srv-resort">Khu nghỉ dưỡng *</label>
+                                    <select id="srv-resort" required>
+                                        <option value="" disabled selected>-- Chọn khu nghỉ dưỡng --</option>
+                                        <option value="Azure Bay Resort &amp; Spa (Đà Nẵng)">Azure Bay Resort &amp; Spa (Đà Nẵng)</option>
+                                        <option value="Hội An Pearl Resort (Hội An)">Hội An Pearl Resort (Hội An)</option>
+                                        <option value="Phú Quốc Paradise (Phú Quốc)">Phú Quốc Paradise (Phú Quốc)</option>
+                                        <option value="Sapa Highland Lodge (Sapa)">Sapa Highland Lodge (Sapa)</option>
+                                        <option value="Nha Trang Coral Bay (Nha Trang)">Nha Trang Coral Bay (Nha Trang)</option>
+                                        <option value="Đà Lạt Pine Valley (Đà Lạt)">Đà Lạt Pine Valley (Đà Lạt)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="srv-room">Số phòng *</label>
+                                    <input type="text" id="srv-room" required placeholder="VD: 104, 302, Villa 5...">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="srv-type">Loại dịch vụ *</label>
+                                <select id="srv-type" required>
+                                    <option value="" disabled selected>-- Chọn loại dịch vụ --</option>
+                                    <option value="Extra Towels">Thêm khăn tắm (Extra Towels)</option>
+                                    <option value="Room Cleaning">Dọn phòng (Room Cleaning)</option>
+                                    <option value="Minibar Restock">Minibar (Restock)</option>
+                                    <option value="Maintenance">Kỹ thuật (Maintenance)</option>
+                                    <option value="Laundry">Giặt là (Laundry)</option>
+                                    <option value="Airport Transfer">Đưa đón sân bay</option>
+                                    <option value="Restaurant Booking">Đặt bàn nhà hàng</option>
+                                    <option value="Spa Booking">Đặt lịch spa</option>
+                                    <option value="Tour Booking">Đặt tour du lịch</option>
+                                    <option value="Special Request">Yêu cầu đặc biệt</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="srv-details">Chi tiết yêu cầu *</label>
+                                <textarea id="srv-details" rows="4" required placeholder="Ghi cụ thể yêu cầu..."></textarea>
+                            </div>
+                            <div id="service-success-msg" class="alert-success hidden"></div>
+                            <div id="service-error-msg" class="alert-error hidden"></div>
+                            <button type="submit" class="btn-primary btn-lg"><i class="fa-solid fa-paper-plane"></i> Gửi Yêu Cầu</button>
+                        </form>
+                    </div>
+                    <div class="services-list-section">
+                        <h3><i class="fa-solid fa-clock-rotate-left"></i> Lịch Sử Yêu Cầu</h3>
+                        <div id="services-history-list" class="history-list">
+                            <div class="no-history">Chưa có yêu cầu nào được gửi.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== 5. ADMIN PAGE ===== -->
+            <section id="admin-page" class="page-view hidden">
+                <div class="admin-container">
+                    <div class="admin-header">
+                        <h2><i class="fa-solid fa-gauge-high gold-color"></i> Quản Trị Hệ Thống</h2>
+                        <button id="refresh-admin-btn" class="btn-outline"><i class="fa-solid fa-arrows-rotate"></i> Làm mới</button>
+                    </div>
+                    <div class="admin-stats">
+                        <div class="stat-card"><div class="stat-icon si-blue"><i class="fa-solid fa-users"></i></div><div class="stat-info"><h4 id="stat-total-users">0</h4><p>Người Dùng</p></div></div>
+                        <div class="stat-card"><div class="stat-icon si-amber"><i class="fa-solid fa-circle-question"></i></div><div class="stat-info"><h4 id="stat-pending-requests">0</h4><p>Chờ Xử Lý</p></div></div>
+                        <div class="stat-card"><div class="stat-icon si-green"><i class="fa-solid fa-circle-check"></i></div><div class="stat-info"><h4 id="stat-completed-requests">0</h4><p>Hoàn Thành</p></div></div>
+                    </div>
+                    <div class="admin-grid">
+                        <div class="admin-card requests-mgmt">
+                            <h3><i class="fa-solid fa-bell-concierge"></i> Quản Lý Yêu Cầu Dịch Vụ</h3>
+                            <div class="table-responsive">
+                                <table class="admin-table">
+                                    <thead><tr><th>ID</th><th>Khách</th><th>Phòng</th><th>Resort</th><th>Dịch vụ</th><th>Chi tiết</th><th>Trạng thái</th><th>Hành động</th></tr></thead>
+                                    <tbody id="admin-requests-tbody"><tr><td colspan="8" class="text-center">Đang tải dữ liệu...</td></tr></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="admin-card users-mgmt">
+                            <h3><i class="fa-solid fa-user-gear"></i> Phân Quyền Người Dùng</h3>
+                            <div class="table-responsive">
+                                <table class="admin-table">
+                                    <thead><tr><th>ID</th><th>Username</th><th>Họ tên</th><th>Vai trò</th><th>Hành động</th></tr></thead>
+                                    <tbody id="admin-users-tbody"><tr><td colspan="5" class="text-center">Đang tải dữ liệu...</td></tr></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/chat.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

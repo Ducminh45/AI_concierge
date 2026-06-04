@@ -1,0 +1,95 @@
+version: '3.8'
+
+# Production Docker Compose for AWS ECS / EC2 deployment
+# Uses awslogs driver for CloudWatch integration and sets resource limits.
+#
+# Usage:
+#   docker-compose -f deploy/aws/docker-compose.prod.yml up -d
+
+services:
+  api:
+    build: ../../
+    ports:
+      - "8000:8000"
+    environment:
+      - MRC_ENVIRONMENT=prod
+      - MRC_LOG_LEVEL=info
+      - MRC_DATABASE_URL=sqlite:////data/monster_resort.db
+      - MRC_LLM_PROVIDER_PRIORITY=openai,anthropic
+      - MRC_LLM_FALLBACK_ENABLED=true
+      - MRC_MLFLOW_ENABLED=false
+    env_file:
+      - ../../.env
+    volumes:
+      - app_data:/data
+      - app_pdfs:/app/generated_pdfs
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 2048M
+        reservations:
+          cpus: "0.5"
+          memory: 1024M
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: /ecs/monster-resort-concierge
+        awslogs-region: eu-west-2
+        awslogs-stream-prefix: api
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import httpx; httpx.get('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ../../prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 512M
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: /ecs/monster-resort-concierge
+        awslogs-region: eu-west-2
+        awslogs-stream-prefix: prometheus
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD:-admin}
+    volumes:
+      - grafana_data:/var/lib/grafana
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 512M
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: /ecs/monster-resort-concierge
+        awslogs-region: eu-west-2
+        awslogs-stream-prefix: grafana
+    restart: unless-stopped
+
+volumes:
+  app_data:
+  app_pdfs:
+  prometheus_data:
+  grafana_data:

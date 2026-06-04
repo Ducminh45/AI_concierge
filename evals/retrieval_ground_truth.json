@@ -1,0 +1,155 @@
+[
+  {
+    "id": 1,
+    "query": "What are the check-in and checkout times?",
+    "relevant_snippets": [
+      "Check-in is from 3:00 PM",
+      "Checkout is by 11:00 AM",
+      "Standard Check-Out Times",
+      "Standard Check-In Times"
+    ],
+    "source_files": ["checkin_checkout.txt", "policies.txt"]
+  },
+  {
+    "id": 2,
+    "query": "What is the pet policy?",
+    "relevant_snippets": [
+      "PET POLICY",
+      "Three-headed dogs (counts as one pet)",
+      "Hellhounds (must be leashed after 9PM)",
+      "Black cats (bring at least 13)"
+    ],
+    "source_files": ["policies.txt"]
+  },
+  {
+    "id": 3,
+    "query": "Tell me about Vampire Manor rooms and coffins",
+    "relevant_snippets": [
+      "VAMPIRE MANOR: ETERNAL NIGHT INN",
+      "Coffin Suites: Luxurious satin-lined resting chambers",
+      "Crypt Penthouses",
+      "No-Mirror Suites"
+    ],
+    "source_files": ["amenities.txt"]
+  },
+  {
+    "id": 4,
+    "query": "What is the WiFi password?",
+    "relevant_snippets": [
+      "Network: \"Eternal_Connection\"",
+      "Password: \"MUAHAHAHA666\"",
+      "Complimentary high-speed (666 Mbps)"
+    ],
+    "source_files": ["faq.txt", "policies.txt"]
+  },
+  {
+    "id": 5,
+    "query": "What spa services does the Werewolf Lodge offer?",
+    "relevant_snippets": [
+      "Lunar Wellness Center",
+      "Full-Body Fur Grooming & Conditioning",
+      "Claw Sharpening & Polish",
+      "Howling Therapy Sessions",
+      "Post-Transformation Recovery Treatment"
+    ],
+    "source_files": ["amenities.txt"]
+  },
+  {
+    "id": 6,
+    "query": "What happens during the Halloween event?",
+    "relevant_snippets": [
+      "HALLOWEEN EXTRAVAGANZA",
+      "The Grand Halloween Ball",
+      "Costume Contest",
+      "Monster Mash Dance-Off",
+      "October 31st, Midnight-Dawn"
+    ],
+    "source_files": ["seasonal_events.txt"]
+  },
+  {
+    "id": 7,
+    "query": "What is the cancellation and refund policy?",
+    "relevant_snippets": [
+      "CANCELLATION POLICY",
+      "72 hours notice: Full refund",
+      "48-72 hours: 50% refund",
+      "No-show: Cursed for 7 years"
+    ],
+    "source_files": ["policies.txt"]
+  },
+  {
+    "id": 8,
+    "query": "What dining options does Castle Frankenstein have?",
+    "relevant_snippets": [
+      "Voltage Victuals Restaurant",
+      "Electric Eel Carpaccio",
+      "Shock-and-Awe Steak",
+      "Frankenstein's Feast"
+    ],
+    "source_files": ["amenities.txt"]
+  },
+  {
+    "id": 9,
+    "query": "Can I book a room at Zombie B&B if I'm not a zombie?",
+    "relevant_snippets": [
+      "Can I check in if I'm not a zombie?",
+      "Non-zombies welcome!",
+      "Heavily discounted rates for humans",
+      "Complimentary monster makeover package included",
+      "All guests are treated with equal enthusiasm regardless of species"
+    ],
+    "source_files": ["faq.txt"]
+  },
+  {
+    "id": 10,
+    "query": "What spa services does the Mummy Resort offer?",
+    "relevant_snippets": [
+      "Eternal Preservation Spa",
+      "Sand Exfoliation Treatment (authentic Sahara grains)",
+      "Papyrus Wrap Therapy",
+      "Hieroglyphic Henna Body Art",
+      "Resin & Natron Deep Tissue Massage",
+      "Tomb Temperature Stone Therapy (cooled to 55°F)"
+    ],
+    "source_files": ["amenities.txt"]
+  },
+  {
+    "id": 11,
+    "query": "What's the most romantic property for a Valentine's Day stay?",
+    "relevant_snippets": [
+      "VALENTINES DARK HEARTS WEEKEND (February 13-14)",
+      "Love Never Dies... Literally",
+      "VAMPIRE MANOR - \"Eternal Love\"",
+      "Couples coffin (king-sized)",
+      "Moonlight flight for two",
+      "The Eternal Romance Package",
+      "Romantic coffin-for-two",
+      "Gothic photography session"
+    ],
+    "source_files": ["seasonal_events.txt", "amenities.txt"]
+  },
+  {
+    "id": 12,
+    "query": "Do you accept cryptocurrency as payment?",
+    "relevant_snippets": [
+      "Accepted Payment Methods",
+      "Cryptocurrency (BitCoffin, EtherGhost)",
+      "All major credit cards (Visa, MasterCard, Amex, Discover)",
+      "Soul Tokens (any variety)",
+      "PayPal (for modern monsters)"
+    ],
+    "source_files": ["policies.txt"]
+  },
+  {
+    "id": 13,
+    "query": "How far in advance should I book the Halloween Extravaganza?",
+    "relevant_snippets": [
+      "Halloween week: 6 months",
+      "Book by: September 1st (sells out every year!)",
+      "HALLOWEEN EXTRAVAGANZA (October 24-31)",
+      "3 nights accommodation (Oct 29-31)",
+      "Price: $999/room or 10 Monster Tokens"
+    ],
+    "source_files": ["seasonal_events.txt", "faq.txt"]
+  }
+]

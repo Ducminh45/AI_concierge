@@ -1,0 +1,142 @@
+[
+  {
+    "id": 1,
+    "query": "What amenities does the resort have?",
+    "expected_tool": null,
+    "expected_keywords": ["pool", "spa", "restaurant"],
+    "category": "knowledge_retrieval"
+  },
+  {
+    "id": 2,
+    "query": "Book a room for John Smith at The Mummy Resort",
+    "expected_tool": "book_room",
+    "expected_keywords": ["booking", "confirmed"],
+    "category": "tool_use"
+  },
+  {
+    "id": 3,
+    "query": "What's the checkout time?",
+    "expected_tool": null,
+    "expected_keywords": ["checkout", "time", "11"],
+    "category": "knowledge_retrieval"
+  },
+  {
+    "id": 4,
+    "query": "Do you have a swimming pool?",
+    "expected_tool": "search_amenities",
+    "expected_keywords": ["pool", "swim"],
+    "category": "knowledge_retrieval"
+  },
+  {
+    "id": 5,
+    "query": "Look up booking BK-001",
+    "expected_tool": "get_booking",
+    "expected_keywords": ["booking", "BK-001"],
+    "category": "tool_use"
+  },
+  {
+    "id": 6,
+    "query": "Hello! How are you?",
+    "expected_tool": null,
+    "expected_keywords": ["hello", "welcome", "help"],
+    "category": "chitchat"
+  },
+  {
+    "id": 7,
+    "query": "Tell me about the Werewolf Lodge",
+    "expected_tool": "search_amenities",
+    "expected_keywords": ["werewolf", "lodge"],
+    "category": "knowledge_retrieval"
+  },
+  {
+    "id": 8,
+    "query": "I need a room with a coffin bed at Vampire Manor",
+    "expected_tool": "book_room",
+    "expected_keywords": ["vampire", "manor", "coffin", "room"],
+    "category": "tool_use"
+  },
+  {
+    "id": 9,
+    "query": "What restaurants are available?",
+    "expected_tool": "search_amenities",
+    "expected_keywords": ["restaurant", "dining", "food"],
+    "category": "knowledge_retrieval"
+  },
+  {
+    "id": 10,
+    "query": "Cancel booking BK-999",
+    "expected_tool": "cancel_booking",
+    "expected_keywords": ["cancel", "booking"],
+    "category": "tool_use"
+  },
+  {
+    "id": 11,
+    "query": "Is there Wi-Fi in the rooms?",
+    "expected_tool": "search_amenities",
+    "expected_keywords": ["wifi", "wi-fi", "internet"],
+    "category": "knowledge_retrieval"
+  },
+  {
+    "id": 12,
+    "query": "What's the weather like there?",
+    "expected_tool": null,
+    "expected_keywords": ["weather", "sorry"],
+    "category": "chitchat"
+  },
+  {
+    "id": 13,
+    "query": "How do I get to Castle Frankenstein?",
+    "expected_tool": "search_amenities",
+    "expected_keywords": ["castle", "frankenstein", "directions"],
+    "category": "knowledge_retrieval"
+  },
+  {
+    "id": 14,
+    "query": "Book a suite for Dracula from Oct 31 to Nov 2",
+    "expected_tool": "book_room",
+    "expected_keywords": ["suite", "booking", "confirmed"],
+    "category": "tool_use"
+  },
+  {
+    "id": 15,
+    "query": "Do you allow pets? I have a three-headed dog",
+    "expected_tool": "search_amenities",
+    "expected_keywords": ["pet", "policy"],
+    "category": "knowledge_retrieval"
+  },
+  {
+    "id": 16,
+    "query": "What's the scariest room you offer?",
+    "expected_tool": "search_amenities",
+    "expected_keywords": ["room", "scare"],
+    "category": "knowledge_retrieval"
+  },
+  {
+    "id": 17,
+    "query": "Thanks for your help!",
+    "expected_tool": null,
+    "expected_keywords": ["welcome", "glad", "help"],
+    "category": "chitchat"
+  },
+  {
+    "id": 18,
+    "query": "Is room service available after midnight?",
+    "expected_tool": "search_amenities",
+    "expected_keywords": ["room service", "midnight"],
+    "category": "knowledge_retrieval"
+  },
+  {
+    "id": 19,
+    "query": "What are the check-in hours?",
+    "expected_tool": "search_amenities",
+    "expected_keywords": ["check-in", "hours"],
+    "category": "knowledge_retrieval"
+  },
+  {
+    "id": 20,
+    "query": "I want to book Zombie Bed and Breakfast for the whole family",
+    "expected_tool": "book_room",
+    "expected_keywords": ["zombie", "booking", "family"],
+    "category": "tool_use"
+  }
+]

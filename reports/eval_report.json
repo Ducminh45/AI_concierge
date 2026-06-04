@@ -1,0 +1,465 @@
+{
+  "total": 20,
+  "passed": 8,
+  "pass_rate": 0.4,
+  "category_results": {
+    "knowledge_retrieval": {
+      "total": 11,
+      "passed": 6,
+      "pass_rate": 0.5455
+    },
+    "tool_use": {
+      "total": 6,
+      "passed": 0,
+      "pass_rate": 0.0
+    },
+    "chitchat": {
+      "total": 3,
+      "passed": 2,
+      "pass_rate": 0.6667
+    }
+  },
+  "avg_hallucination_score": 0.6,
+  "avg_retrieval_relevance": 0.3792,
+  "tool_selection_accuracy": 0.8,
+  "latency_p50": 0.0,
+  "latency_p95": 0.0,
+  "failed_cases": [
+    {
+      "case_id": 1,
+      "query": "What amenities does the resort have?",
+      "reasons": [
+        "Expected tool 'None', got 'search_amenities'"
+      ]
+    },
+    {
+      "case_id": 2,
+      "query": "Book a room for John Smith at The Mummy Resort",
+      "reasons": [
+        "Retrieval relevance too low: 0%"
+      ]
+    },
+    {
+      "case_id": 3,
+      "query": "What's the checkout time?",
+      "reasons": [
+        "Expected tool 'None', got 'search_amenities'"
+      ]
+    },
+    {
+      "case_id": 5,
+      "query": "Look up booking BK-001",
+      "reasons": [
+        "Expected tool 'get_booking', got 'book_room'",
+        "Retrieval relevance too low: 0%"
+      ]
+    },
+    {
+      "case_id": 7,
+      "query": "Tell me about the Werewolf Lodge",
+      "reasons": [
+        "Retrieval relevance too low: 0%"
+      ]
+    },
+    {
+      "case_id": 8,
+      "query": "I need a room with a coffin bed at Vampire Manor",
+      "reasons": [
+        "Expected tool 'book_room', got 'None'",
+        "Retrieval relevance too low: 25%"
+      ]
+    },
+    {
+      "case_id": 9,
+      "query": "What restaurants are available?",
+      "reasons": [
+        "Response keyword hit rate too low: 33%"
+      ]
+    },
+    {
+      "case_id": 10,
+      "query": "Cancel booking BK-999",
+      "reasons": [
+        "Expected tool 'cancel_booking', got 'book_room'",
+        "Retrieval relevance too low: 0%"
+      ]
+    },
+    {
+      "case_id": 12,
+      "query": "What's the weather like there?",
+      "reasons": [
+        "Retrieval relevance too low: 0%"
+      ]
+    },
+    {
+      "case_id": 13,
+      "query": "How do I get to Castle Frankenstein?",
+      "reasons": [
+        "Retrieval relevance too low: 0%"
+      ]
+    },
+    {
+      "case_id": 14,
+      "query": "Book a suite for Dracula from Oct 31 to Nov 2",
+      "reasons": [
+        "Retrieval relevance too low: 0%"
+      ]
+    },
+    {
+      "case_id": 20,
+      "query": "I want to book Zombie Bed and Breakfast for the whole family",
+      "reasons": [
+        "Retrieval relevance too low: 0%"
+      ]
+    }
+  ],
+  "results": [
+    {
+      "case_id": 1,
+      "query": "What amenities does the resort have?",
+      "category": "knowledge_retrieval",
+      "passed": false,
+      "retrieval_relevance": 1.0,
+      "tool_correct": false,
+      "response_keyword_hit": 1.0,
+      "hallucination_score": 0.6620391947882516,
+      "hallucination_level": "MEDIUM",
+      "latency_s": 0.0,
+      "expected_tool": null,
+      "actual_tool": "search_amenities",
+      "response_snippet": "Welcome to the Monster Resort! Regarding your query about 'What amenities does the resort have?': We have a pool, spa, restaurant, and coffin beds. Checkout time is 11am. Booking confirmed. WiFi avail",
+      "failure_reasons": [
+        "Expected tool 'None', got 'search_amenities'"
+      ]
+    },
+    {
+      "case_id": 2,
+      "query": "Book a room for John Smith at The Mummy Resort",
+      "category": "tool_use",
+      "passed": false,
+      "retrieval_relevance": 0.0,
+      "tool_correct": true,
+      "response_keyword_hit": 1.0,
+      "hallucination_score": 0.586252916961157,
+      "hallucination_level": "MEDIUM",
+      "latency_s": 0.0,
+      "expected_tool": "book_room",
+      "actual_tool": "book_room",
+      "response_snippet": "Welcome to the Monster Resort! Regarding your query about 'Book a room for John Smith at The Mummy Resort': We have a pool, spa, restaurant, and coffin beds. Checkout time is 11am. Booking confirmed. ",
+      "failure_reasons": [
+        "Retrieval relevance too low: 0%"
+      ]
+    },
+    {
+      "case_id": 3,
+      "query": "What's the checkout time?",
+      "category": "knowledge_retrieval",
+      "passed": false,
+      "retrieval_relevance": 1.0,
+      "tool_correct": false,
+      "response_keyword_hit": 1.0,
+      "hallucination_score": 0.6734222696907253,
+      "hallucination_level": "MEDIUM",
+      "latency_s": 0.0,
+      "expected_tool": null,
+      "actual_tool": "search_amenities",
+      "response_snippet": "Welcome to the Monster Resort! Regarding your query about 'What's the checkout time?': We have a pool, spa, restaurant, and coffin beds. Checkout time is 11am. Booking confirmed. WiFi available. Pets ",
+      "failure_reasons": [
+        "Expected tool 'None', got 'search_amenities'"
+      ]
+    },
+    {
+      "case_id": 4,
+      "query": "Do you have a swimming pool?",
+      "category": "knowledge_retrieval",
+      "passed": true,
+      "retrieval_relevance": 0.5,
+      "tool_correct": true,
+      "response_keyword_hit": 1.0,
+      "hallucination_score": 0.5970398511205401,
+      "hallucination_level": "MEDIUM",
+      "latency_s": 0.0,
+      "expected_tool": "search_amenities",
+      "actual_tool": "search_amenities",
+      "response_snippet": "Welcome to the Monster Resort! Regarding your query about 'Do you have a swimming pool?': We have a pool, spa, restaurant, and coffin beds. Checkout time is 11am. Booking confirmed. WiFi available. Pe",
+      "failure_reasons": []
+    },
+    {
+      "case_id": 5,
+      "query": "Look up booking BK-001",
+      "category": "tool_use",
+      "passed": false,
+      "retrieval_relevance": 0.0,
+      "tool_correct": false,
+      "response_keyword_hit": 1.0,
+      "hallucination_score": 0.5745650958041756,
+      "hallucination_level": "MEDIUM",
+      "latency_s": 0.0,
+      "expected_tool": "get_booking",
+      "actual_tool": "book_room",
+      "response_snippet": "Welcome to the Monster Resort! Regarding your query about 'Look up booking BK-001': We have a pool, spa, restaurant, and coffin beds. Checkout time is 11am. Booking confirmed. WiFi available. Pets wel",
+      "failure_reasons": [
+        "Expected tool 'get_booking', got 'book_room'",
+        "Retrieval relevance too low: 0%"
+      ]
+    },
+    {
+      "case_id": 6,
+      "query": "Hello! How are you?",
+      "category": "chitchat",
+      "passed": true,
+      "retrieval_relevance": 0.3333333333333333,
+      "tool_correct": true,
+      "response_keyword_hit": 1.0,
+      "hallucination_score": 0.5760403752326966,
+      "hallucination_level": "MEDIUM",
+      "latency_s": 0.0,
+      "expected_tool": null,
+      "actual_tool": null,
+      "response_snippet": "Welcome to the Monster Resort! Regarding your query about 'Hello! How are you?': We have a pool, spa, restaurant, and coffin beds. Checkout time is 11am. Booking confirmed. WiFi available. Pets welcom",
+      "failure_reasons": []
+    },
+    {
+      "case_id": 7,
+      "query": "Tell me about the Werewolf Lodge",
+      "category": "knowledge_retrieval",
+      "passed": false,
+      "retrieval_relevance": 0.0,
+      "tool_correct": true,
+      "response_keyword_hit": 1.0,
+      "hallucination_score": 0.5504996608714668,
+      "hallucination_level": "MEDIUM",
+      "latency_s": 0.0,
+      "expected_tool": "search_amenities",
+      "actual_tool": "search_amenities",
+      "response_snippet": "Welcome to the Monster Resort! Regarding your query about 'Tell me about the Werewolf Lodge': We have a pool, spa, restaurant, and coffin beds. Checkout time is 11am. Booking confirmed. WiFi available",
+      "failure_reasons": [
+        "Retrieval relevance too low: 0%"
+      ]
+    },
+    {
+      "case_id": 8,
+      "query": "I need a room with a coffin bed at Vampire Manor",
+      "category": "tool_use",
+      "passed": false,
+      "retrieval_relevance": 0.25,
+      "tool_correct": false,
+      "response_keyword_hit": 1.0,
+      "hallucination_score": 0.6080508274691445,
+      "hallucination_level": "MEDIUM",
+      "latency_s": 0.0,
+      "expected_tool": "book_room",
+      "actual_tool": null,
+      "response_snippet": "Welcome to the Monster Resort! Regarding your query about 'I need a room with a coffin bed at Vampire Manor': We have a pool, spa, restaurant, and coffin beds. Checkout time is 11am. Booking confirmed",
+      "failure_reasons": [
+        "Expected tool 'book_room', got 'None'",
+        "Retrieval relevance too low: 25%"
+      ]
+    },
+    {
+      "case_id": 9,
+      "query": "What restaurants are available?",
+      "category": "knowledge_retrieval",
+      "passed": false,
+      "retrieval_relevance": 0.3333333333333333,
+      "tool_correct": true,
+      "response_keyword_hit": 0.3333333333333333,
+      "hallucination_score": 0.6481155449496214,
+      "hallucination_level": "MEDIUM",
+      "latency_s": 0.0,
+      "expected_tool": "search_amenities",
+      "actual_tool": "search_amenities",
+      "response_snippet": "Welcome to the Monster Resort! Regarding your query about 'What restaurants are available?': We have a pool, spa, restaurant, and coffin beds. Checkout time is 11am. Booking confirmed. WiFi available.",
+      "failure_reasons": [
+        "Response keyword hit rate too low: 33%"
+      ]
+    },
+    {
+      "case_id": 10,
+      "query": "Cancel booking BK-999",
+      "category": "tool_use",
+      "passed": false,
+      "retrieval_relevance": 0.0,
+      "tool_correct": false,
+      "response_keyword_hit": 1.0,
+      "hallucination_score": 0.566395195892879,
+      "hallucination_level": "MEDIUM",
+      "latency_s": 0.0,
+      "expected_tool": "cancel_booking",
+      "actual_tool": "book_room",
+      "response_snippet": "Welcome to the Monster Resort! Regarding your query about 'Cancel booking BK-999': We have a pool, spa, restaurant, and coffin beds. Checkout time is 11am. Booking confirmed. WiFi available. Pets welc",
+      "failure_reasons": [
+        "Expected tool 'cancel_booking', got 'book_room'",
+        "Retrieval relevance too low: 0%"
+      ]
+    },
+    {
+      "case_id": 11,
+      "query": "Is there Wi-Fi in the rooms?",
+      "category": "knowledge_retrieval",
+      "passed": true,
+      "retrieval_relevance": 0.3333333333333333,
+      "tool_correct": true,
+      "response_keyword_hit": 0.6666666666666666,
+      "hallucination_score": 0.6242986557435016,
+      "hallucination_level": "MEDIUM",
+      "latency_s": 0.0,
+      "expected_tool": "search_amenities",
+      "actual_tool": "search_amenities",
+      "response_snippet": "Welcome to the Monster Resort! Regarding your query about 'Is there Wi-Fi in the rooms?': We have a pool, spa, restaurant, and coffin beds. Checkout time is 11am. Booking confirmed. WiFi available. Pe",
+      "failure_reasons": []
+    },
+    {
+      "case_id": 12,
+      "query": "What's the weather like there?",
+      "category": "chitchat",
+      "passed": false,
+      "retrieval_relevance": 0.0,
+      "tool_correct": true,
+      "response_keyword_hit": 0.5,
+      "hallucination_score": 0.5850700883184161,
+      "hallucination_level": "MEDIUM",
+      "latency_s": 0.0,
+      "expected_tool": null,
+      "actual_tool": null,
+      "response_snippet": "Welcome to the Monster Resort! Regarding your query about 'What's the weather like there?': We have a pool, spa, restaurant, and coffin beds. Checkout time is 11am. Booking confirmed. WiFi available. ",
+      "failure_reasons": [
+        "Retrieval relevance too low: 0%"
+      ]
+    },
+    {
+      "case_id": 13,
+      "query": "How do I get to Castle Frankenstein?",
+      "category": "knowledge_retrieval",
+      "passed": false,
+      "retrieval_relevance": 0.0,
+      "tool_correct": true,
+      "response_keyword_hit": 0.6666666666666666,
+      "hallucination_score": 0.5572850277443894,
+      "hallucination_level": "MEDIUM",
+      "latency_s": 0.0,
+      "expected_tool": "search_amenities",
+      "actual_tool": "search_amenities",
+      "response_snippet": "Welcome to the Monster Resort! Regarding your query about 'How do I get to Castle Frankenstein?': We have a pool, spa, restaurant, and coffin beds. Checkout time is 11am. Booking confirmed. WiFi avail",
+      "failure_reasons": [
+        "Retrieval relevance too low: 0%"
+      ]
+    },
+    {
+      "case_id": 14,
+      "query": "Book a suite for Dracula from Oct 31 to Nov 2",
+      "category": "tool_use",
+      "passed": false,
+      "retrieval_relevance": 0.0,
+      "tool_correct": true,
+      "response_keyword_hit": 1.0,
+      "hallucination_score": 0.531915085088639,
+      "hallucination_level": "MEDIUM",
+      "latency_s": 0.0,
+      "expected_tool": "book_room",
+      "actual_tool": "book_room",
+      "response_snippet": "Welcome to the Monster Resort! Regarding your query about 'Book a suite for Dracula from Oct 31 to Nov 2': We have a pool, spa, restaurant, and coffin beds. Checkout time is 11am. Booking confirmed. W",
+      "failure_reasons": [
+        "Retrieval relevance too low: 0%"
+      ]
+    },
+    {
+      "case_id": 15,
+      "query": "Do you allow pets? I have a three-headed dog",
+      "category": "knowledge_retrieval",
+      "passed": true,
+      "retrieval_relevance": 1.0,
+      "tool_correct": true,
+      "response_keyword_hit": 1.0,
+      "hallucination_score": 0.5583103698033554,
+      "hallucination_level": "MEDIUM",
+      "latency_s": 0.0,
+      "expected_tool": "search_amenities",
+      "actual_tool": "search_amenities",
+      "response_snippet": "Welcome to the Monster Resort! Regarding your query about 'Do you allow pets? I have a three-headed dog': We have a pool, spa, restaurant, and coffin beds. Checkout time is 11am. Booking confirmed. Wi",
+      "failure_reasons": []
+    },
+    {
+      "case_id": 16,
+      "query": "What's the scariest room you offer?",
+      "category": "knowledge_retrieval",
+      "passed": true,
+      "retrieval_relevance": 0.5,
+      "tool_correct": true,
+      "response_keyword_hit": 0.5,
+      "hallucination_score": 0.5908727810042245,
+      "hallucination_level": "MEDIUM",
+      "latency_s": 0.0,
+      "expected_tool": "search_amenities",
+      "actual_tool": "search_amenities",
+      "response_snippet": "Welcome to the Monster Resort! Regarding your query about 'What's the scariest room you offer?': We have a pool, spa, restaurant, and coffin beds. Checkout time is 11am. Booking confirmed. WiFi availa",
+      "failure_reasons": []
+    },
+    {
+      "case_id": 17,
+      "query": "Thanks for your help!",
+      "category": "chitchat",
+      "passed": true,
+      "retrieval_relevance": 0.3333333333333333,
+      "tool_correct": true,
+      "response_keyword_hit": 1.0,
+      "hallucination_score": 0.5974905102992131,
+      "hallucination_level": "MEDIUM",
+      "latency_s": 0.0,
+      "expected_tool": null,
+      "actual_tool": null,
+      "response_snippet": "Welcome to the Monster Resort! Regarding your query about 'Thanks for your help!': We have a pool, spa, restaurant, and coffin beds. Checkout time is 11am. Booking confirmed. WiFi available. Pets welc",
+      "failure_reasons": []
+    },
+    {
+      "case_id": 18,
+      "query": "Is room service available after midnight?",
+      "category": "knowledge_retrieval",
+      "passed": true,
+      "retrieval_relevance": 1.0,
+      "tool_correct": true,
+      "response_keyword_hit": 1.0,
+      "hallucination_score": 0.7010725929500152,
+      "hallucination_level": "HIGH",
+      "latency_s": 0.0,
+      "expected_tool": "search_amenities",
+      "actual_tool": "search_amenities",
+      "response_snippet": "Welcome to the Monster Resort! Regarding your query about 'Is room service available after midnight?': We have a pool, spa, restaurant, and coffin beds. Checkout time is 11am. Booking confirmed. WiFi ",
+      "failure_reasons": []
+    },
+    {
+      "case_id": 19,
+      "query": "What are the check-in hours?",
+      "category": "knowledge_retrieval",
+      "passed": true,
+      "retrieval_relevance": 1.0,
+      "tool_correct": true,
+      "response_keyword_hit": 1.0,
+      "hallucination_score": 0.6586099682757574,
+      "hallucination_level": "MEDIUM",
+      "latency_s": 0.0,
+      "expected_tool": "search_amenities",
+      "actual_tool": "search_amenities",
+      "response_snippet": "Welcome to the Monster Resort! Regarding your query about 'What are the check-in hours?': We have a pool, spa, restaurant, and coffin beds. Checkout time is 11am. Booking confirmed. WiFi available. Pe",
+      "failure_reasons": []
+    },
+    {
+      "case_id": 20,
+      "query": "I want to book Zombie Bed and Breakfast for the whole family",
+      "category": "tool_use",
+      "passed": false,
+      "retrieval_relevance": 0.0,
+      "tool_correct": true,
+      "response_keyword_hit": 1.0,
+      "hallucination_score": 0.5526015327090309,
+      "hallucination_level": "MEDIUM",
+      "latency_s": 0.0,
+      "expected_tool": "book_room",
+      "actual_tool": "book_room",
+      "response_snippet": "Welcome to the Monster Resort! Regarding your query about 'I want to book Zombie Bed and Breakfast for the whole family': We have a pool, spa, restaurant, and coffin beds. Checkout time is 11am. Booki",
+      "failure_reasons": [
+        "Retrieval relevance too low: 0%"
+      ]
+    }
+  ]
+}

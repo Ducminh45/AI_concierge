@@ -1,0 +1,9 @@
+{
+  "logGroupName": "/ecs/monster-resort-concierge",
+  "retentionInDays": 30,
+  "tags": {
+    "Project": "monster-resort-concierge",
+    "Environment": "production",
+    "ManagedBy": "ecs"
+  }
+}

@@ -1,0 +1,12 @@
+# Secrets — never read by Claude
+.env
+.env.*
+!.env.example
+
+# Credentials
+*.pem
+*.key
+*.crt
+*.p12
+credentials.json
+service-account.json

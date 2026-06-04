@@ -1,0 +1,6 @@
+description: "Prompt for conversation summarization in the memory store"
+version: "1.0"
+prompt: |
+  Summarize the following conversation for context retention. Be concise and capture key facts, guest requests, specific resort names, room details, and names.
+
+  {conversation}

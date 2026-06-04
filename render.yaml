@@ -1,0 +1,30 @@
+services:
+  # Web service for the FastAPI Backend and Frontend SPA
+  - type: web
+    name: ai-resort-concierge
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: RC_ENVIRONMENT
+        value: production
+      - key: RC_LOG_LEVEL
+        value: info
+      - key: RC_RESORT_NAME
+        value: "Vietnam Luxury Resorts"
+      - key: RC_DEFAULT_LANGUAGE
+        value: vi
+      - key: RC_RESORT_TIMEZONE
+        value: Asia/Ho_Chi_Minh
+      - key: RC_OPENAI_API_KEY
+        sync: false
+      - key: RC_JWT_SECRET
+        generateValue: true
+      - key: RC_API_KEY
+        generateValue: true
+      - key: RC_DATABASE_URL
+        value: sqlite:////opt/render/project/src/resort_concierge.db
+    disk:
+      name: sqlite-data
+      mountPath: /opt/render/project/src
+      sizeGB: 1

@@ -1,0 +1,59 @@
+{
+  "family": "monster-resort-concierge",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "1024",
+  "memory": "2048",
+  "executionRoleArn": "arn:aws:iam::ACCOUNT_ID:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::ACCOUNT_ID:role/ecsTaskRole",
+  "containerDefinitions": [
+    {
+      "name": "monster-resort-api",
+      "image": "ACCOUNT_ID.dkr.ecr.REGION.amazonaws.com/monster-resort-concierge:latest",
+      "portMappings": [
+        {
+          "containerPort": 8000,
+          "protocol": "tcp"
+        }
+      ],
+      "essential": true,
+      "healthCheck": {
+        "command": ["CMD-SHELL", "python -c \"import httpx; httpx.get('http://localhost:8000/health')\" || exit 1"],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "startPeriod": 60
+      },
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/monster-resort-concierge",
+          "awslogs-region": "REGION",
+          "awslogs-stream-prefix": "api"
+        }
+      },
+      "secrets": [
+        {
+          "name": "MRC_OPENAI_API_KEY",
+          "valueFrom": "arn:aws:secretsmanager:REGION:ACCOUNT_ID:secret:monster-resort/openai-api-key"
+        },
+        {
+          "name": "MRC_API_KEY",
+          "valueFrom": "arn:aws:secretsmanager:REGION:ACCOUNT_ID:secret:monster-resort/api-key"
+        },
+        {
+          "name": "MRC_ANTHROPIC_API_KEY",
+          "valueFrom": "arn:aws:secretsmanager:REGION:ACCOUNT_ID:secret:monster-resort/anthropic-api-key"
+        }
+      ],
+      "environment": [
+        { "name": "MRC_ENVIRONMENT", "value": "prod" },
+        { "name": "MRC_DATABASE_URL", "value": "sqlite:////data/monster_resort.db" },
+        { "name": "MRC_LOG_LEVEL", "value": "info" },
+        { "name": "MRC_LLM_PROVIDER_PRIORITY", "value": "openai,anthropic" },
+        { "name": "MRC_LLM_FALLBACK_ENABLED", "value": "true" },
+        { "name": "MRC_MLFLOW_ENABLED", "value": "false" }
+      ]
+    }
+  ]
+}
