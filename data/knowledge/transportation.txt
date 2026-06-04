@@ -1,0 +1,52 @@
+VINPEARL TRANSPORTATION AND DIRECTIONS
+
+Khoảng cách tới sân bay, trung tâm và cách di chuyển cho từng cơ sở Vinpearl (nguồn: data.txt).
+
+============================================================
+Vinpearl Nha Trang
+ID: nha-trang
+Location: Đảo Hòn Tre, Vĩnh Nguyên, Nha Trang, Khánh Hòa
+
+Transportation: Vinpearl Nha Trang nằm trên đảo Hòn Tre, cách trung tâm thành phố Nha Trang khoảng 5–6km và cách sân bay quốc tế Cam Ranh khoảng 23–24km. Khách di chuyển ra đảo bằng cáp treo vượt biển hoặc tàu cao tốc/tàu cao tốc do Vinpearl tổ chức; nhiều gói nghỉ dưỡng đã bao gồm tàu cao tốc đưa đón từ đất liền.
+
+============================================================
+Vinpearl Nam Hội An (Vinpearl Resort & Golf Nam Hội An)
+ID: nam-hoi-an
+Location: Bình Minh, Thăng Bình, Quảng Nam (cách phố cổ Hội An ~12km)
+
+Transportation: Vinpearl Nam Hội An nằm tại Bình Minh, cách trung tâm Hội An khoảng 11.9km và cách sân bay quốc tế Đà Nẵng khoảng 34–44km tùy cách đo và tuyến đường. Khách có thể di chuyển bằng ô tô/taxi hoặc xe đưa đón từ Đà Nẵng – Hội An tới khu nghỉ; từ resort đi VinWonders Nam Hội An chỉ mất vài phút vì nằm trong cùng quần thể.
+
+============================================================
+Vinpearl Phú Quốc
+ID: phu-quoc
+Location: Bãi Dài, Gành Dầu, Phú Quốc, Kiên Giang
+
+Transportation: Vinpearl Phú Quốc nằm ở Bãi Dài (Gành Dầu), cách trung tâm thị trấn Dương Đông khoảng 19–20km và cách sân bay Phú Quốc khoảng 32–33km. Du khách thường dùng xe đưa đón miễn phí của Vinpearl từ sân bay (cần đăng ký khi đặt phòng), VinBus hoặc taxi/xe riêng để tới khu. Bên trong quần thể có xe điện, shuttle bus di chuyển giữa các khách sạn, VinWonders, Safari, Grand World.
+
+============================================================
+Melia Vinpearl Cửa Sót Beach Resort (Hà Tĩnh)
+ID: cua-sot-ha-tinh
+Location: Biển Cửa Sót, Thịnh Lộc, Lộc Hà, Hà Tĩnh
+
+Transportation: Resort nằm tại Thịnh Lộc, Lộc Hà, cách trung tâm TP Hà Tĩnh khá xa nên thích hợp đi bằng ô tô/taxi riêng; nội khu dùng xe điện để di chuyển.
+
+============================================================
+Vinpearl Hotel Bắc Ninh
+ID: bac-ninh
+Location: Km 1+200 Trần Hưng Đạo, phường Kinh Bắc, TP. Bắc Ninh
+
+Transportation: Vinpearl Hotel Bắc Ninh nằm ngay trục đường Trần Hưng Đạo, thuận tiện di chuyển bằng taxi, ô tô riêng; từ đây dễ đi tới các khu công nghiệp, chùa – đền và làng quan họ.
+
+============================================================
+Melia Vinpearl Cửa Hội Beach Resort (Nghệ An)
+ID: cua-hoi-nghe-an
+Location: Đường Bình Minh, phường Nghi Hải, Cửa Lò, Nghệ An
+
+Transportation: Resort nằm tại đường Bình Minh, phường Nghi Hải, Cửa Lò – cách trung tâm thành phố Vinh không xa; khách thường di chuyển bằng ô tô, taxi hoặc xe riêng từ sân bay Vinh/ga Vinh đến Cửa Lò rồi vào resort.
+
+============================================================
+Vinpearl Resort & Spa Hạ Long
+ID: ha-long
+Location: Đảo Rều, khu vực Bãi Cháy, TP. Hạ Long, Quảng Ninh
+
+Transportation: Resort nằm trên Đảo Rều, khu vực Bãi Cháy, cách sân bay Nội Bài khoảng 173km, sân bay Cát Bi khoảng 65km; khách thường di chuyển bằng ô tô/bus tới Hạ Long rồi dùng tàu/ca nô của resort ra đảo.

@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Concierge 24/7 - Slide trình bày</title>
+  <link rel="icon" href="data:,">
+  <style>
+    :root {
+      --navy: #0d1520;
+      --ink: #141c27;
+      --surface: #1b2535;
+      --gold: #c8973e;
+      --gold-light: #e8c56d;
+      --teal: #22a090;
+      --orange: #e67e30;
+      --cream: #f9f7f3;
+      --muted: #aeb7c2;
+      --line: rgba(255, 255, 255, .12);
+      --shadow: 0 24px 80px rgba(0, 0, 0, .36);
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--navy);
+      color: var(--cream);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow: hidden;
+    }
+
+    body {
+      background:
+        linear-gradient(120deg, rgba(13, 21, 32, .98), rgba(20, 28, 39, .92)),
+        url("https://cf.bstatic.com/xdata/images/hotel/max1024x768/412883158.jpg?k=a220ece8f04054da35466bd13ee87342354cc18122b73eb0fbdcfef850115325") center / cover fixed;
+    }
+
+    .deck {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(340px, .95fr);
+      gap: 42px;
+      align-items: center;
+      padding: 64px 78px 78px;
+      opacity: 0;
+      transform: translateX(42px);
+      pointer-events: none;
+      transition: opacity .32s ease, transform .32s ease;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
+
+    .slide.full {
+      grid-template-columns: minmax(0, 1fr);
+      align-content: center;
+      text-align: center;
+      padding-inline: min(9vw, 110px);
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: var(--gold-light);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 500;
+      line-height: 1.04;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      max-width: 980px;
+      margin-inline: auto;
+      font-size: clamp(48px, 7vw, 96px);
+    }
+
+    h2 {
+      font-size: clamp(38px, 5vw, 72px);
+    }
+
+    .lead {
+      max-width: 920px;
+      margin: 28px auto 0;
+      color: rgba(249, 247, 243, .84);
+      font-size: clamp(20px, 2vw, 30px);
+      line-height: 1.45;
+    }
+
+    .copy {
+      max-width: 780px;
+      color: rgba(249, 247, 243, .82);
+      font-size: 22px;
+      line-height: 1.48;
+    }
+
+    .bullets {
+      display: grid;
+      gap: 16px;
+      margin: 28px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .bullets li {
+      display: grid;
+      grid-template-columns: 14px 1fr;
+      gap: 14px;
+      color: rgba(249, 247, 243, .86);
+      font-size: 21px;
+      line-height: 1.4;
+    }
+
+    .bullets li::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      margin-top: 10px;
+      border-radius: 999px;
+      background: var(--gold);
+      box-shadow: 0 0 0 6px rgba(200, 151, 62, .12);
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(27, 37, 53, .78);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      overflow: hidden;
+    }
+
+    .photo {
+      min-height: 430px;
+      background: center / cover;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .panel-body {
+      padding: 28px;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .metric {
+      min-height: 132px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .05);
+    }
+
+    .metric strong {
+      display: block;
+      color: var(--gold-light);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 42px;
+      font-weight: 500;
+      line-height: 1;
+    }
+
+    .metric span {
+      display: block;
+      margin-top: 10px;
+      color: rgba(249, 247, 243, .76);
+      font-size: 15px;
+      line-height: 1.35;
+    }
+
+    .stack {
+      display: grid;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 16px;
+      align-items: start;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .055);
+    }
+
+    .step-num {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(34, 160, 144, .16);
+      color: var(--teal);
+      font-weight: 800;
+    }
+
+    .step h3,
+    .card h3 {
+      margin: 0 0 6px;
+      font-size: 20px;
+      line-height: 1.25;
+    }
+
+    .step p,
+    .card p {
+      margin: 0;
+      color: rgba(249, 247, 243, .72);
+      font-size: 16px;
+      line-height: 1.42;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 30px;
+    }
+
+    .card {
+      min-height: 190px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(27, 37, 53, .78);
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 26px;
+    }
+
+    .tag {
+      padding: 9px 12px;
+      border: 1px solid rgba(232, 197, 109, .36);
+      border-radius: 999px;
+      color: var(--gold-light);
+      background: rgba(200, 151, 62, .1);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .image-showcase {
+      display: grid;
+      place-items: center;
+      margin-top: 30px;
+    }
+
+    .showcase-image {
+      max-width: min(100%, 960px);
+      max-height: 62vh;
+      border: 1px solid rgba(255, 255, 255, .18);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: var(--shadow);
+      object-fit: contain;
+    }
+
+    .qr-image {
+      width: min(58vh, 520px);
+      max-width: 82vw;
+      padding: 18px;
+    }
+
+    .destinations {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    .destination {
+      min-height: 108px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .055);
+      text-align: left;
+    }
+
+    .destination strong {
+      display: block;
+      font-size: 15px;
+      line-height: 1.25;
+    }
+
+    .destination span {
+      display: block;
+      margin-top: 8px;
+      color: rgba(249, 247, 243, .66);
+      font-size: 13px;
+      line-height: 1.3;
+    }
+
+    .nav {
+      position: fixed;
+      left: 34px;
+      right: 34px;
+      bottom: 24px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      pointer-events: none;
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      pointer-events: auto;
+    }
+
+    button {
+      min-width: 46px;
+      min-height: 42px;
+      border: 1px solid rgba(255, 255, 255, .2);
+      border-radius: 8px;
+      color: var(--cream);
+      background: rgba(13, 21, 32, .72);
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+    }
+
+    button:hover { border-color: var(--gold); color: var(--gold-light); }
+
+    .counter {
+      padding: 12px 14px;
+      border: 1px solid rgba(255, 255, 255, .16);
+      border-radius: 8px;
+      background: rgba(13, 21, 32, .72);
+      color: rgba(249, 247, 243, .78);
+      font-size: 14px;
+      font-weight: 700;
+      backdrop-filter: blur(12px);
+      pointer-events: auto;
+    }
+
+    .progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 20;
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, .12);
+    }
+
+    .progress span {
+      display: block;
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), var(--orange), var(--teal));
+      transition: width .25s ease;
+    }
+
+    .hint {
+      position: fixed;
+      top: 22px;
+      right: 26px;
+      z-index: 10;
+      color: rgba(249, 247, 243, .56);
+      font-size: 13px;
+    }
+
+    @media (max-width: 980px) {
+      html,
+      body { overflow: auto; }
+
+      .deck {
+        height: auto;
+        min-height: 100vh;
+      }
+
+      .slide,
+      .slide.full {
+        position: relative;
+        display: none;
+        min-height: 100vh;
+        grid-template-columns: 1fr;
+        padding: 58px 22px 88px;
+      }
+
+      .slide.active { display: grid; }
+      .photo { min-height: 240px; }
+      .copy { font-size: 18px; }
+      .bullets li { font-size: 18px; }
+      .cards,
+      .metric-grid,
+      .destinations { grid-template-columns: 1fr; }
+      .hint { display: none; }
+      .nav { left: 14px; right: 14px; bottom: 14px; }
+    }
+
+    @media print {
+      html,
+      body {
+        overflow: visible;
+        background: #fff;
+        color: #111;
+      }
+
+      .deck { height: auto; }
+
+      .slide,
+      .slide.full {
+        position: relative;
+        page-break-after: always;
+        opacity: 1;
+        transform: none;
+        min-height: 100vh;
+        color: #111;
+        background: #fff;
+      }
+
+      .panel,
+      .card,
+      .metric,
+      .step,
+      .destination {
+        background: #fff;
+        color: #111;
+        box-shadow: none;
+        border-color: #ddd;
+      }
+
+      .nav,
+      .hint,
+      .progress { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress"><span id="progressBar"></span></div>
+  <div class="hint">Dùng phím ← → hoặc Space để trình chiếu</div>
+
+  <main class="deck" aria-live="polite">
+    <section class="slide full active">
+      <div>
+        <p class="eyebrow">Hackathon Lab 6 · AI Concierge</p>
+        <h1>AI Concierge 24/7 cho chuỗi nghỉ dưỡng cao cấp Việt Nam</h1>
+        <p class="lead">Trợ lý số song ngữ giúp khách hỏi đáp, đặt dịch vụ và nhận tư vấn Vinpearl/Vinpearl Melia nhanh hơn, an toàn hơn và có kiểm soát nguồn tri thức.</p>
+        <div class="tag-row" style="justify-content:center">
+          <span class="tag">RAG + LLM</span>
+          <span class="tag">FastAPI</span>
+          <span class="tag">SPA Luxury</span>
+          <span class="tag">Guardrails</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide full">
+      <div>
+        <p class="eyebrow">Truy cập demo</p>
+        <h2>Quét mã QR để mở trải nghiệm AI Concierge</h2>
+        <p class="lead">Dùng mã QR này trong phần trình bày để người nghe mở nhanh bản demo hoặc tài nguyên dự án.</p>
+        <div class="image-showcase">
+          <img class="showcase-image qr-image" src="Untitled.png" alt="Mã QR truy cập demo AI Concierge">
+        </div>
+      </div>
+    </section>
+
+    <section class="slide full">
+      <div>
+        <p class="eyebrow">Vấn đề giải quyết</p>
+        <h2>Pain Points của du khách khi lập kế hoạch</h2>
+        <div class="image-showcase">
+          <img class="showcase-image" src="painpoint.png" alt="Các pain points: quá tải thông tin, khó lập lịch trình, thiếu contextual UI và hallucination">
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div>
+        <p class="eyebrow">Bài toán</p>
+        <h2>Khách resort cần hỗ trợ tức thì, đúng ngữ cảnh</h2>
+        <ul class="bullets">
+          <li>Thông tin về điểm đến, tiện ích, chính sách, di chuyển và mùa du lịch nằm rải rác ở nhiều nguồn.</li>
+          <li>Nhân viên lễ tân phải xử lý lặp lại các câu hỏi phổ biến và yêu cầu dịch vụ phòng.</li>
+          <li>Câu trả lời AI trong lĩnh vực lưu trú phải tránh bịa thông tin vì ảnh hưởng trực tiếp tới trải nghiệm khách.</li>
+        </ul>
+      </div>
+      <aside class="panel">
+        <div class="photo" style="background-image:url('https://pplx-res.cloudinary.com/image/upload/pplx_search_images/774758752642ecc34a7b6e613503ae9ce9f86d05.jpg')"></div>
+        <div class="panel-body">
+          <p class="copy" style="font-size:18px;margin:0">Mục tiêu của project là biến concierge thành một kênh phục vụ 24/7: trả lời nhanh, có căn cứ, và chuyển tiếp được nhu cầu dịch vụ cho đội vận hành.</p>
+        </div>
+      </aside>
+    </section>
+
+    <section class="slide">
+      <div>
+        <p class="eyebrow">Giải pháp</p>
+        <h2>Một AI Butler có tri thức resort và quy trình vận hành</h2>
+        <ul class="bullets">
+          <li>Chatbot song ngữ Việt - Anh trả lời theo ngôn ngữ của khách.</li>
+          <li>Form và chatbot hỗ trợ gửi yêu cầu: khăn, nước uống, dọn phòng, giặt là, spa, đưa đón sân bay.</li>
+          <li>Dashboard quản trị theo dõi người dùng, vai trò và trạng thái yêu cầu theo thời gian thực.</li>
+        </ul>
+      </div>
+      <aside class="panel">
+        <div class="metric-grid" style="padding:20px">
+          <div class="metric"><strong>24/7</strong><span>Luôn sẵn sàng hỗ trợ khách lưu trú</span></div>
+          <div class="metric"><strong>2</strong><span>Ngôn ngữ chính: tiếng Việt và tiếng Anh</span></div>
+          <div class="metric"><strong>7</strong><span>Điểm đến Vinpearl/Vinpearl Melia trong bộ dữ liệu</span></div>
+          <div class="metric"><strong>JWT</strong><span>Xác thực người dùng và phân quyền vai trò</span></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="slide full">
+      <div>
+        <p class="eyebrow">Phạm vi dữ liệu</p>
+        <h2>7 điểm đến trong knowledge base</h2>
+        <div class="destinations">
+          <div class="destination"><strong>Vinpearl Nha Trang</strong><span>Đảo Hòn Tre · nghỉ dưỡng đảo, VinWonders</span></div>
+          <div class="destination"><strong>Vinpearl Nam Hội An</strong><span>Resort & golf · river safari, văn hóa dân gian</span></div>
+          <div class="destination"><strong>Vinpearl Phú Quốc</strong><span>All-in-one · VinWonders, Safari, Grand World</span></div>
+          <div class="destination"><strong>Melia Vinpearl Cửa Sót</strong><span>Villa biển Hà Tĩnh · yên tĩnh, gia đình</span></div>
+          <div class="destination"><strong>Vinpearl Hotel Bắc Ninh</strong><span>Khách sạn 5 sao trung tâm · MICE, công tác</span></div>
+          <div class="destination"><strong>Melia Vinpearl Cửa Hội</strong><span>Biển Nghệ An · gia đình, cặp đôi</span></div>
+          <div class="destination"><strong>Vinpearl Hạ Long</strong><span>Đảo Rều · view vịnh, nghỉ dưỡng riêng tư</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div>
+        <p class="eyebrow">Kiến trúc</p>
+        <h2>Backend RAG hybrid + frontend SPA</h2>
+        <p class="copy">Project dùng FastAPI làm lõi backend, tách các lớp API, orchestration, retrieval, validation, monitoring và database. Frontend là SPA phong cách luxury, phục vụ cả khách lưu trú và admin/staff.</p>
+        <div class="tag-row">
+          <span class="tag">FastAPI</span>
+          <span class="tag">LangChain RAG</span>
+          <span class="tag">SQLite/DB Memory</span>
+          <span class="tag">Prometheus</span>
+          <span class="tag">MLflow</span>
+        </div>
+      </div>
+      <aside class="panel">
+        <div class="panel-body">
+          <div class="stack">
+            <div class="step"><div class="step-num">1</div><div><h3>Người dùng hỏi hoặc đặt dịch vụ</h3><p>SPA gửi chat/service request tới FastAPI.</p></div></div>
+            <div class="step"><div class="step-num">2</div><div><h3>Orchestrator phân loại ý định</h3><p>Chitchat nhanh được xử lý rẻ hơn; câu hỏi nghiệp vụ đi qua RAG.</p></div></div>
+            <div class="step"><div class="step-num">3</div><div><h3>RAG truy xuất tri thức</h3><p>BM25, vector dense, RRF và reranker chọn context phù hợp.</p></div></div>
+            <div class="step"><div class="step-num">4</div><div><h3>Guardrails kiểm tra đầu ra</h3><p>Giảm prompt injection, PII leakage và hallucination.</p></div></div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="slide">
+      <div>
+        <p class="eyebrow">RAG pipeline</p>
+        <h2>Tăng độ chính xác bằng nhiều tầng truy xuất</h2>
+        <ul class="bullets">
+          <li>BM25 bắt các từ khóa rõ ràng như tên resort, chính sách, tiện ích.</li>
+          <li>Dense vector search hiểu câu hỏi tự nhiên và các cách diễn đạt gần nghĩa.</li>
+          <li>RRF hợp nhất kết quả, sau đó Cross-Encoder reranker sắp xếp lại theo độ liên quan.</li>
+        </ul>
+      </div>
+      <aside class="panel">
+        <div class="metric-grid" style="padding:20px">
+          <div class="metric"><strong>0.756</strong><span>MRR trong đánh giá retrieval live</span></div>
+          <div class="metric"><strong>76.9%</strong><span>Recall@3 trên bộ 13 câu hỏi ground truth</span></div>
+          <div class="metric"><strong>78.5%</strong><span>Recall@10 khi mở rộng số chunk truy xuất</span></div>
+          <div class="metric"><strong>46.2%</strong><span>Precision@3 trong đánh giá hiện tại</span></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="slide">
+      <div>
+        <p class="eyebrow">An toàn AI</p>
+        <h2>Không chỉ trả lời hay, mà phải trả lời có căn cứ</h2>
+        <ul class="bullets">
+          <li>Input guard phát hiện prompt injection và giữ câu hỏi trong ranh giới chủ đề concierge.</li>
+          <li>PII redaction giúp ẩn thông tin nhạy cảm như email, số điện thoại, số thẻ.</li>
+          <li>Hallucination scoring kết hợp source attribution, token overlap, semantic similarity và claim verification thử nghiệm.</li>
+        </ul>
+      </div>
+      <aside class="panel">
+        <div class="panel-body">
+          <div class="cards" style="grid-template-columns:1fr">
+            <div class="card"><h3>Heuristic nhanh</h3><p>Chấm độ grounded của câu trả lời dựa trên context đã truy xuất.</p></div>
+            <div class="card"><h3>NLI claim verification</h3><p>Kiểm tra từng tuyên bố để phát hiện câu trả lời dùng đúng từ nhưng sai sự thật.</p></div>
+            <div class="card"><h3>Minh bạch với khách</h3><p>Frontend có thể hiển thị AI Confidence Score để người dùng biết mức tin cậy.</p></div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="slide full">
+      <div>
+        <p class="eyebrow">Demo workflow</p>
+        <h2>Luồng trải nghiệm chính</h2>
+        <div class="cards">
+          <div class="card"><h3>1. Khách hỏi</h3><p>“Ở Vinpearl Phú Quốc có shuttle từ sân bay không?”</p></div>
+          <div class="card"><h3>2. AI truy xuất</h3><p>RAG lấy context từ transportation, FAQ, policies và dữ liệu điểm đến.</p></div>
+          <div class="card"><h3>3. AI trả lời</h3><p>Câu trả lời nêu rõ có xe đưa đón/shuttle, cách đăng ký và lưu ý xác nhận trước.</p></div>
+          <div class="card"><h3>4. Khách đặt dịch vụ</h3><p>Nếu cần, khách gửi yêu cầu đưa đón sân bay qua form hoặc chat.</p></div>
+          <div class="card"><h3>5. Staff xử lý</h3><p>Dashboard chuyển trạng thái từ “Chờ xử lý” sang “Đang thực hiện”, rồi “Hoàn thành”.</p></div>
+          <div class="card"><h3>6. Hệ thống ghi nhớ</h3><p>Lịch sử hội thoại được lưu và tóm tắt khi dài để tiết kiệm token.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div>
+        <p class="eyebrow">Điểm nổi bật kỹ thuật</p>
+        <h2>Project không dừng ở chatbot cơ bản</h2>
+        <ul class="bullets">
+          <li>Planner/Executor prompt templates giúp tách ý định, lập kế hoạch và sinh câu trả lời.</li>
+          <li>Conversation memory có cơ chế auto-summarization ở ngưỡng 12 tin nhắn.</li>
+          <li>Observability gồm logging, metrics, profiling và MLflow tracking để đánh giá chất lượng hệ thống.</li>
+          <li>Test suite bao phủ API, RAG, guardrails, security, structured output và booking flow.</li>
+        </ul>
+      </div>
+      <aside class="panel">
+        <div class="photo" style="background-image:url('https://cf.bstatic.com/xdata/images/hotel/max1024x768/412883158.jpg?k=a220ece8f04054da35466bd13ee87342354cc18122b73eb0fbdcfef850115325')"></div>
+        <div class="panel-body">
+          <p class="copy" style="font-size:18px;margin:0">Thiết kế phù hợp bài toán resort: sang trọng ở trải nghiệm người dùng, nhưng có kiểm soát kỹ thuật ở tầng backend.</p>
+        </div>
+      </aside>
+    </section>
+
+    <section class="slide full">
+      <div>
+        <p class="eyebrow">Kết luận</p>
+        <h2>AI Concierge 24/7 giúp nâng cấp dịch vụ khách sạn bằng AI có kiểm soát</h2>
+        <p class="lead">Giá trị chính của project là kết hợp tri thức Vinpearl, RAG hybrid, guardrails và dashboard vận hành để tạo một trợ lý khách sạn đáng tin cậy, có thể mở rộng cho nhiều điểm đến và nhiều quy trình phục vụ.</p>
+        <div class="tag-row" style="justify-content:center">
+          <span class="tag">Nhanh hơn</span>
+          <span class="tag">Đúng ngữ cảnh hơn</span>
+          <span class="tag">Ít ảo giác hơn</span>
+          <span class="tag">Dễ vận hành hơn</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="nav" aria-label="Điều hướng slide">
+    <div class="controls">
+      <button id="prevBtn" type="button" aria-label="Slide trước">←</button>
+      <button id="nextBtn" type="button" aria-label="Slide sau">→</button>
+    </div>
+    <div class="counter" id="counter">1 / 12</div>
+  </nav>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const counter = document.getElementById("counter");
+    const progressBar = document.getElementById("progressBar");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    let current = 0;
+
+    function showSlide(index) {
+      current = Math.max(0, Math.min(index, slides.length - 1));
+      slides.forEach((slide, i) => slide.classList.toggle("active", i === current));
+      counter.textContent = `${current + 1} / ${slides.length}`;
+      progressBar.style.width = `${((current + 1) / slides.length) * 100}%`;
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === slides.length - 1;
+    }
+
+    function nextSlide() { showSlide(current + 1); }
+    function prevSlide() { showSlide(current - 1); }
+
+    prevBtn.addEventListener("click", prevSlide);
+    nextBtn.addEventListener("click", nextSlide);
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight" || event.key === " " || event.key === "PageDown") {
+        event.preventDefault();
+        nextSlide();
+      }
+      if (event.key === "ArrowLeft" || event.key === "PageUp") {
+        event.preventDefault();
+        prevSlide();
+      }
+      if (event.key === "Home") showSlide(0);
+      if (event.key === "End") showSlide(slides.length - 1);
+    });
+
+    showSlide(0);
+  </script>
+</body>
+</html>

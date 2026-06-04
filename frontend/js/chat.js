@@ -66,8 +66,47 @@ function showTypingIndicator(show = true) {
     }
 }
 
+// Render OpenStreetMap (Leaflet) panels for detected Vinpearl locations.
+// Returns descriptors to initialise after the element is attached to the DOM.
+function buildLocationMaps(wrapperDiv, locations) {
+    const mapEls = [];
+    if (!Array.isArray(locations) || locations.length === 0) return mapEls;
+
+    locations.forEach(loc => {
+        const mapWrap = document.createElement('div');
+        mapWrap.style.marginTop = '10px';
+
+        const title = document.createElement('div');
+        title.style.cssText = 'font-size:12px;color:#1e3a8a;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:6px;';
+        title.innerHTML = `<i class="fa-solid fa-location-dot"></i> ${loc.name}`;
+
+        const mapEl = document.createElement('div');
+        mapEl.style.cssText = 'height:220px;width:100%;border-radius:12px;overflow:hidden;border:1px solid #e2e8f0;position:relative;z-index:0;';
+
+        mapWrap.appendChild(title);
+        mapWrap.appendChild(mapEl);
+        wrapperDiv.appendChild(mapWrap);
+        mapEls.push({ el: mapEl, loc });
+    });
+    return mapEls;
+}
+
+function initLocationMaps(mapEls) {
+    if (!mapEls.length || !window.L) return;
+    mapEls.forEach(({ el, loc }) => {
+        const map = L.map(el, { scrollWheelZoom: false }).setView([loc.lat, loc.lng], loc.zoom || 14);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+        L.marker([loc.lat, loc.lng]).addTo(map).bindPopup(loc.name).openPopup();
+        // Fix tile sizing now the container is laid out in the DOM
+        setTimeout(() => map.invalidateSize(), 100);
+    });
+}
+
 // Append message element to container (Light Theme Structure)
-function appendMessage(role, content, confidence = null, sources = null) {
+function appendMessage(role, content, confidence = null, sources = null, locations = null) {
     const chatMsg = document.getElementById('chat-messages');
     if (!chatMsg) return;
 
@@ -147,6 +186,9 @@ function appendMessage(role, content, confidence = null, sources = null) {
         wrapperDiv.appendChild(confBadge);
     }
 
+    // Build map panels for any detected Vinpearl locations (bot only)
+    const mapEls = role === 'bot' ? buildLocationMaps(wrapperDiv, locations) : [];
+
     const timeDiv = document.createElement('div');
     timeDiv.className = 'timestamp';
     timeDiv.innerText = formatTime();
@@ -155,7 +197,10 @@ function appendMessage(role, content, confidence = null, sources = null) {
     messageDiv.appendChild(avatarDiv);
     messageDiv.appendChild(wrapperDiv);
     chatMsg.appendChild(messageDiv);
-    
+
+    // Maps must be initialised after they are attached to the DOM
+    initLocationMaps(mapEls);
+
     scrollToBottom();
 }
 
@@ -222,8 +267,44 @@ function initVoiceInput(chatInput, chatForm) {
     });
 }
 
+// All Vinpearl properties for the overview map (mirrors backend registry)
+const VINPEARL_PLACES = [
+    { name: 'Vinpearl Nha Trang', lat: 12.2145, lng: 109.2962 },
+    { name: 'Vinpearl Nam Hội An', lat: 15.7016, lng: 108.3735 },
+    { name: 'Vinpearl Phú Quốc', lat: 10.3247, lng: 103.8540 },
+    { name: 'Melia Vinpearl Cửa Sót (Hà Tĩnh)', lat: 18.3530, lng: 105.9090 },
+    { name: 'Vinpearl Hotel Bắc Ninh', lat: 21.1845, lng: 106.0750 },
+    { name: 'Melia Vinpearl Cửa Hội (Nghệ An)', lat: 18.7820, lng: 105.7090 },
+    { name: 'Vinpearl Resort & Spa Hạ Long', lat: 20.9470, lng: 107.0735 },
+];
+
+let overviewMap = null;
+
+// Map of all Vinpearl locations across Vietnam, shown in the right sidebar.
+function initOverviewMap() {
+    const el = document.getElementById('overview-map');
+    if (!el || overviewMap || !window.L) return;
+
+    overviewMap = L.map(el, { scrollWheelZoom: false }).setView([16.2, 107.5], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap'
+    }).addTo(overviewMap);
+
+    const bounds = [];
+    VINPEARL_PLACES.forEach(p => {
+        L.marker([p.lat, p.lng]).addTo(overviewMap).bindPopup(p.name);
+        bounds.push([p.lat, p.lng]);
+    });
+    overviewMap.fitBounds(bounds, { padding: [30, 30] });
+
+    // Container may have been hidden during init — recompute size once visible
+    setTimeout(() => overviewMap.invalidateSize(), 200);
+}
+
 // Initialize Chat Module
 function initChatView() {
+    initOverviewMap();
     if (chatInitialized) return;
     chatInitialized = true;
 
@@ -294,7 +375,7 @@ function initChatView() {
                 showTypingIndicator(false);
 
                 if (response.ok) {
-                    appendMessage('bot', response.reply, response.confidence, response.sources);
+                    appendMessage('bot', response.reply, response.confidence, response.sources, response.locations);
                 } else {
                     appendMessage('bot', 'Xin lỗi quý khách, trợ lý gặp lỗi kết nối hệ thống. Xin hãy thử lại.');
                 }

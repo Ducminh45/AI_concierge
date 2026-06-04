@@ -9,6 +9,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -183,6 +187,7 @@
 
             <!-- ===== 3. CHAT PAGE (Light Theme Redesign) ===== -->
             <section id="chat-page" class="page-view hidden">
+                <div class="concierge-layout">
                 <div class="chat-light-wrap">
                     <header class="chat-light-header">
                         <div class="chat-header-left">
@@ -207,13 +212,13 @@
                             <div class="avatar"><i class="fa-solid fa-robot"></i></div>
                             <div class="message-content-wrapper">
                                 <div class="message-bubble">
-                                    <p>Xin chào! Tôi là trợ lý concierge của resort. Tôi có thể giúp bạn đặt nhà hàng, spa, dọn phòng, hỏi giờ tiện ích hay gợi ý hoạt động. Bạn cần gì ạ?</p>
+                                    <p>Xin chào! Tôi là <strong>Trợ lý ảo Vinpearl AI</strong>. Tôi có thể tư vấn các điểm đến Vinpearl như Nha Trang, Phú Quốc, Nam Hội An, Hạ Long..., gợi ý phòng &amp; combo, lên lịch trình và hỗ trợ đặt phòng. Bạn muốn khám phá Vinpearl nào ạ?</p>
                                 </div>
                                 <div class="quick-actions-row">
-                                    <button class="qa-chip" data-msg="Tôi muốn đặt nhà hàng tối nay">🍽️ Đặt nhà hàng</button>
-                                    <button class="qa-chip" data-msg="Hồ bơi mở cửa mấy giờ?">🏊 Giờ hồ bơi</button>
-                                    <button class="qa-chip" data-msg="Tôi muốn đặt lịch spa">💆 Đặt spa</button>
-                                    <button class="qa-chip" data-msg="Cho tôi xin thêm 2 khăn tắm">🧺 Xin thêm khăn</button>
+                                    <button class="qa-chip" data-msg="Vinpearl Nha Trang có gì chơi?">🏝️ Vinpearl Nha Trang</button>
+                                    <button class="qa-chip" data-msg="Giới thiệu Vinpearl Phú Quốc">🏖️ Vinpearl Phú Quốc</button>
+                                    <button class="qa-chip" data-msg="Tư vấn phòng và combo Vinpearl">🛏️ Phòng &amp; combo</button>
+                                    <button class="qa-chip" data-msg="Hotline và ưu đãi mới nhất của Vinpearl">📞 Hotline &amp; ưu đãi</button>
                                 </div>
                             </div>
                         </div>
@@ -229,6 +234,35 @@
                         </form>
                         <p class="chat-disclaimer">AI có thể sai sót. Yêu cầu quan trọng sẽ được chuyển tới nhân viên.</p>
                     </div>
+                </div>
+
+                <aside class="concierge-aside">
+                    <div class="aside-panel">
+                        <h3 class="aside-title"><i class="fa-solid fa-images"></i> Hình ảnh thực tế</h3>
+                        <div class="aside-gallery">
+                            <figure class="gallery-tile gallery-tile-wide">
+                                <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&q=70&auto=format&fit=crop" alt="Vinpearl resort pool" loading="lazy">
+                                <figcaption>Vinpearl Nha Trang</figcaption>
+                            </figure>
+                            <figure class="gallery-tile">
+                                <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=400&q=70&auto=format&fit=crop" alt="Bãi Dài beach" loading="lazy">
+                                <figcaption>Phú Quốc · Bãi Dài</figcaption>
+                            </figure>
+                            <figure class="gallery-tile">
+                                <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=400&q=70&auto=format&fit=crop" alt="Beach villa" loading="lazy">
+                                <figcaption>Nam Hội An</figcaption>
+                            </figure>
+                            <figure class="gallery-tile gallery-tile-wide">
+                                <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&q=70&auto=format&fit=crop" alt="Hạ Long resort" loading="lazy">
+                                <figcaption>Vinpearl Hạ Long</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                    <div class="aside-panel aside-panel-map">
+                        <h3 class="aside-title"><i class="fa-solid fa-map-location-dot"></i> Bản đồ vị trí</h3>
+                        <div id="overview-map" class="aside-map"></div>
+                    </div>
+                </aside>
                 </div>
             </section>
 

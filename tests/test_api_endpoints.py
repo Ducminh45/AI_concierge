@@ -23,6 +23,18 @@ def test_chat_endpoint_allows_anonymous_requests(client):
     assert response.json()["ok"] is True
 
 
+def test_chat_endpoint_returns_map_locations_for_named_property(client):
+    """A query naming a Vinpearl property should return its map coordinates."""
+    response = client.post(
+        "/chat",
+        json={"message": "Vinpearl Nha Trang có gì vui", "session_id": "map-test"},
+    )
+    assert response.status_code == 200
+    locations = response.json()["locations"]
+    assert locations and locations[0]["id"] == "nha-trang"
+    assert "lat" in locations[0] and "lng" in locations[0] and "zoom" in locations[0]
+
+
 def test_chat_endpoint_requires_message(client):
     """Test chat endpoint handles missing message"""
     response = client.post(

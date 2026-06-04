@@ -24,6 +24,7 @@ from .core.llm_providers import (
 from .core.memory import MemoryStore
 from .core.orchestrator import ConciergeOrchestrator
 from .core.tools import make_registry
+from .core.vinpearl_locations import detect_locations
 from .core.vinpearl_search import VinpearlTavilySearch
 from .database.db import DatabaseManager
 from .monitoring.metrics import install_metrics
@@ -248,12 +249,16 @@ def build_app() -> FastAPI:
             body.message,
             body.session_id,
         )
+        locations = detect_locations(body.message)
+        if not locations:
+            locations = detect_locations(result.response, limit=1)
         return {
             "ok": True,
             "reply": result.response,
             "plan": result.plan.model_dump(),
             "tool_result": result.tool_result,
             "sources": result.sources,
+            "locations": locations,
             "confidence": _serialise_optional(result.confidence),
             "claim_verification": _serialise_optional(result.claim_verification),
             "guardrail": result.guardrail,
@@ -277,6 +282,10 @@ def build_app() -> FastAPI:
         @app.get("/")
         async def index():
             return FileResponse(frontend_dir / "index.html")
+
+        @app.get("/concierge")
+        async def concierge():
+            return FileResponse(frontend_dir / "concierge.html")
 
     return app
 
