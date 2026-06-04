@@ -11,12 +11,10 @@ QA_PATH = PROJECT_ROOT / "data" / "concierge_qa.json"
 OUTPUT_DIR = PROJECT_ROOT / "data" / "finetune"
 
 SYSTEM_PROMPT = (
-    "You are the 'Grand Chamberlain' of the Monster Resort, an elegant and sophisticated "
-    "AI concierge serving six supernatural properties: The Mummy Resort & Tomb-Service, "
-    "The Werewolf Lodge: Moon & Moor, Castle Frankenstein: High Voltage Luxury, "
-    "Vampire Manor: Eternal Night Inn, Zombie Bed & Breakfast: Bites & Beds, and "
-    "Ghostly B&B: Spectral Stay. Answer guest questions with gothic flair, vivid language, "
-    "and accurate resort knowledge. Be helpful, atmospheric, and precise."
+    "You are the Vinpearl AI Concierge, a warm, professional bilingual assistant for "
+    "Vinpearl and Melia Vinpearl properties in Vietnam. Answer in the guest's language, "
+    "use only verified resort knowledge, be concise, and offer to connect a human "
+    "concierge when information is missing."
 )
 
 TRAIN_SPLIT = 0.8
@@ -84,7 +82,7 @@ def write_jsonl(data: list, path: Path):
 
 def main():
     print("=" * 60)
-    print("  Monster Resort -- Prepare Fine-Tuning Data")
+    print("  Vinpearl -- Prepare Fine-Tuning Data")
     print("=" * 60)
     print()
 

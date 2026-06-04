@@ -8,6 +8,20 @@ from ..database.db import DatabaseManager
 security = HTTPBearer(auto_error=False)
 
 
+def _is_managed_api_key(token: str) -> bool:
+    return token.startswith(("mr_", "rc_"))
+
+
+def _api_key_user(user_id: str) -> dict:
+    return {
+        "id": 0,
+        "username": user_id,
+        "email": None,
+        "full_name": "Managed API Key User",
+        "role": "admin",
+    }
+
+
 async def get_current_user(
     request: Request,
     x_api_key: str = Header(default=None),
@@ -18,6 +32,7 @@ async def get_current_user(
     manager = getattr(request.app.state, "api_key_manager", None)
 
     username = None
+    managed_key_user = False
 
     # 1. Try X-API-Key header
     if x_api_key:
@@ -31,11 +46,12 @@ async def get_current_user(
                 "full_name": "API Key Admin",
                 "role": "admin",
             }
-        if manager and token.startswith("rc_"):
+        if manager and _is_managed_api_key(token):
             user_id = manager.verify_key(token)
             if user_id:
                 manager.log_usage(token, endpoint=request.url.path, success=True)
                 username = user_id
+                managed_key_user = True
             else:
                 manager.log_usage(token, endpoint=request.url.path, success=False)
 
@@ -52,11 +68,12 @@ async def get_current_user(
                 "role": "admin",
             }
 
-        if manager and token.startswith("rc_"):
+        if manager and _is_managed_api_key(token):
             user_id = manager.verify_key(token)
             if user_id:
                 manager.log_usage(token, endpoint=request.url.path, success=True)
                 username = user_id
+                managed_key_user = True
             else:
                 manager.log_usage(token, endpoint=request.url.path, success=False)
 
@@ -73,15 +90,8 @@ async def get_current_user(
         user = db.get_user(username)
         if user:
             return user
-        # Handle static api_key_user
-        if username == "api_key_user":
-            return {
-                "id": 0,
-                "username": "api_key_admin",
-                "email": "admin@resort.com",
-                "full_name": "API Key Admin",
-                "role": "admin",
-            }
+        if managed_key_user or username == "api_key_user":
+            return _api_key_user(username)
 
     raise HTTPException(status_code=401, detail="Invalid token or not authenticated")
 
@@ -100,4 +110,3 @@ async def get_staff_user(current_user: dict = Depends(get_current_user)) -> dict
 
 # Alias for backward compatibility
 jwt_or_api_key = get_current_user
-

@@ -6,12 +6,12 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - MRC_ENVIRONMENT=prod
-      - MRC_API_KEY=${MRC_API_KEY}
-      - MRC_OPENAI_API_KEY=${MRC_OPENAI_API_KEY}
-      - MRC_DATABASE_URL=postgresql://monster:${POSTGRES_PASSWORD:-monster_secret}@postgres:5432/monster_resort
-      - MRC_REDIS_URL=redis://redis:6379/0
-      - MRC_REDIS_ENABLED=true
+      - RC_ENVIRONMENT=prod
+      - RC_API_KEY=${RC_API_KEY:-${MRC_API_KEY}}
+      - RC_OPENAI_API_KEY=${RC_OPENAI_API_KEY:-${MRC_OPENAI_API_KEY}}
+      - RC_DATABASE_URL=postgresql://monster:${POSTGRES_PASSWORD:-monster_secret}@postgres:5432/monster_resort
+      - RC_REDIS_URL=redis://redis:6379/0
+      - RC_REDIS_ENABLED=true
     volumes:
       - ./data:/data
       - ./generated_pdfs:/app/generated_pdfs

@@ -19,7 +19,8 @@ from .llm_providers import LLMMessage, LLMProvider, LLMResponse
 from .memory import MemoryStore
 from .prompt_loader import load_prompt
 from .structured_output import StructuredOutputParser
-from .tools import ToolRegistry, VALID_HOTELS
+from .tools import ToolRegistry
+from .vinpearl_search import VinpearlTavilySearch, is_vinpearl_query
 from ..validation.hallucination import (
     ConfidenceLevel,
     HallucinationDetector,
@@ -83,6 +84,7 @@ class ConciergeOrchestrator:
         memory_store: MemoryStore,
         detector: Optional[HallucinationDetector] = None,
         input_guard: Optional[InputGuard] = None,
+        web_search: Optional[VinpearlTavilySearch] = None,
     ):
         self.llm = llm_provider
         self.rag = rag
@@ -90,6 +92,7 @@ class ConciergeOrchestrator:
         self.memory = memory_store
         self.detector = detector
         self.input_guard = input_guard
+        self.web_search = web_search
         self._total_planner_tokens = 0
         self._total_executor_tokens = 0
         self._costs = CostAccumulator()
@@ -181,11 +184,6 @@ class ConciergeOrchestrator:
             )
             # Heuristic fallback
             lower = raw.lower()
-            if any(kw in lower for kw in ["book", "reserve", "lookup", "get_booking"]):
-                return Plan(
-                    intent=IntentType.TOOL,
-                    reasoning="JSON parse failed; detected tool keywords",
-                )
             if any(kw in lower for kw in ["amenities", "pool", "spa", "restaurant"]):
                 return Plan(
                     intent=IntentType.KNOWLEDGE,
@@ -206,11 +204,6 @@ class ConciergeOrchestrator:
             )
             # Fall back to keyword heuristic
             lower = str(data).lower()
-            if any(kw in lower for kw in ["book", "reserve", "lookup", "get_booking"]):
-                return Plan(
-                    intent=IntentType.TOOL,
-                    reasoning="Pydantic validation failed; detected tool keywords",
-                )
             if any(kw in lower for kw in ["amenities", "pool", "spa", "restaurant"]):
                 return Plan(
                     intent=IntentType.KNOWLEDGE,
@@ -280,6 +273,18 @@ class ConciergeOrchestrator:
                 context_parts.append(text)
                 sources.append(source)
 
+        if not self._has_relevant_context(query, context_parts):
+            context_parts = []
+            sources = []
+            if self.web_search is not None:
+                web_results = await self.web_search.search(query)
+                for item in web_results.get("results", []):
+                    text = item.get("text", "")
+                    source = item.get("source", "")
+                    if text and source:
+                        context_parts.append(text)
+                        sources.append(source)
+
         context = "\n---\n".join(context_parts) if context_parts else "(no results found)"
         history = self.memory.get_messages(session_id, limit=5)
 
@@ -309,59 +314,77 @@ class ConciergeOrchestrator:
     async def _execute_tool(
         self, plan: Plan, user_message: str, session_id: str
     ) -> ExecutionResult:
-        """Execute a registered tool and format the result."""
-        if not plan.tool_name:
-            return ExecutionResult(
-                response=(
-                    "I understood you want to perform an action, but I could"
-                    " not determine which one. Could you be more specific?"
-                ),
-                plan=plan,
-            )
-
-        tool = self.tools.get(plan.tool_name)
-        if not tool:
-            available = [t.name for t in self.tools.list()]
-            return ExecutionResult(
-                response=f"I don't have a tool called '{plan.tool_name}'. Available tools: {', '.join(available)}.",
-                plan=plan,
-            )
-
-        valid, reason = self._validate_tool_call(
-            plan.tool_name, plan.tool_args
-        )
-        if not valid:
-            return ExecutionResult(response=reason, plan=plan)
-
-        args = dict(plan.tool_args)
-        if "session_id" not in args:
-            args["session_id"] = session_id
-
-        request_id = str(uuid.uuid4())
-        tool_result = await self.tools.async_execute_with_timing(
-            plan.tool_name, request_id=request_id, **args
-        )
-
+        """Run a small ReAct loop: model chooses tools, observes results, then answers."""
+        tool_schemas = self.tools.get_openai_tool_schemas()
+        tool_names = [tool.name for tool in self.tools.list()]
+        history = self.memory.get_messages(session_id, limit=5)
+        tool_list = ", ".join(tool_names) if tool_names else "(none)"
         prompt = load_prompt(
-            "executor.tool_result",
-            tool_name=plan.tool_name,
-            tool_result=json.dumps(tool_result, default=str),
+            "executor.agent",
+            tools=tool_list,
+            history=self._format_history(history),
             question=user_message,
         )
 
-        response = await self.llm.chat(
-            [
-                LLMMessage(role="system", content=prompt),
-                LLMMessage(role="user", content=user_message),
-            ]
-        )
-        self._track_tokens("executor", response.usage, response)
+        messages = [
+            LLMMessage(role="system", content=prompt),
+            LLMMessage(role="user", content=user_message),
+        ]
+        observations: dict[str, Any] = {}
+        observation_contexts: list[str] = []
+        token_usage: dict[str, int] = {}
+        final_response = ""
+
+        for _ in range(3):
+            response = await self.llm.chat(
+                messages,
+                tools=tool_schemas,
+            )
+            self._track_tokens("executor", response.usage, response)
+            self._merge_token_usage(token_usage, response.usage)
+
+            if not response.tool_calls:
+                final_response = response.content
+                break
+
+            messages.append(
+                LLMMessage(
+                    role="assistant",
+                    content=response.content,
+                    tool_calls=response.tool_calls,
+                )
+            )
+
+            for tool_call in response.tool_calls:
+                tool_result = await self._run_react_tool_call(tool_call)
+                observations[tool_call.name] = tool_result
+                observation_text = json.dumps(
+                    tool_result,
+                    ensure_ascii=False,
+                    default=str,
+                )
+                observation_contexts.append(observation_text)
+                messages.append(
+                    LLMMessage(
+                        role="tool",
+                        content=observation_text,
+                        tool_call_id=tool_call.id,
+                    )
+                )
+
+        if not final_response:
+            final_response = (
+                "I do not have enough verified information to answer that "
+                "confidently. I can connect you with a human concierge for "
+                "confirmed assistance."
+            )
 
         return ExecutionResult(
-            response=response.content,
+            response=final_response,
             plan=plan,
-            tool_result=tool_result if isinstance(tool_result, dict) else {"result": tool_result},
-            token_usage=response.usage,
+            tool_result=observations or None,
+            rag_contexts=observation_contexts,
+            token_usage=token_usage,
         )
 
     async def _execute_clarify(
@@ -428,11 +451,7 @@ class ConciergeOrchestrator:
         "xin chào", "chào", "chào buổi sáng", "chào bạn",
     ])
 
-    _TOOL_KEYWORDS = frozenset([
-        "book", "reserve", "reservation", "cancel", "booking",
-        "my booking", "booking id", "check my", "look up",
-        "đặt phòng", "đặt lịch", "đặt bàn", "đặt spa", "đặt tour",
-    ])
+    _TOOL_KEYWORDS = frozenset()
 
     # Temporal / filter phrases that signal an event query needs search_events
     _EVENT_FILTER_SIGNALS = re.compile(
@@ -450,10 +469,7 @@ class ConciergeOrchestrator:
         re.IGNORECASE,
     )
 
-    _BOOKING_ID_PATTERN = re.compile(
-        r"#[A-Za-z0-9]{3,}|(?:BK|BOOK|RES|REF)-?\d{4,}",
-        re.IGNORECASE,
-    )
+    _BOOKING_ID_PATTERN = re.compile(r"$^")
 
     def _classify_intent_cheap(
         self, text: str,
@@ -486,14 +502,8 @@ class ConciergeOrchestrator:
         if any(w in lower for w in ("event", "events")) and self._EVENT_FILTER_SIGNALS.search(text):
             return None
 
-        # Knowledge: question or statement asking about the resort
-        if len(words) >= 3 and ("?" in text or any(
-            w in lower for w in ("what", "where", "when", "how", "tell",
-                                 "about", "does", "is there", "do you")
-        )):
-            return IntentType.KNOWLEDGE
-
-        # Everything else → planner decides
+        # Resort questions should go through the planner/agent so the model
+        # can use tools instead of answering as a plain chatbot.
         return None
 
     # ------------------------------------------------------------------
@@ -524,9 +534,8 @@ class ConciergeOrchestrator:
             logger.info("input_guard_off_topic")
             return text, [], ExecutionResult(
                 response=(
-                    "I am the Grand Chamberlain of the Monster Resort. "
-                    "I can only assist with resort and hospitality "
-                    "inquiries."
+                    "I am the Vinpearl AI Concierge. I can only assist "
+                    "with Vinpearl resort and hospitality inquiries."
                 ),
                 plan=Plan(intent=IntentType.CHITCHAT),
                 guardrail="off_topic",
@@ -650,42 +659,7 @@ class ConciergeOrchestrator:
         tool_name: str, tool_args: dict
     ) -> tuple[bool, str]:
         """Validate tool call arguments before execution."""
-        if tool_name == "book_room":
-            hotel = tool_args.get("hotel_name", "")
-            if hotel not in VALID_HOTELS:
-                return (
-                    False,
-                    f"Blocked: unknown hotel '{hotel}'."
-                    " Not in official registry.",
-                )
-            # guest_name validation
-            guest_name = tool_args.get("guest_name", "")
-            if not guest_name or not guest_name.strip():
-                return False, "Blocked: guest_name cannot be empty."
-            if len(guest_name) > 100:
-                return (
-                    False,
-                    "Blocked: guest_name exceeds 100 character limit.",
-                )
-            if ConciergeOrchestrator._DANGEROUS_PATH_RE.search(guest_name):
-                return (
-                    False,
-                    "Blocked: guest_name contains invalid characters.",
-                )
-            # date format validation
-            for date_field in ("check_in", "check_out"):
-                val = tool_args.get(date_field, "")
-                if not ConciergeOrchestrator._DATE_FORMAT_RE.match(str(val)):
-                    return (
-                        False,
-                        f"Blocked: {date_field} must be YYYY-MM-DD"
-                        f" format, got '{val}'.",
-                    )
-        elif tool_name == "get_booking":
-            booking_id = tool_args.get("booking_id", "")
-            if not booking_id or not booking_id.strip():
-                return False, "Blocked: booking_id cannot be empty."
-        elif tool_name == "search_amenities":
+        if tool_name == "search_amenities":
             query = tool_args.get("query", "")
             if not query or not query.strip():
                 return False, "Blocked: search query cannot be empty."
@@ -723,6 +697,42 @@ class ConciergeOrchestrator:
             )
         return True, ""
 
+    async def _run_react_tool_call(self, tool_call) -> dict:
+        tool = self.tools.get(tool_call.name)
+        if not tool:
+            return {
+                "ok": False,
+                "error": f"Unknown tool: {tool_call.name}",
+            }
+
+        try:
+            raw_args = json.loads(tool_call.arguments or "{}")
+        except json.JSONDecodeError:
+            return {
+                "ok": False,
+                "error": "Tool arguments must be valid JSON.",
+            }
+
+        if not isinstance(raw_args, dict):
+            return {
+                "ok": False,
+                "error": "Tool arguments must be a JSON object.",
+            }
+
+        valid, reason = self._validate_tool_call(tool_call.name, raw_args)
+        if not valid:
+            return {
+                "ok": False,
+                "error": reason,
+            }
+
+        result = await self.tools.async_execute_with_timing(
+            tool_call.name,
+            request_id=str(uuid.uuid4()),
+            **raw_args,
+        )
+        return result if isinstance(result, dict) else {"result": result}
+
     def _format_history(self, messages: list[dict]) -> str:
         """Format conversation history for prompt injection."""
         if not messages:
@@ -733,6 +743,45 @@ class ConciergeOrchestrator:
             content = msg.get("content", "")
             lines.append(f"{role}: {content}")
         return "\n".join(lines)
+
+    @staticmethod
+    def _merge_token_usage(total: dict[str, int], usage: dict) -> None:
+        for key, value in usage.items():
+            if isinstance(value, int):
+                total[key] = total.get(key, 0) + value
+
+    _CONTEXT_STOPWORDS = frozenset(
+        {
+            "a", "an", "and", "are", "about", "can", "does", "for", "has",
+            "how", "is", "it", "me", "of", "on", "or", "the", "there",
+            "to", "what", "where", "with", "you", "có", "của", "gì",
+            "không", "là", "ở", "và", "về",
+        }
+    )
+
+    @classmethod
+    def _content_tokens(cls, text: str) -> set[str]:
+        return {
+            token
+            for token in re.findall(r"\w+", text.lower())
+            if len(token) > 2 and token not in cls._CONTEXT_STOPWORDS
+        }
+
+    @classmethod
+    def _has_relevant_context(cls, query: str, contexts: list[str]) -> bool:
+        if not contexts:
+            return False
+
+        combined_text = " ".join(contexts)
+        if is_vinpearl_query(query) and "vinpearl" not in combined_text.lower():
+            return False
+
+        query_tokens = cls._content_tokens(query)
+        if not query_tokens:
+            return True
+
+        combined = cls._content_tokens(combined_text)
+        return bool(query_tokens & combined)
 
     def _track_tokens(self, agent: str, usage: dict, response: LLMResponse | None = None) -> None:
         """Accumulate token counts and estimated cost."""

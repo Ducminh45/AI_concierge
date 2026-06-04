@@ -1,5 +1,7 @@
 from __future__ import annotations
 from functools import lru_cache
+import os
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from pydantic import Field, field_validator
@@ -10,6 +12,8 @@ class Settings(BaseSettings):
     """Central configuration for the AI Resort Concierge 24/7.
 
     Uses environment variables with the prefix `RC_` (Resort Concierge).
+    Legacy `MRC_` variables are accepted when the matching `RC_` value is
+    absent, for compatibility with older Docker Compose files and tests.
     """
 
     model_config = SettingsConfigDict(
@@ -45,6 +49,13 @@ class Settings(BaseSettings):
     rag_collection: str = "resort_concierge_knowledge"
     rag_persist_dir: str = "./.rag_store"
     rag_max_results: int = 5
+
+    # Vinpearl web fallback via Tavily
+    tavily_api_key: str | None = None
+    tavily_base_url: str = "https://api.tavily.com/search"
+    tavily_timeout_seconds: float = 8.0
+    tavily_max_results: int = 5
+    tavily_include_domains: str = "vinpearl.com"
 
     # LLM / Embeddings (optional)
     openai_api_key: str | None = Field(
@@ -110,6 +121,17 @@ class Settings(BaseSettings):
 
     # Embedding model
     embedding_model: str = "all-MiniLM-L6-v2"
+
+    def __init__(self, **values):
+        for name in self.__class__.model_fields:
+            if name in values:
+                continue
+            env_name = name.upper()
+            rc_name = f"RC_{env_name}"
+            mrc_name = f"MRC_{env_name}"
+            if rc_name not in os.environ and mrc_name in os.environ:
+                values[name] = os.environ[mrc_name]
+        super().__init__(**values)
 
     @field_validator("environment")
     @classmethod

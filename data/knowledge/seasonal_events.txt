@@ -1,120 +1,197 @@
-🌸 SEASONAL EVENTS & LOCAL ACTIVITIES - VIETNAM LUXURY RESORTS 🌸
-═══════════════════════════════════════════════════════════════════
+VINPEARL SEASONAL EVENTS AND MOCK ACTIVITY CALENDAR
 
-1. AZURE BAY RESORT & SPA (ĐÀ NẴNG)
-───────────────────────────────────────────────────────────────────
-• Event 1: Lunar New Year Celebration (Lễ Hội Tết Nguyên Đán)
-  - Date: Late January or February (Tet Festival).
-  - Description: Traditional lion dance, making Banh Chung (square sticky rice cake) class, calligraphy market, and traditional music performance. (Múa lân sư rồng truyền thống, lớp gói bánh chưng, chợ ông đồ viết thư pháp, biểu diễn nhạc cụ dân tộc).
-  - Fee: Complimentary / Miễn phí.
-• Event 2: Weekly Beach Seafood BBQ (Tiệc Nướng Hải Sản Bãi Biển)
-  - Date: Every Saturday from 6:30 PM - 9:30 PM.
-  - Description: Fresh lobster, oysters, crabs, and fish caught daily, grilled live on the beach with fire dance performances. (Tiệc nướng hải sản tươi sống gồm tôm hùm, hàu, ghẹ, cá biển kết hợp biểu diễn múa lửa).
-  - Fee: 1,500,000 VND / person.
-• Event 3: Sun Sea Sand Yoga (Yoga Bình Minh Trên Cát)
-  - Date: Daily from 6:30 AM - 7:30 AM.
-  - Description: Revitalize your mind and body with sunrise yoga on the beach led by certified yoga masters. (Tái tạo năng lượng với lớp học yoga đón bình minh trên bãi biển cùng chuyên gia).
-  - Fee: Complimentary / Miễn phí.
-• Event 4: Central Vietnam Cooking Class (Lớp Học Nấu Ăn Miền Trung)
-  - Date: Every Monday and Friday at 2:00 PM.
-  - Description: Master traditional Central dishes: Mi Quang (Quang style noodles), Banh Xeo (crispy pancake). (Học chế biến mì Quảng, bánh xèo giòn rụm).
-  - Fee: 850,000 VND / person (includes recipe book & chef apron).
+============================================================
+Vinpearl Nha Trang
+ID: nha-trang
+Location: Đảo Hòn Tre, Vĩnh Nguyên, Nha Trang, Khánh Hòa
+Tags: resort-5-sao, vinwonders, gia-dinh, cap-doi, nhom-ban, bai-bien-rieng, cong-vien-nuoc, all-in-one, nghi-duong-dao, combo-vinwonders
+Keywords: vinpearl nha trang, vinpearl land, vinwonders nha trang, nha trang, đảo hòn tre, vinpearl resort nha trang
+- Event type: family
+  Name: Vinpearl Nha Trang - Family discovery walk
+  Schedule: Daily at 09:00
+  Description: Guided orientation for families using the main resort facilities.
+  Fee: Complimentary
+- Event type: dining
+  Name: Vinpearl Nha Trang - Signature dinner recommendation
+  Schedule: Daily at 18:30
+  Description: Concierge helps reserve the most suitable restaurant or buffet based on guest profile.
+  Fee: Menu price varies
+- Event type: wellness
+  Name: Vinpearl Nha Trang - Wellness and pool morning
+  Schedule: Daily at 07:00
+  Description: Light wellness session followed by pool or beach time where available.
+  Fee: Complimentary unless spa treatment is added
+- Event type: local
+  Name: Vinpearl Nha Trang - Local attraction planning
+  Schedule: Daily by request
+  Description: Concierge drafts a half-day route near the property.
+  Fee: Transport and tickets charged separately
 
-2. HỘI AN PEARL RESORT (HỘI AN)
-───────────────────────────────────────────────────────────────────
-• Event 5: Full Moon Lantern Festival (Lễ Hội Đèn Lồng Đêm Rằm)
-  - Date: 14th day of every Lunar Month.
-  - Description: The resort turns off all electric lights and illuminates only with hundreds of traditional lanterns. Released flower lanterns on the river. (Resort tắt toàn bộ điện, thắp sáng bằng hàng trăm đèn lồng cổ kính và thả hoa đăng cầu may trên sông).
-  - Fee: Complimentary / Miễn phí.
-• Event 6: Traditional Lantern Making Workshop (Lớp Học Làm Đèn Lồng)
-  - Date: Every Tuesday & Thursday at 3:00 PM.
-  - Description: Learn from local artisans how to construct and wrap a bamboo lantern frame with beautiful Hoi An silk. (Học cách dựng khung tre và bọc lụa Hội An cho đèn lồng cùng nghệ nhân bản địa).
-  - Fee: Complimentary / Miễn phí.
-• Event 7: Thu Bon River Sunset Wine Cruise (Du Thuyền Hoàng Hôn Thưởng Rượu)
-  - Date: Daily from 4:30 PM - 6:00 PM.
-  - Description: A romantic boat cruise along the Thu Bon River, serving premium wines and local hors d'oeuvres at sunset. (Hành trình ngắm hoàng hôn lãng mạn dọc sông Thu Bồn, thưởng thức vang cao cấp và đồ ăn nhẹ).
-  - Fee: 600,000 VND / person.
-• Event 8: Hoi An Old Town Walking Tour (Tour Đi Bộ Khám Phá Phố Cổ)
-  - Date: Daily at 9:00 AM & 3:00 PM.
-  - Description: Guided walk through historical assembly halls, ancient houses, and the Japanese Covered Bridge. (Tour đi bộ khám phá các hội quán, nhà cổ và Chùa Cầu cùng hướng dẫn viên).
-  - Fee: 300,000 VND / person.
+============================================================
+Vinpearl Nam Hội An (Vinpearl Resort & Golf Nam Hội An)
+ID: nam-hoi-an
+Location: Bình Minh, Thăng Bình, Quảng Nam (cách phố cổ Hội An ~12km)
+Tags: resort-5-sao, golf-resort, vinwonders, gia-dinh, cap-doi, nhom-ban, bai-bien-rieng, river-safari, van-hoa-dan-gian, gan-hoi-an
+Keywords: vinpearl nam hội an, vinpearl hội an, vinwonders nam hội an, bình minh thăng bình, resort & golf nam hội an, vinpearl resort golf
+- Event type: family
+  Name: Vinpearl Nam Hội An (Vinpearl Resort & Golf Nam Hội An) - Family discovery walk
+  Schedule: Daily at 09:00
+  Description: Guided orientation for families using the main resort facilities.
+  Fee: Complimentary
+- Event type: dining
+  Name: Vinpearl Nam Hội An (Vinpearl Resort & Golf Nam Hội An) - Signature dinner recommendation
+  Schedule: Daily at 18:30
+  Description: Concierge helps reserve the most suitable restaurant or buffet based on guest profile.
+  Fee: Menu price varies
+- Event type: wellness
+  Name: Vinpearl Nam Hội An (Vinpearl Resort & Golf Nam Hội An) - Wellness and pool morning
+  Schedule: Daily at 07:00
+  Description: Light wellness session followed by pool or beach time where available.
+  Fee: Complimentary unless spa treatment is added
+- Event type: local
+  Name: Vinpearl Nam Hội An (Vinpearl Resort & Golf Nam Hội An) - Local attraction planning
+  Schedule: Daily by request
+  Description: Concierge drafts a half-day route near the property.
+  Fee: Transport and tickets charged separately
 
-3. PHÚ QUỐC PARADISE RESORT (PHÚ QUỐC)
-───────────────────────────────────────────────────────────────────
-• Event 9: Mid-Autumn Festival Beach Carnival (Lễ Hội Trung Thu Bên Bãi Biển)
-  - Date: 15th day of the 8th Lunar Month (September).
-  - Description: Lantern parade, mooncake-making workshop, lion dance, and beach campfire with traditional folk games. (Rước đèn ông sao, tự tay làm bánh trung thu, múa lân và đốt lửa trại bãi biển).
-  - Fee: Complimentary / Miễn phí.
-• Event 10: Night Squid Fishing Excursion (Tour Câu Mực Đêm Đại Dương)
-  - Date: Daily from 5:00 PM - 8:00 PM.
-  - Description: Catch squid under the starlight on a traditional wooden boat. The crew will cook your fresh catch on board. (Trải nghiệm câu mực đêm trên tàu gỗ truyền thống và thưởng thức thành quả ngay trên tàu).
-  - Fee: 750,000 VND / person.
-• Event 11: SunsetHorizon Cocktail Masterclass (Lớp Học Pha Chế Cocktail)
-  - Date: Every Wednesday at 4:30 PM.
-  - Description: Learn to shake and stir tropical cocktails using Phu Quoc premium sim wine and fresh fruits at the rooftop bar. (Học pha chế cocktail từ rượu sim Phú Quốc và trái cây nhiệt đới tại Sunset Horizon Bar).
-  - Fee: 450,000 VND / person.
-• Event 12: Coral Reef Snorkeling Safari (Khám Phá Rạn San Hô Đảo Ngọc)
-  - Date: Daily from 8:30 AM - 1:30 PM.
-  - Description: Guided speed boat tour to South Island's pristine reefs. Snorkeling equipment and beach lunch included. (Tour cano cao tốc lặn ngắm rặng san hô nguyên sơ phía Nam đảo, đã gồm ăn trưa trên đảo hoang).
-  - Fee: 1,200,000 VND / person.
+============================================================
+Vinpearl Phú Quốc
+ID: phu-quoc
+Location: Bãi Dài, Gành Dầu, Phú Quốc, Kiên Giang
+Tags: resort-5-sao, all-in-one, vinwonders, safari, gia-dinh, cap-doi, nhom-ban, bai-bien-rieng, bai-dai, phu-quoc-united-center
+Keywords: phú quốc, phu quoc, pq, đảo ngọc, vinpearl phú quốc, vinwonders phú quốc, safari phú quốc, bãi dài, phu quoc united center
+- Event type: family
+  Name: Vinpearl Phú Quốc - Family discovery walk
+  Schedule: Daily at 09:00
+  Description: Guided orientation for families using the main resort facilities.
+  Fee: Complimentary
+- Event type: dining
+  Name: Vinpearl Phú Quốc - Signature dinner recommendation
+  Schedule: Daily at 18:30
+  Description: Concierge helps reserve the most suitable restaurant or buffet based on guest profile.
+  Fee: Menu price varies
+- Event type: wellness
+  Name: Vinpearl Phú Quốc - Wellness and pool morning
+  Schedule: Daily at 07:00
+  Description: Light wellness session followed by pool or beach time where available.
+  Fee: Complimentary unless spa treatment is added
+- Event type: local
+  Name: Vinpearl Phú Quốc - Local attraction planning
+  Schedule: Daily by request
+  Description: Concierge drafts a half-day route near the property.
+  Fee: Transport and tickets charged separately
 
-4. SAPA HIGHLAND LODGE (SAPA)
-───────────────────────────────────────────────────────────────────
-• Event 13: Highland Rice Terrace Harvest Festival (Lễ Hội Mùa Vàng Sapa)
-  - Date: Mid-September to early October (Harvest Season).
-  - Description: Photo trekking tours, local ethnic H'Mong and Red Dao dance performances, traditional culinary market on the hillside. (Tour đi bộ chụp ảnh mùa lúa chín, múa khèn người Mông, nhảy sạp Dao đỏ và chợ ẩm thực vùng cao).
-  - Fee: Complimentary / Miễn phí (Market items sold separately).
-• Event 14: Ta Van & Lao Chai Trekking Adventure (Tour Trekking Bản Lao Chải - Tả Van)
-  - Date: Daily at 9:00 AM.
-  - Description: 6 km guided hike through beautiful valley scenery, bamboo forests, and traditional villages. (Trekking 6km qua thung lũng Mường Hoa, rừng trúc và bản làng người dân tộc thiểu số).
-  - Fee: 450,000 VND / person.
-• Event 15: Ethnic Brocade Indigo Dyeing Class (Học Nhuộm Chàm Thổ Cẩm)
-  - Date: Every Wednesday and Saturday at 2:00 PM.
-  - Description: Learn the traditional batik and natural indigo dyeing techniques from H'mong craftswomen. (Trải nghiệm vẽ sáp ong và nhuộm chàm tự nhiên cùng nghệ nhân người Mông).
-  - Fee: 350,000 VND / person.
-• Event 16: San Lung Wine & Herbal Hot Pot Night (Đêm Rượu San Lùng & Lẩu Cá Hồi)
-  - Date: Every Friday at 7:00 PM.
-  - Description: Warm indoor dining event featuring hot organic salmon hotpot, locally brewed herbal wines, and acoustic music. (Tiệc lẩu cá hồi Sapa nóng hổi, rượu San Lùng ấm nồng và biểu diễn ca nhạc mộc).
-  - Fee: 650,000 VND / person.
+============================================================
+Melia Vinpearl Cửa Sót Beach Resort (Hà Tĩnh)
+ID: cua-sot-ha-tinh
+Location: Biển Cửa Sót, Thịnh Lộc, Lộc Hà, Hà Tĩnh
+Tags: resort-5-sao, bien, villa, gia-dinh, nhom-ban, khuon-vien-rong, cong-vien-nuoc, ha-tinh, nghi-duong-yen-tinh
+Keywords: vinpearl cửa sót, melia vinpearl cửa sót, cửa sót, xuân hải, resort hà tĩnh, vinpearl ha tinh
+- Event type: family
+  Name: Melia Vinpearl Cửa Sót Beach Resort (Hà Tĩnh) - Family discovery walk
+  Schedule: Daily at 09:00
+  Description: Guided orientation for families using the main resort facilities.
+  Fee: Complimentary
+- Event type: dining
+  Name: Melia Vinpearl Cửa Sót Beach Resort (Hà Tĩnh) - Signature dinner recommendation
+  Schedule: Daily at 18:30
+  Description: Concierge helps reserve the most suitable restaurant or buffet based on guest profile.
+  Fee: Menu price varies
+- Event type: wellness
+  Name: Melia Vinpearl Cửa Sót Beach Resort (Hà Tĩnh) - Wellness and pool morning
+  Schedule: Daily at 07:00
+  Description: Light wellness session followed by pool or beach time where available.
+  Fee: Complimentary unless spa treatment is added
+- Event type: local
+  Name: Melia Vinpearl Cửa Sót Beach Resort (Hà Tĩnh) - Local attraction planning
+  Schedule: Daily by request
+  Description: Concierge drafts a half-day route near the property.
+  Fee: Transport and tickets charged separately
 
-5. NHA TRANG CORAL BAY (NHA TRANG)
-───────────────────────────────────────────────────────────────────
-• Event 17: Summer Water Sports Tournament (Đại Hội Thể Thao Nước Mùa Hè)
-  - Date: June to August (Weekly on Fridays).
-  - Description: Exciting jet ski racing, flyboard show, kayak relay race, and volleyball tournament for resort guests. (Giải đua mô tô nước, biểu diễn flyboard bay lượn, đua thuyền kayak tiếp sức và bóng chuyền bãi biển).
-  - Fee: Complimentary for spectators, entry fee for tournament: 200,000 VND.
-• Event 18: Coral Bay Scuba Diving Experience (Trải Nghiệm Lặn Bình Khí San Hô)
-  - Date: Daily at 8:00 AM.
-  - Description: Professional PADI scuba diving lessons and underwater exploration at Nha Trang's marine reserve. (Khóa học lặn biển bằng bình khí và thám hiểm đại dương cùng huấn luyện viên PADI).
-  - Fee: 1,800,000 VND / person.
-• Event 19: Sunset Sailing Cruise (Du Thuyền Buồm Hoàng Hôn)
-  - Date: Daily from 4:30 PM - 7:00 PM.
-  - Description: Cruise the beautiful Nha Trang Bay on a premium catamaran sailing boat with live saxophone music and champagne. (Ngắm vịnh Nha Trang trên thuyền buồm catamaran sang trọng, thưởng thức rượu champagne và kèn saxophone).
-  - Fee: 1,400,000 VND / person.
-• Event 20: Beach Sandcastle Building Competition (Cuộc Thi Xây Lâu Đài Cát)
-  - Date: Every Saturday at 3:30 PM.
-  - Description: Fun-filled family activity with prizes for the most creative sand structure. (Hoạt động vui nhộn cho gia đình xây lâu đài cát có trao giải thưởng).
-  - Fee: Complimentary / Miễn phí.
+============================================================
+Vinpearl Hotel Bắc Ninh
+ID: bac-ninh
+Location: Km 1+200 Trần Hưng Đạo, phường Kinh Bắc, TP. Bắc Ninh
+Tags: khach-san-5-sao, city-hotel, business, mice, bac-ninh, spa, ho-boi-trong-nha
+Keywords: vinpearl bắc ninh, vinpearl hotel bac ninh, khach san bac ninh, khach san 5 sao bac ninh, kinh bac
+- Event type: family
+  Name: Vinpearl Hotel Bắc Ninh - Family discovery walk
+  Schedule: Daily at 09:00
+  Description: Guided orientation for families using the main resort facilities.
+  Fee: Complimentary
+- Event type: dining
+  Name: Vinpearl Hotel Bắc Ninh - Signature dinner recommendation
+  Schedule: Daily at 18:30
+  Description: Concierge helps reserve the most suitable restaurant or buffet based on guest profile.
+  Fee: Menu price varies
+- Event type: wellness
+  Name: Vinpearl Hotel Bắc Ninh - Wellness and pool morning
+  Schedule: Daily at 07:00
+  Description: Light wellness session followed by pool or beach time where available.
+  Fee: Complimentary unless spa treatment is added
+- Event type: local
+  Name: Vinpearl Hotel Bắc Ninh - Local attraction planning
+  Schedule: Daily by request
+  Description: Concierge drafts a half-day route near the property.
+  Fee: Transport and tickets charged separately
 
-6. ĐÀ LẠT PINE VALLEY (ĐÀ LẠT)
-───────────────────────────────────────────────────────────────────
-• Event 21: French Heritage & Wine Soirée (Đêm Rượu Vang & Di Sản Pháp)
-  - Date: Every Friday from 7:00 PM - 9:30 PM.
-  - Description: Wine tasting of premium Dalat and imported French wines paired with artisan cheeses in a 1930s colonial villa. (Thưởng thức vang Đà Lạt và vang Pháp kèm phô mai hảo hạng trong không gian biệt thự Pháp cổ thập niên 1930).
-  - Fee: 950,000 VND / person.
-• Event 22: Premium Drip Coffee Masterclass (Lớp Học Pha Cà Phê Cầu Đất)
-  - Date: Every Tuesday and Sunday at 10:00 AM.
-  - Description: Learn to brew authentic Vietnamese drip coffee and milk coffee using high-end Arabica beans from Cau Dat estate. (Học pha cà phê phin và cà phê trứng từ hạt Arabica Cầu Đất Thượng Hạng).
-  - Fee: 350,000 VND / person.
-• Event 23: Pine Forest Trekking & Organic Farm Visit (Trekking Rừng Thông & Nông Trại Hữu Cơ)
-  - Date: Daily at 8:30 AM.
-  - Description: Guided walk through cool pine valleys, visiting local greenhouses to pick strawberries and flowers. (Trekking rừng thông Đà Lạt mát mẻ, ghé thăm trang trại nhà kính hái dâu tây và hoa tươi).
-  - Fee: 400,000 VND / person.
-• Event 24: Campfire, Acoustic Guitar & Marshmallows (Đốt Lửa Trại & Ca Nhạc Mộc)
-  - Date: Daily at 7:30 PM.
-  - Description: Cozy outdoor gathering in the gardens. Toast marshmallows over the campfire and listen to acoustic guitar songs. (Quây quần bên lửa trại ấm áp, nướng kẹo bông gòn và lắng nghe giai điệu guitar mộc mạc).
-  - Fee: Complimentary / Miễn phí.
-• Event 25: Dalat Flower & Art Exhibition (Triển Lãm Nghệ Thuật & Hoa Đà Lạt)
-  - Date: December (Annual Winter Festival).
-  - Description: Stunning visual displays of local flowers, artwork, oil paintings, and local tea tastings. (Trưng bày hoa tươi rực rỡ, triển lãm tranh sơn dầu và thử các loại trà hoa Đà Lạt).
-  - Fee: Complimentary / Miễn phí.
+============================================================
+Melia Vinpearl Cửa Hội Beach Resort (Nghệ An)
+ID: cua-hoi-nghe-an
+Location: Đường Bình Minh, phường Nghi Hải, Cửa Lò, Nghệ An
+Tags: resort-5-sao, bien, villa, gia-dinh, cap-doi, cua-hoi, cua-lo, nghe-an
+Keywords: vinpearl cửa hội, melia vinpearl cửa hội, cửa hội, cửa lò, nghệ an, resort nghe an
+- Event type: family
+  Name: Melia Vinpearl Cửa Hội Beach Resort (Nghệ An) - Family discovery walk
+  Schedule: Daily at 09:00
+  Description: Guided orientation for families using the main resort facilities.
+  Fee: Complimentary
+- Event type: dining
+  Name: Melia Vinpearl Cửa Hội Beach Resort (Nghệ An) - Signature dinner recommendation
+  Schedule: Daily at 18:30
+  Description: Concierge helps reserve the most suitable restaurant or buffet based on guest profile.
+  Fee: Menu price varies
+- Event type: wellness
+  Name: Melia Vinpearl Cửa Hội Beach Resort (Nghệ An) - Wellness and pool morning
+  Schedule: Daily at 07:00
+  Description: Light wellness session followed by pool or beach time where available.
+  Fee: Complimentary unless spa treatment is added
+- Event type: local
+  Name: Melia Vinpearl Cửa Hội Beach Resort (Nghệ An) - Local attraction planning
+  Schedule: Daily by request
+  Description: Concierge drafts a half-day route near the property.
+  Fee: Transport and tickets charged separately
+
+============================================================
+Vinpearl Resort & Spa Hạ Long
+ID: ha-long
+Location: Đảo Rều, khu vực Bãi Cháy, TP. Hạ Long, Quảng Ninh
+Tags: resort-5-sao, dao-rieng, ha-long-bay, bai-chay, gia-dinh, cap-doi, view-vinh
+Keywords: vinpearl hạ long, vinpearl ha long, dao reu, bai chay, vinpearl resort spa ha long
+- Event type: family
+  Name: Vinpearl Resort & Spa Hạ Long - Family discovery walk
+  Schedule: Daily at 09:00
+  Description: Guided orientation for families using the main resort facilities.
+  Fee: Complimentary
+- Event type: dining
+  Name: Vinpearl Resort & Spa Hạ Long - Signature dinner recommendation
+  Schedule: Daily at 18:30
+  Description: Concierge helps reserve the most suitable restaurant or buffet based on guest profile.
+  Fee: Menu price varies
+- Event type: wellness
+  Name: Vinpearl Resort & Spa Hạ Long - Wellness and pool morning
+  Schedule: Daily at 07:00
+  Description: Light wellness session followed by pool or beach time where available.
+  Fee: Complimentary unless spa treatment is added
+- Event type: local
+  Name: Vinpearl Resort & Spa Hạ Long - Local attraction planning
+  Schedule: Daily by request
+  Description: Concierge drafts a half-day route near the property.
+  Fee: Transport and tickets charged separately
+
+Seasonal guidance:
+- Nha Trang is usually most convenient for beach activities from January to August; rain can affect outdoor activities from September to December.
+- Phu Quoc is usually best from November to April; rain season can affect beach and boat activities from May to October.
+- Hoi An and Central Vietnam can be hot in summer and rainy in late-year months; verify weather before outdoor schedules.
+- Ha Long boat and island transfers depend on weather and sea conditions.
+- North Central beach resorts such as Cua Sot and Cua Hoi are strongest for summer beach stays but can be more seasonal.

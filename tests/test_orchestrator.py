@@ -52,13 +52,13 @@ class TestPlanDefaults:
     def test_plan_with_all_fields(self):
         plan = Plan(
             intent=IntentType.TOOL,
-            tool_name="book_room",
-            tool_args={"guest": "Dracula"},
+            tool_name="search_amenities",
+            tool_args={"query": "spa"},
             search_query=None,
-            reasoning="Booking request",
+            reasoning="Amenities search",
         )
-        assert plan.tool_name == "book_room"
-        assert plan.tool_args == {"guest": "Dracula"}
+        assert plan.tool_name == "search_amenities"
+        assert plan.tool_args == {"query": "spa"}
 
 
 # ---------------------------------------------------------------------------
@@ -116,15 +116,15 @@ class TestParsePlan:
     def test_tool_intent(self, parse):
         raw = json.dumps({
             "intent": "tool",
-            "tool_name": "book_room",
-            "tool_args": {"guest_name": "Dracula"},
+            "tool_name": "search_amenities",
+            "tool_args": {"query": "pool"},
             "search_query": None,
-            "reasoning": "Booking",
+            "reasoning": "Amenities search",
         })
         plan = parse(raw)
         assert plan.intent == IntentType.TOOL
-        assert plan.tool_name == "book_room"
-        assert plan.tool_args == {"guest_name": "Dracula"}
+        assert plan.tool_name == "search_amenities"
+        assert plan.tool_args == {"query": "pool"}
 
     # -- markdown-wrapped JSON -----------------------------------------------
 
@@ -160,9 +160,9 @@ class TestParsePlan:
 
     # -- keyword fallback heuristics -----------------------------------------
 
-    def test_garbage_with_tool_keyword(self, parse):
+    def test_garbage_with_removed_booking_keyword_defaults_chitchat(self, parse):
         plan = parse("please book a room for me")
-        assert plan.intent == IntentType.TOOL
+        assert plan.intent == IntentType.CHITCHAT
 
     def test_garbage_with_knowledge_keyword(self, parse):
         plan = parse("tell me about the pool and spa")

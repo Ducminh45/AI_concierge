@@ -27,12 +27,12 @@ class TestLLMMessage:
 
     def test_with_tool_calls(self):
         tc = LLMToolCall(
-            id="tc_1", name="book_room",
-            arguments='{"guest": "Drac"}'
+            id="tc_1", name="search_amenities",
+            arguments='{"query": "pool"}'
         )
         msg = LLMMessage(role="assistant", content="", tool_calls=[tc])
         assert len(msg.tool_calls) == 1
-        assert msg.tool_calls[0].name == "book_room"
+        assert msg.tool_calls[0].name == "search_amenities"
 
     def test_tool_message(self):
         msg = LLMMessage(
@@ -65,12 +65,12 @@ class TestAnthropicProvider:
             {
                 "type": "function",
                 "function": {
-                    "name": "book_room",
-                    "description": "Book a room",
+                    "name": "search_amenities",
+                    "description": "Search amenities",
                     "parameters": {
                         "type": "object",
-                        "properties": {"guest_name": {"type": "string"}},
-                        "required": ["guest_name"],
+                        "properties": {"query": {"type": "string"}},
+                        "required": ["query"],
                     },
                 },
             }
@@ -79,13 +79,13 @@ class TestAnthropicProvider:
         result = provider.translate_tool_schemas(openai_schemas)
 
         assert len(result) == 1
-        assert result[0]["name"] == "book_room"
-        assert result[0]["description"] == "Book a room"
+        assert result[0]["name"] == "search_amenities"
+        assert result[0]["description"] == "Search amenities"
         assert "input_schema" in result[0]
-        guest_type = (
-            result[0]["input_schema"]["properties"]["guest_name"]["type"]
+        query_type = (
+            result[0]["input_schema"]["properties"]["query"]["type"]
         )
-        assert guest_type == "string"
+        assert query_type == "string"
 
 
 # ---------------------------------------------------------------------------

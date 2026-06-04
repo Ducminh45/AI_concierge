@@ -48,7 +48,7 @@ function clearAuthState() {
 const routes = {
     '#login':    { view: 'login-page',    auth: false, init: () => {} },
     '#register': { view: 'register-page', auth: false, init: () => {} },
-    '#chat':     { view: 'chat-page',     auth: true,  init: () => initChatView() },
+    '#chat':     { view: 'chat-page',     auth: false, init: () => initChatView() },
     '#services': { view: 'services-page', auth: true,  init: () => loadServicesView() },
     '#admin':    { view: 'admin-page',    auth: true,  init: () => loadAdminView() }
 };
@@ -103,7 +103,7 @@ async function router() {
     const route = routes[hash];
     if (!route) { navigateTo('#chat'); return; }
     if (route.auth && !isAuthenticated()) { navigateTo('#login'); return; }
-    if (!route.auth && isAuthenticated()) { navigateTo('#chat'); return; }
+    if (hash !== '#chat' && !route.auth && isAuthenticated()) { navigateTo('#chat'); return; }
     showPage(route.view);
     updateNavigation();
     route.init();
@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
         link.addEventListener('click', () => navigateTo(link.getAttribute('href')));
     });
 
-    // Book now
+    // Chat now
     const bookBtn = document.getElementById('btn-book-now');
     if (bookBtn) bookBtn.addEventListener('click', e => { e.preventDefault(); navigateTo('#chat'); });
 

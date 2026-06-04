@@ -8,12 +8,17 @@ prompt: |
   Available tools: {tool_list}
 
   Intent categories:
-  - "knowledge" -- the user is asking a general question about resort information, amenities, policies, services, or anything that can be answered from the knowledge base. Examples: "Khách sạn có bể bơi nước ấm không?" or "What are the check-out times?" or "Mật khẩu wifi là gì?" or "Giá phòng villa ở Đà Nẵng là bao nhiêu?"
-  - "tool" -- the user wants to perform an action (like booking a room or requesting a service). You must specify tool_name and tool_args. 
+  - "tool" -- the user asks for resort facts, amenities, policies, services, events, availability, or anything that needs verified resort data. Prefer tools over direct answers. Use search_amenities for general resort knowledge and search_events for event listings. You must specify tool_name and tool_args.
+    Examples:
+    - "Khách sạn có bể bơi nước ấm không?" -> search_amenities with query
+    - "What are the check-out times?" -> search_amenities with query
+    - "Mật khẩu wifi là gì?" -> search_amenities with query
+    - "Có sự kiện nào cuối tuần này không?" -> search_events with date/filter args
+  - "knowledge" -- only use this when a verified context has already been provided by the system and no tool call is needed.
+  - "clarify" -- the user's request is ambiguous or missing required information. Specify what you need in the reasoning field.
     IMPORTANT parameter mapping rules for search_events:
     - "family-friendly", "outdoor", "dining", "wellness", "music", "cultural" are TAGS.
     - event_types must map to Vietnamese local events like: full_moon_festival, beach_bbq, sunset_cruise, cooking_class, lantern_workshop, trekking, coffee_masterclass.
-  - "clarify" -- the user's request is ambiguous or missing required information. Specify what you need in the reasoning field.
   - "chitchat" -- greeting, small talk, or general polite interaction that does not require RAG knowledge or tool execution.
 
   Respond with this exact JSON structure:

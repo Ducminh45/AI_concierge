@@ -1,20 +1,21 @@
-import os
+from app.core.tools import make_registry
+from app.database.db import DatabaseManager
+from app.config import Settings
 
 
-API_KEY = os.environ.get("MRC_API_KEY", "dummy")
-AUTH = {"Authorization": f"Bearer {API_KEY}"}
-
-
-def test_chat_booking_flow(client):
-    """Test that chat endpoint accepts a booking request."""
-    r = client.post(
-        "/chat",
-        json={
-            "session_id": "s1",
-            "message": "Please book a room for Mina",
-        },
-        headers=AUTH,
+def test_booking_tools_not_registered(tmp_path):
+    """Booking actions should not be available to the chat agent."""
+    settings = Settings(
+        database_url=f"sqlite:///{tmp_path / 'test.db'}",
+        pdf_output_dir=str(tmp_path / "pdfs"),
+        rag_persist_dir=str(tmp_path / "rag"),
     )
-    # With a dummy API key, the LLM call may fail
-    # but the endpoint should not crash (200 or 500)
-    assert r.status_code in [200, 500]
+    registry = make_registry(
+        db=DatabaseManager(settings),
+        rag_search_fn=lambda query, k=5: [],
+    )
+
+    tool_names = {tool.name for tool in registry.list()}
+
+    assert "book_room" not in tool_names
+    assert "get_booking" not in tool_names

@@ -56,15 +56,15 @@ class TestParsePlanFallbackChain:
     def test_clean_json_parsed_directly(self, parse):
         raw = json.dumps({
             "intent": "tool",
-            "tool_name": "book_room",
-            "tool_args": {"guest": "Frankenstein"},
+            "tool_name": "search_amenities",
+            "tool_args": {"query": "spa"},
             "search_query": None,
-            "reasoning": "Booking request",
+            "reasoning": "Amenities search",
         })
         plan = parse(raw)
         assert plan.intent == IntentType.TOOL
-        assert plan.tool_name == "book_room"
-        assert plan.tool_args == {"guest": "Frankenstein"}
+        assert plan.tool_name == "search_amenities"
+        assert plan.tool_args == {"query": "spa"}
 
     def test_json_with_prose_falls_to_extract(self, parse):
         raw = (
@@ -82,9 +82,9 @@ class TestParsePlanFallbackChain:
         plan = parse(raw)
         assert plan.intent == IntentType.CLARIFY
 
-    def test_no_json_uses_keyword_heuristic_tool(self, parse):
+    def test_no_json_removed_booking_keyword_defaults_chitchat(self, parse):
         plan = parse("I think we should book a room for the guest")
-        assert plan.intent == IntentType.TOOL
+        assert plan.intent == IntentType.CHITCHAT
 
     def test_no_json_uses_keyword_heuristic_knowledge(self, parse):
         plan = parse("The guest is asking about the spa facilities")

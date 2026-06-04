@@ -1,0 +1,188 @@
+VINPEARL AI CONCIERGE KNOWLEDGE BASE - DESTINATION OVERVIEW
+
+This mock dataset is generated from data.txt and is intended for retrieval, evaluation, and fine-tuning of the Vinpearl chatbot agent.
+Assistant rule: answer in the guest's language, stay inside the verified context, and do not invent live availability, promotions, phone numbers, or booking confirmation details.
+
+Covered properties:
+1. Vinpearl Nha Trang - Đảo Hòn Tre, Vĩnh Nguyên, Nha Trang, Khánh Hòa
+2. Vinpearl Nam Hội An (Vinpearl Resort & Golf Nam Hội An) - Bình Minh, Thăng Bình, Quảng Nam (cách phố cổ Hội An ~12km)
+3. Vinpearl Phú Quốc - Bãi Dài, Gành Dầu, Phú Quốc, Kiên Giang
+4. Melia Vinpearl Cửa Sót Beach Resort (Hà Tĩnh) - Biển Cửa Sót, Thịnh Lộc, Lộc Hà, Hà Tĩnh
+5. Vinpearl Hotel Bắc Ninh - Km 1+200 Trần Hưng Đạo, phường Kinh Bắc, TP. Bắc Ninh
+6. Melia Vinpearl Cửa Hội Beach Resort (Nghệ An) - Đường Bình Minh, phường Nghi Hải, Cửa Lò, Nghệ An
+7. Vinpearl Resort & Spa Hạ Long - Đảo Rều, khu vực Bãi Cháy, TP. Hạ Long, Quảng Ninh
+
+============================================================
+Vinpearl Nha Trang
+ID: nha-trang
+Location: Đảo Hòn Tre, Vĩnh Nguyên, Nha Trang, Khánh Hòa
+Tags: resort-5-sao, vinwonders, gia-dinh, cap-doi, nhom-ban, bai-bien-rieng, cong-vien-nuoc, all-in-one, nghi-duong-dao, combo-vinwonders
+Keywords: vinpearl nha trang, vinpearl land, vinwonders nha trang, nha trang, đảo hòn tre, vinpearl resort nha trang
+
+Overview: Vinpearl Nha Trang là quần thể nghỉ dưỡng – vui chơi giải trí 5 sao hàng đầu trên đảo Hòn Tre, giữa vịnh Nha Trang, gồm hệ thống resort cao cấp, bãi biển riêng, hồ bơi ngoài trời lớn và công viên giải trí VinWonders Nha Trang với hàng trăm trò chơi, phù hợp cho gia đình, cặp đôi và khách đi du lịch kết hợp hội họp, sự kiện.
+
+Best for:
+- Gia đình có trẻ em (kids club, khu vui chơi, công viên nước).
+- Nhóm bạn muốn vui chơi công viên giải trí, công viên nước và bãi biển.
+- Cặp đôi nghỉ dưỡng biển, resort 5 sao, không gian riêng tư.
+- Khách công ty, hội thảo, sự kiện MICE.
+
+Highlights:
+- Quần thể nghỉ dưỡng 5 sao khép kín trên đảo Hòn Tre với nhiều khu resort, khách sạn và biệt thự hướng biển.
+- VinWonders Nha Trang – công viên giải trí hiện đại rộng khoảng 200.000m², có 6 phân khu chủ đề, hàng trăm trò chơi và hoạt động giải trí.
+- Bãi biển riêng với cát trắng, nước trong, được đánh giá là một trong những bãi biển đẹp tại Nha Trang.
+- Hồ bơi nước ngọt ngoài trời diện tích lớn, thuộc nhóm hồ bơi ngoài trời nổi bật ở khu vực.
+- Hệ thống phòng nghỉ và biệt thự đa dạng (phòng khách sạn, villa 3 phòng ngủ có hồ bơi riêng, nhiều hạng phòng Deluxe, Suite, hướng biển).
+- 4 nhà hàng chính (Orchid, Lotus, Camellia, Jasmine) và nhiều quầy bar, phục vụ buffet và món Á – Âu, ẩm thực Việt.
+- Dịch vụ spa, gym, sân golf, thể thao dưới nước, câu lạc bộ trẻ em và khu vui chơi trong nhà.
+- Cáp treo vượt biển và tàu cao tốc kết nối từ đất liền ra đảo, tạo trải nghiệm di chuyển đặc biệt.
+
+Reference price range: 1.700.000 VND - 3.000.000 VND per night. Giá phòng khách sạn Vinpearl Nha Trang thường dao động khoảng 1.7–3 triệu đồng/khách/đêm cho phòng tiêu chuẩn, tùy mùa và gói combo (giá BestPrice 2024 khoảng 1.665.000–2.400.000đ/khách/đêm, Agoda ghi nhận giá trung bình khoảng 91 USD/đêm).
+Guest rating reference: 8.9/10. Vinpearl Resort Nha Trang được khách lưu trú đánh giá trung bình khoảng 8.8–8.9/10 trên các OTA lớn (Booking chấm 8.9 điểm, các tiêu chí sạch sẽ, tiện nghi, thoải mái đều khoảng 8.7–8.8; Trip.com ghi nhận điểm tổng khoảng 8.9/10 cho resort khu vực VinWonders). Sources: Booking, Agoda, Trip.com.
+
+============================================================
+Vinpearl Nam Hội An (Vinpearl Resort & Golf Nam Hội An)
+ID: nam-hoi-an
+Location: Bình Minh, Thăng Bình, Quảng Nam (cách phố cổ Hội An ~12km)
+Tags: resort-5-sao, golf-resort, vinwonders, gia-dinh, cap-doi, nhom-ban, bai-bien-rieng, river-safari, van-hoa-dan-gian, gan-hoi-an
+Keywords: vinpearl nam hội an, vinpearl hội an, vinwonders nam hội an, bình minh thăng bình, resort & golf nam hội an, vinpearl resort golf
+
+Overview: Vinpearl Nam Hội An là quần thể nghỉ dưỡng – vui chơi – golf 5 sao nằm trên bờ biển Bình Minh, phía Nam Hội An, gồm khu resort sang trọng, hệ thống biệt thự hướng biển, sân golf 18 hố và công viên giải trí – văn hóa VinWonders Nam Hội An rộng 200ha, kết hợp vui chơi hiện đại với trải nghiệm văn hóa, river safari.
+
+Best for:
+- Gia đình có trẻ em, nhờ khu vui chơi, hồ bơi, VinWonders Nam Hội An và river safari.
+- Nhóm bạn muốn kết hợp nghỉ dưỡng biển, vui chơi công viên giải trí, check-in cảnh quan và phố cổ Hội An gần đó.
+- Cặp đôi nghỉ dưỡng biển, trải nghiệm resort 5 sao yên tĩnh, bãi biển vắng, không gian lãng mạn.
+- Golfer và khách MICE nhờ sân golf 18 hố, không gian rộng, hội trường và dịch vụ hội thảo.
+
+Highlights:
+- Khu nghỉ dưỡng 5 sao nằm ngay bên bãi biển Bình Minh, sở hữu đường bờ biển dài, cát mịn, không gian yên tĩnh, thoáng đãng.
+- VinWonders Nam Hội An rộng khoảng 200ha, kết hợp công viên giải trí, river safari, đảo văn hóa dân gian và khu phố Đông – Tây, đáp ứng nhu cầu vui chơi lẫn trải nghiệm văn hóa.
+- Hệ thống phòng khách sạn và biệt thự phong phú, gồm phòng Deluxe, Suite và các villa 2–3 phòng ngủ, có biệt thự sát biển với hồ bơi riêng.
+- Sân golf 18 hố chuẩn quốc tế, nằm trong khuôn viên resort & golf, phù hợp khách chơi golf kết hợp nghỉ dưỡng.
+- Nhiều hồ bơi ngoài trời lớn, khu vườn xanh, cảnh quan được đánh giá rất đẹp trong các review.
+- Nhiều nhà hàng, bar phục vụ buffet sáng, ẩm thực Á – Âu, hải sản; kết hợp khu ẩm thực, nhà hàng trong VinWonders Nam Hội An.
+
+Reference price range: 2.500.000 VND - 4.500.000 VND per night. Giá phòng Vinpearl Resort & Golf Nam Hội An thường dao động khoảng 2.5–4.5 triệu đồng/phòng/đêm cho các hạng phòng khách sạn tùy mùa, ngày trong tuần và ưu đãi; thống kê Kayak cho thấy giá trung bình weekday vào khoảng 3.7 triệu và weekend khoảng 2.9 triệu, trong khi Trip.com ghi nhận giá trung bình từ khoảng 6.0 triệu cho một số hạng cao hơn, villa có giá cao hơn nữa.
+Guest rating reference: 8.6/10. Vinpearl Resort & Golf Nam Hội An được đánh giá khoảng 8.5–8.7/10 trên các nền tảng đặt phòng: Booking chấm khoảng 8.6–8.7/10, Trip.com ghi nhận điểm tổng khoảng 8.6/10 với hơn 100 đánh giá, các tiêu chí sạch sẽ và dịch vụ thường được chấm khoảng 9.0/10 trên Agoda. Sources: Booking, Trip.com, OTA khác.
+
+============================================================
+Vinpearl Phú Quốc
+ID: phu-quoc
+Location: Bãi Dài, Gành Dầu, Phú Quốc, Kiên Giang
+Tags: resort-5-sao, all-in-one, vinwonders, safari, gia-dinh, cap-doi, nhom-ban, bai-bien-rieng, bai-dai, phu-quoc-united-center
+Keywords: phú quốc, phu quoc, pq, đảo ngọc, vinpearl phú quốc, vinwonders phú quốc, safari phú quốc, bãi dài, phu quoc united center
+
+Overview: Vinpearl Phú Quốc là tổ hợp nghỉ dưỡng – vui chơi giải trí – mua sắm “all-in-one” tại Bãi Dài, phía Bắc đảo Phú Quốc, thuộc quần thể Phú Quốc United Center. Với hệ thống resort 5 sao, biệt thự biển, công viên chủ đề VinWonders Phú Quốc, vườn thú bán hoang dã Vinpearl Safari và bãi biển Bãi Dài nổi tiếng, đây là lựa chọn lý tưởng cho kỳ nghỉ dài ngày, du lịch gia đình và cặp đôi.
+
+Best for:
+- Gia đình có trẻ em (VinWonders, Safari, hồ bơi, bãi biển, nhiều tiện ích cho trẻ).
+- Nhóm bạn muốn vui chơi công viên chủ đề, công viên nước, trải nghiệm “thành phố không ngủ” Grand World gần kề.
+- Cặp đôi nghỉ dưỡng biển, resort 5 sao, không gian lãng mạn bên bãi biển Bãi Dài.
+- Khách nghỉ dưỡng dài ngày, kết hợp workation, chơi golf, khám phá Bắc đảo Phú Quốc.
+
+Highlights:
+- Quần thể Vinpearl Phú Quốc có diện tích hơn 1.000ha, là một phần của Phú Quốc United Center với nhiều khu: resort, vui chơi, mua sắm, giải trí, hội nghị.
+- VinWonders Phú Quốc là công viên chủ đề khoảng 50ha, gồm 6 phân khu lớn với 12 chủ đề được thiết kế chi tiết, hội tụ công viên nước, trò chơi cảm giác mạnh, khu làng Viking, cung điện Hải Vương…
+- Vinpearl Safari Phú Quốc là vườn thú bán hoang dã đầu tiên và lớn nhất Việt Nam với diện tích 500ha, hơn 4.000 cá thể thuộc khoảng 200 loài, chia 2 khu: vườn thú mở và safari “nhốt người thả thú”.
+- Vinpearl Resort & Spa Phú Quốc tọa lạc tại Bãi Dài, có 630 phòng khách sạn và hệ thống biệt thự 3–4 phòng ngủ, hồ bơi ngoài trời gần 5.000m², bãi biển riêng, phong cách Indochine sang trọng.
+- Các khu Vinpearl/VinWonders/Grand World được kết nối thuận tiện bằng xe điện, VinBus và dịch vụ shuttle của quần thể.
+- Tổ hợp “không ngủ” với nhiều dịch vụ ăn uống, vui chơi, biểu diễn hoạt động gần như 24/7 tại Grand World và các khu lân cận.
+
+Reference price range: 1.350.000 VND - 5.000.000 VND per night. Giá phòng Vinpearl Phú Quốc thay đổi theo khách sạn, mùa và gói dịch vụ. Tham chiếu từ bảng giá đại lý: phòng khách sạn VinHolidays Fiesta từ khoảng 1.350.000đ/2 khách/đêm, phòng Deluxe Vinpearl Resort & Spa Phú Quốc khoảng 2.150.000–2.250.000đ/2 khách/đêm, villa 2–4 phòng ngủ trong khoảng 4.75–9.99 triệu/đêm tùy số khách và gói kèm VinWonders/Safari.
+Guest rating reference: 8.8/10. Vinpearl Resort & Spa Phú Quốc thường được đánh giá khoảng 8.7–8.9/10 trên Booking (với các tiêu chí sạch sẽ, tiện nghi, nhân viên đều khoảng 8.8–9.1) và xếp loại rất tốt trên Tripadvisor với hơn 3.700 đánh giá, trong đó đa số nhận xét tích cực về bãi biển, hồ bơi và dịch vụ. Sources: Booking, Tripadvisor, Agoda.
+
+============================================================
+Melia Vinpearl Cửa Sót Beach Resort (Hà Tĩnh)
+ID: cua-sot-ha-tinh
+Location: Biển Cửa Sót, Thịnh Lộc, Lộc Hà, Hà Tĩnh
+Tags: resort-5-sao, bien, villa, gia-dinh, nhom-ban, khuon-vien-rong, cong-vien-nuoc, ha-tinh, nghi-duong-yen-tinh
+Keywords: vinpearl cửa sót, melia vinpearl cửa sót, cửa sót, xuân hải, resort hà tĩnh, vinpearl ha tinh
+
+Overview: Melia Vinpearl Cửa Sót Beach Resort là khu nghỉ dưỡng 5 sao ven biển Cửa Sót, sở hữu khuôn viên rộng, biệt thự hiện đại, bể bơi lớn, spa, sân golf mini và công viên nước trong nội khu, phù hợp cho gia đình và nhóm bạn muốn nghỉ dưỡng yên tĩnh, tránh xa trung tâm thành phố.
+
+Best for:
+- Gia đình cần không gian yên tĩnh, villa rộng, có bể bơi riêng và khu vui chơi trẻ em.
+- Nhóm bạn muốn nghỉ dưỡng villa, tổ chức tiệc BBQ, sử dụng công viên nước và bãi biển riêng.
+- Cặp đôi muốn không gian lãng mạn, ít ồn ào, view biển, spa và hồ bơi lớn.
+- Khách đi “chữa lành”, thư giãn xa trung tâm, ưu tiên sự riêng tư và yên tĩnh.
+
+Highlights:
+- Khu nghỉ dưỡng ven biển Xuân Hải – Cửa Sót với bãi biển dài, không khí trong lành, khuôn viên nhiều cây xanh.
+- Hệ thống biệt thự rộng, thiết kế hiện đại, nhiều căn có bể bơi riêng, phù hợp gia đình và nhóm khách.
+- Công viên nước nội khu với nhiều trò chơi, trong đó có các trò cảm giác mạnh cho đủ lứa tuổi.
+- Bể bơi chung lớn, có bể sục; kết hợp spa, nhà hàng, sân golf mini, tennis… ngay trong resort.
+- Xe điện nội khu đưa đón khách giữa villa, lễ tân, bể bơi và bãi biển.
+
+Reference price range: 4.920.000 VND - 4.950.000 VND per night. Giá tham khảo cho villa tại Melia Vinpearl Cửa Sót Beach Resort khoảng 4.92–4.95 triệu đồng/đêm cho một số ngày trong năm 2025–2026 (giá Expedia khoảng 4.920.000đ, Eholiday ghi “bắt đầu từ 4.950.000đ”), tùy loại villa và thời điểm.
+Guest rating reference: 9.6/10. Melia Vinpearl Cửa Sót Beach Resort được đánh giá rất cao: Expedia chấm khoảng 9.6/10, các tiêu chí sạch sẽ, tiện nghi thường đạt 9–10/10; Booking chấm 8.5/10 với bữa sáng được khách đánh giá tốt; Chudu24 ghi nhận nhiều review tích cực về không gian, phòng ốc và dịch vụ. Sources: Expedia, Booking, Chudu24.
+
+============================================================
+Vinpearl Hotel Bắc Ninh
+ID: bac-ninh
+Location: Km 1+200 Trần Hưng Đạo, phường Kinh Bắc, TP. Bắc Ninh
+Tags: khach-san-5-sao, city-hotel, business, mice, bac-ninh, spa, ho-boi-trong-nha
+Keywords: vinpearl bắc ninh, vinpearl hotel bac ninh, khach san bac ninh, khach san 5 sao bac ninh, kinh bac
+
+Overview: Vinpearl Hotel Bắc Ninh là khách sạn 5 sao đầu tiên tại trung tâm TP. Bắc Ninh, cao 32 tầng với 265 phòng, thiết kế hiện đại, hệ thống nhà hàng, hồ bơi 4 mùa, spa, gym và không gian hội nghị – sự kiện, phù hợp khách công tác, du lịch tâm linh và nghỉ dưỡng ngắn ngày tại vùng Kinh Bắc.
+
+Best for:
+- Khách công tác tại Bắc Ninh cần khách sạn 5 sao trung tâm, tiện di chuyển.
+- Gia đình/cặp đôi kết hợp tham quan chùa, đền, làng quan họ và lưu trú tiện nghi.
+- Tổ chức hội nghị, tiệc cưới, sự kiện MICE với hệ thống phòng họp và ballroom.
+
+Highlights:
+- Vị trí “đất vàng” ngay trung tâm thành phố, thuận tiện giao thương và di chuyển.
+- Tòa khách sạn cao 32 tầng, 265 phòng với 4 hạng: Deluxe, Executive, Suite, President Suite.
+- Hồ bơi trong nhà, khu spa, phòng gym, dịch vụ ẩm thực đa dạng.
+- Không gian nội thất lấy cảm hứng từ gam màu nâu gốm, xám đất nung, xanh lưới gợi nhớ văn hóa Kinh Bắc.
+
+Reference price range: 2.017.637 VND - 2.868.421 VND per night. Giá phòng Vinpearl Hotel Bắc Ninh thường dao động khoảng 2.0–2.9 triệu đồng/phòng/đêm cho hạng chuẩn, dựa trên giá hiện tại trên Hotels.com (~2.017.637đ) và khoảng giá Tripadvisor 2.289.474–2.868.421đ.
+Guest rating reference: 9.2/10. Vinpearl Hotel Bắc Ninh được khách trên Tripadvisor chấm khoảng 4.6/5 (tương đương ~9.2/10) với nhận xét tốt về chất lượng dịch vụ, phòng ốc sạch sẽ, nhân viên thân thiện. Sources: Tripadvisor.
+
+============================================================
+Melia Vinpearl Cửa Hội Beach Resort (Nghệ An)
+ID: cua-hoi-nghe-an
+Location: Đường Bình Minh, phường Nghi Hải, Cửa Lò, Nghệ An
+Tags: resort-5-sao, bien, villa, gia-dinh, cap-doi, cua-hoi, cua-lo, nghe-an
+Keywords: vinpearl cửa hội, melia vinpearl cửa hội, cửa hội, cửa lò, nghệ an, resort nghe an
+
+Overview: Melia Vinpearl Cửa Hội Beach Resort là khu nghỉ dưỡng 5 sao ven biển, nằm gần Cửa Lò, sở hữu 184 phòng khách sạn và 15 căn biệt thự hướng biển, bãi biển riêng hoang sơ, bể bơi lớn ngoài trời và hệ thống tiện ích cao cấp, phù hợp gia đình, cặp đôi và khách nghỉ dưỡng dài ngày tại Bắc Trung Bộ.
+
+Best for:
+- Gia đình có trẻ em nhờ bãi biển riêng, hồ bơi, khu vui chơi và không gian rộng.
+- Cặp đôi muốn nghỉ dưỡng biển lãng mạn, yên tĩnh, gần Cửa Lò.
+- Nhóm bạn muốn ở resort 5 sao, kết hợp tắm biển, bể bơi, khám phá Nghệ An – Hà Tĩnh.
+- Khách MICE, hội nghị nhỏ với phòng họp và dịch vụ nghỉ dưỡng kèm theo.
+
+Highlights:
+- Resort nằm trên bãi biển riêng Cửa Hội, gần Cửa Lò, cảnh biển hoang sơ, ít đông đúc hơn trung tâm.
+- Quy mô gồm 1 tòa khách sạn 5 tầng với 184 phòng nghỉ và khu villa với 15 biệt thự sang trọng, phần lớn hướng biển.
+- Bể bơi ngoài trời lớn hướng biển, cùng bãi biển riêng dài, thích hợp tắm biển và dạo bộ.
+- Tiện ích gồm phòng gym, spa, khu vui chơi trẻ em, sân golf mini và dịch vụ ẩm thực cao cấp.
+
+Reference price range: 1.786.000 VND - 3.755.836 VND per night. Traveloka ghi nhận giá Vinpearl Cua Hoi Resort, Affiliated by Melia dao động khoảng 1.786.000–3.755.836đ/phòng/đêm tùy hạng phòng, thời điểm và ưu đãi; một số review thực tế cho thấy giá khoảng 2.4–3.5 triệu/đêm vào tháng 4/2025.
+Guest rating reference: 8.7/10. Melia Vinpearl Cửa Hội Beach Resort được Booking chấm 8.7/10, bữa sáng đạt 9.4/10; Trip.com ghi nhận điểm tổng 9.0/10 với đánh giá tích cực về dịch vụ; Agoda cho điểm sạch sẽ khoảng 9.3/10. Sources: Booking, Trip.com, Agoda.
+
+============================================================
+Vinpearl Resort & Spa Hạ Long
+ID: ha-long
+Location: Đảo Rều, khu vực Bãi Cháy, TP. Hạ Long, Quảng Ninh
+Tags: resort-5-sao, dao-rieng, ha-long-bay, bai-chay, gia-dinh, cap-doi, view-vinh
+Keywords: vinpearl hạ long, vinpearl ha long, dao reu, bai chay, vinpearl resort spa ha long
+
+Overview: Vinpearl Resort & Spa Hạ Long là khu nghỉ dưỡng 5 sao biệt lập trên Đảo Rều, giữa vùng biển Bãi Cháy – Hạ Long, sở hữu kiến trúc như một “lâu đài trên vịnh”, bãi biển riêng, hồ bơi lớn, 3 nhà hàng và quầy bar, rất phù hợp cho kỳ nghỉ sang trọng cùng gia đình hoặc cặp đôi.
+
+Best for:
+- Gia đình muốn nghỉ dưỡng biệt lập trên đảo, có bãi biển riêng và hồ bơi lớn.
+- Cặp đôi tìm không gian lãng mạn, view vịnh Hạ Long, resort 5 sao.
+- Nhóm bạn/nhóm công ty muốn trải nghiệm nghỉ dưỡng cao cấp kết hợp team building.
+
+Highlights:
+- Vị trí biệt lập trên Đảo Rều, nhìn ra vịnh Hạ Long và khu vực Bãi Cháy, tạo cảm giác “resort trên đảo riêng”.
+- Kiến trúc sang trọng, khuôn viên rộng với bãi biển riêng, quảng trường và vườn xanh.
+- Hệ thống 3 nhà hàng, quán bar/khu lounge, câu lạc bộ trẻ em, trung tâm thể thao và spa.
+- Hồ bơi ngoài trời lớn nhìn ra vịnh được khách đánh giá rất cao.
+
+Reference price range: 2.575.728 VND - 2.920.875 VND per night. Giá tham khảo trên vi.hotels.com cho Vinpearl Resort & Spa Hạ Long khoảng 2.575.728–2.920.875đ/phòng/đêm (đã gồm thuế phí) cho một số ngày đầu năm 2026; giá thực tế thay đổi theo mùa và hạng phòng.
+Guest rating reference: 9/10. Resort được vi.hotels.com chấm khoảng 9.0/10 (Tuyệt vời), Chudu24 ghi nhận điểm trung bình 8.8/10 từ 471 đánh giá, khách khen vị trí, hồ bơi và thái độ nhân viên. Sources: Hotels.com, Chudu24.

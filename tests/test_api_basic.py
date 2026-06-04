@@ -15,6 +15,8 @@ def test_health_endpoint():
 def test_tools_endpoint_auth():
     app = build_app()
     client = TestClient(app)
-    # Should fail without API key if required
     r = client.get("/tools")
-    assert r.status_code in (200, 401)
+    assert r.status_code == 200
+    tool_names = {tool["name"] for tool in r.json()["tools"]}
+    assert "book_room" not in tool_names
+    assert "get_booking" not in tool_names

@@ -148,5 +148,5 @@ class MCPServer:
             "tools": [t["name"] for t in tools],
             "tool_count": len(tools),
             "description": "Monster Game Resort Concierge tool server — "
-            "book rooms, retrieve bookings, search resort amenities.",
+            "search resort amenities and events.",
         }

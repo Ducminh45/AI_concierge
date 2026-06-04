@@ -204,7 +204,7 @@ class TestAdminEndpoints:
         keys = resp.json()
         assert any(k["user_id"] == "integration_user" for k in keys)
 
-    def test_managed_key_authenticates_chat(self, client, api_key_header):
+    def test_managed_key_authenticates_protected_endpoint(self, client, api_key_header):
         # Create a managed key
         resp = client.post(
             "/admin/api-keys",
@@ -213,13 +213,8 @@ class TestAdminEndpoints:
         )
         managed_key = resp.json()["raw_key"]
 
-        # Use it to call /chat
-        resp = client.post(
-            "/chat",
-            json={"message": "Hello"},
-            headers={"X-API-Key": managed_key},
-        )
-        # 200 means auth passed (chat may fail due to LLM, but auth works)
+        # Use it to call a protected admin endpoint
+        resp = client.get("/admin/api-keys", headers={"X-API-Key": managed_key})
         assert resp.status_code == 200
 
     def test_revoke_key_blocks_access(self, client, api_key_header):
@@ -243,12 +238,8 @@ class TestAdminEndpoints:
         )
         assert resp.status_code == 200
 
-        # Try using revoked key
-        resp = client.post(
-            "/chat",
-            json={"message": "Hello"},
-            headers={"X-API-Key": managed_key},
-        )
+        # Try using revoked key on a protected endpoint
+        resp = client.get("/admin/api-keys", headers={"X-API-Key": managed_key})
         assert resp.status_code == 401
 
     def test_usage_log_populated(self, client, api_key_header):
@@ -260,12 +251,8 @@ class TestAdminEndpoints:
         )
         managed_key = resp.json()["raw_key"]
 
-        # Use it
-        client.post(
-            "/chat",
-            json={"message": "Hello"},
-            headers={"X-API-Key": managed_key},
-        )
+        # Use it on a protected endpoint so usage is logged
+        client.get("/admin/api-keys", headers={"X-API-Key": managed_key})
 
         # Check usage
         resp = client.get("/admin/api-keys/usage", headers=api_key_header)

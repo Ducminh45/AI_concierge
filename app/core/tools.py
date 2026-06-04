@@ -7,7 +7,6 @@ from time import time
 import uuid
 
 from ..database.db import DatabaseManager
-from ..services.pdf_generator import PDFGenerator
 from ..monitoring.logging_utils import logger, MonsterResortError
 from ..monitoring.metrics import Counter
 
@@ -22,12 +21,13 @@ _tool_call_timestamps: dict[str, list[float]] = defaultdict(list)
 
 # Defense 1: Authoritative hotel registry — single source of truth
 VALID_HOTELS = {
-    "Azure Bay Resort & Spa (Đà Nẵng)",
-    "Hội An Pearl Resort (Hội An)",
-    "Phú Quốc Paradise (Phú Quốc)",
-    "Sapa Highland Lodge (Sapa)",
-    "Nha Trang Coral Bay (Nha Trang)",
-    "Đà Lạt Pine Valley (Đà Lạt)",
+    "Vinpearl Nha Trang",
+    "Vinpearl Nam Hội An (Vinpearl Resort & Golf Nam Hội An)",
+    "Vinpearl Phú Quốc",
+    "Melia Vinpearl Cửa Sót Beach Resort (Hà Tĩnh)",
+    "Vinpearl Hotel Bắc Ninh",
+    "Melia Vinpearl Cửa Hội Beach Resort (Nghệ An)",
+    "Vinpearl Resort & Spa Hạ Long",
 }
 
 TOOL_CALL_COUNT = Counter("mrc_tool_calls_total", "Total tool calls", ["tool"])
@@ -44,46 +44,7 @@ class Tool:
     def to_openai_schema(self) -> dict:
         logger.debug("generating_openai_schema", extra={"tool": self.name})
 
-        if self.name == "book_room":
-            return {
-                "name": "book_room",
-                "description": "Book a room at one of our official Monster Resort properties.",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "session_id": {"type": "string"},
-                        "guest_name": {"type": "string"},
-                        "hotel_name": {
-                            "type": "string",
-                            "enum": list(VALID_HOTELS),
-                        },
-                        "room_type": {"type": "string"},
-                        "check_in": {"type": "string"},
-                        "check_out": {"type": "string"},
-                    },
-                    "required": [
-                        "session_id",
-                        "guest_name",
-                        "hotel_name",
-                        "room_type",
-                        "check_in",
-                        "check_out",
-                    ],
-                },
-            }
-
-        elif self.name == "get_booking":
-            return {
-                "name": "get_booking",
-                "description": "Retrieve details for an existing booking.",
-                "parameters": {
-                    "type": "object",
-                    "properties": {"booking_id": {"type": "string"}},
-                    "required": ["booking_id"],
-                },
-            }
-
-        elif self.name == "search_amenities":
+        if self.name == "search_amenities":
             return {
                 "name": "search_amenities",
                 "description": "Search resort knowledge base for amenities and info.",
@@ -98,7 +59,7 @@ class Tool:
             return {
                 "name": "search_events",
                 "description": (
-                    "Search for events across all Monster Resort "
+                    "Search for events across all Vinpearl "
                     "properties. Supports filtering by hotel, event "
                     "type, date range, availability, and tags. "
                     "Returns paginated results with sorting."
@@ -362,142 +323,11 @@ class ToolRegistry:
 
 def make_registry(
     db: DatabaseManager,
-    pdf: PDFGenerator,
     rag_search_fn: Callable,
 ) -> ToolRegistry:
     logger.info("initializing_tool_registry")
 
     registry = ToolRegistry()
-
-    @registry.register("book_room", "Create a new booking")
-    async def book_room(
-        session_id: str,
-        guest_name: str,
-        hotel_name: str,
-        room_type: str,
-        check_in: str,
-        check_out: str,
-        request_id: str,
-    ):
-        logger.info(
-            "book_room_called",
-            extra={
-                "request_id": request_id,
-                "session_id": session_id,
-                "guest_name": guest_name,
-                "hotel_name": hotel_name,
-            },
-        )
-
-        # Defense 1: Reject bookings for unknown hotels
-        if hotel_name not in VALID_HOTELS:
-            logger.warning(
-                "book_room_rejected_invalid_hotel",
-                extra={"hotel_name": hotel_name, "request_id": request_id},
-            )
-            return {
-                "ok": False,
-                "error": f"Invalid hotel: '{hotel_name}'. Must be one of our official properties.",
-                "request_id": request_id,
-            }
-
-        try:
-            booking = db.create_booking(
-                session_id=session_id,
-                guest_name=guest_name,
-                hotel_name=hotel_name,
-                room_type=room_type,
-                check_in=check_in,
-                check_out=check_out,
-            )
-
-            booking_id = booking.get("booking_id")
-
-            logger.info(
-                "booking_created",
-                extra={
-                    "request_id": request_id,
-                    "booking_id": booking_id,
-                },
-            )
-
-            invoice_url = None
-            try:
-                items = [(f"{room_type} at {hotel_name}", 299.99)]
-
-                pdf.create_receipt(
-                    guest_name=guest_name,
-                    booking_id=booking_id,
-                    items=items,
-                )
-
-                invoice_url = (
-                    f"/invoices/receipt_{booking_id}_"
-                    f"{guest_name.replace(' ', '_')}.pdf"
-                )
-
-                logger.info(
-                    "receipt_generated",
-                    extra={
-                        "request_id": request_id,
-                        "invoice_url": invoice_url,
-                    },
-                )
-
-            except Exception as pdf_err:
-                logger.warning(
-                    "receipt_generation_failed",
-                    extra={
-                        "request_id": request_id,
-                        "error": str(pdf_err),
-                    },
-                )
-
-            return {
-                "ok": True,
-                "booking_id": booking_id,
-                "message": f"Stay confirmed at {hotel_name}!",
-                "invoice_url": invoice_url,
-                "request_id": request_id,
-            }
-
-        except Exception as e:
-            logger.exception(
-                "book_room_failed",
-                extra={
-                    "request_id": request_id,
-                    "error": str(e),
-                },
-            )
-            return {"ok": False, "error": str(e), "request_id": request_id}
-
-    @registry.register("get_booking", "Look up a booking")
-    async def get_booking(booking_id: str, request_id: str):
-        logger.info(
-            "get_booking_called",
-            extra={
-                "request_id": request_id,
-                "booking_id": booking_id,
-            },
-        )
-
-        booking = db.get_booking(booking_id)
-
-        result = (
-            {"ok": True, "booking": booking, "request_id": request_id}
-            if booking
-            else {"ok": False, "error": "Not found", "request_id": request_id}
-        )
-
-        logger.info(
-            "get_booking_completed",
-            extra={
-                "request_id": request_id,
-                "found": bool(booking),
-            },
-        )
-
-        return result
 
     @registry.register("search_amenities", "Search resort knowledge")
     async def search_amenities(query: str, request_id: str):
@@ -547,7 +377,7 @@ def make_registry(
 
     @registry.register(
         "search_events",
-        "Search for events across all Monster Resort properties. "
+        "Search for events across all Vinpearl properties. "
         "Supports filtering by hotel, event type, date range, "
         "availability, and tags. Returns paginated results with sorting.",
     )

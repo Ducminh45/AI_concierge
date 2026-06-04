@@ -8,8 +8,6 @@ from app.rag.vector_rag import VectorRAG
 
 _validate = ConciergeOrchestrator._validate_tool_call
 
-VALID_HOTEL = "Vampire Manor: Eternal Night Inn"
-
 
 @pytest.fixture
 def guard():
@@ -116,61 +114,31 @@ class TestOutputGuardSecurity:
 
 class TestToolArgValidation:
 
-    def test_15_path_traversal(self):
-        ok, reason = _validate("book_room", {
-            "hotel_name": VALID_HOTEL,
-            "guest_name": "../etc/passwd",
-            "check_in": "2026-05-15",
-            "check_out": "2026-05-17",
-        })
-        assert ok is False
-        assert "invalid" in reason.lower() or "blocked" in reason.lower()
-
-    def test_16_normal_name(self):
-        ok, _ = _validate("book_room", {
-            "hotel_name": VALID_HOTEL,
-            "guest_name": "Mina Harker",
-            "check_in": "2026-05-15",
-            "check_out": "2026-05-17",
-        })
+    def test_15_valid_search_query(self):
+        ok, _ = _validate("search_amenities", {"query": "pool hours"})
         assert ok is True
 
-    def test_17_empty_name(self):
-        ok, reason = _validate("book_room", {
-            "hotel_name": VALID_HOTEL,
-            "guest_name": "",
-            "check_in": "2026-05-15",
-            "check_out": "2026-05-17",
-        })
+    def test_16_empty_search_query(self):
+        ok, reason = _validate("search_amenities", {"query": ""})
         assert ok is False
         assert "empty" in reason.lower()
 
-    def test_18_long_name(self):
-        ok, reason = _validate("book_room", {
-            "hotel_name": VALID_HOTEL,
-            "guest_name": "A" * 101,
-            "check_in": "2026-05-15",
-            "check_out": "2026-05-17",
-        })
+    def test_17_long_search_query(self):
+        ok, reason = _validate("search_amenities", {"query": "x" * 501})
         assert ok is False
-        assert "100" in reason
+        assert "500" in reason
 
-    def test_19_valid_date(self):
-        ok, _ = _validate("book_room", {
-            "hotel_name": VALID_HOTEL,
-            "guest_name": "Mina Harker",
-            "check_in": "2026-05-15",
-            "check_out": "2026-05-17",
-        })
+    def test_18_valid_event_limit(self):
+        ok, _ = _validate("search_events", {"limit": 10})
         assert ok is True
 
-    def test_20_natural_language_date(self):
-        ok, reason = _validate("book_room", {
-            "hotel_name": VALID_HOTEL,
-            "guest_name": "Mina Harker",
-            "check_in": "next tuesday",
-            "check_out": "2026-05-17",
-        })
+    def test_19_invalid_event_limit(self):
+        ok, reason = _validate("search_events", {"limit": 99})
+        assert ok is False
+        assert "between 1 and 50" in reason
+
+    def test_20_invalid_event_date(self):
+        ok, reason = _validate("search_events", {"start_after": "next tuesday"})
         assert ok is False
         assert "YYYY-MM-DD" in reason
 

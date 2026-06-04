@@ -14,18 +14,19 @@ def test_health_endpoint(client):
     assert "app" in data
 
 
-def test_chat_endpoint_requires_auth(client):
-    """Test chat endpoint rejects unauthenticated requests"""
+def test_chat_endpoint_allows_anonymous_requests(client):
+    """Chat should be available without login or API key."""
     response = client.post(
-        "/chat", json={"message": "Hello"}
+        "/chat", json={"message": "Hello", "session_id": "anonymous"}
     )
-    assert response.status_code in [401, 403]
+    assert response.status_code == 200
+    assert response.json()["ok"] is True
 
 
 def test_chat_endpoint_requires_message(client):
     """Test chat endpoint handles missing message"""
     response = client.post(
-        "/chat", json={}, headers=AUTH
+        "/chat", json={}
     )
     # May return 400/422 (validation) or 500 (unhandled)
     assert response.status_code in [400, 422, 500]
@@ -46,7 +47,6 @@ def test_sql_injection_prevention(client):
     response = client.post(
         "/chat",
         json={"message": malicious},
-        headers=AUTH,
     )
     assert response.status_code in [200, 400, 422, 500]
     health = client.get("/health")

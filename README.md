@@ -9,14 +9,15 @@
 
 ---
 
-## 🏨 Chuỗi 6 Khu Nghỉ Dưỡng Cao Cấp
-Hệ thống AI Concierge phục vụ đồng thời 6 resort hàng đầu trên cả nước:
-1. **Azure Bay Resort & Spa (Đà Nẵng)** — Sang trọng hiện đại bên bờ biển.
-2. **Hội An Pearl Resort (Hội An)** — Di sản văn hóa cổ kính bên sông Thu Bồn.
-3. **Phú Quốc Paradise (Phú Quốc)** — Thiên đường nhiệt đới & hoàng hôn vàng rực rỡ.
-4. **Sapa Highland Lodge (Sapa)** — Nét đẹp văn hóa bản địa sương mờ vùng cao.
-5. **Nha Trang Coral Bay (Nha Trang)** — Trải nghiệm phiêu lưu đại dương & thể thao nước đầy năng động.
-6. **Đà Lạt Pine Valley (Đà Lạt)** — Thung lũng thông mộng mơ & kiến trúc Pháp cổ điển.
+## 🏨 Bộ Dữ Liệu Vinpearl Mock Cho Chatbot Agent
+Hệ thống AI Concierge hiện dùng bộ dữ liệu mock Vinpearl được sinh từ `data.txt`, phục vụ 7 điểm đến:
+1. **Vinpearl Nha Trang** — Nghỉ dưỡng đảo Hòn Tre, VinWonders, bãi biển riêng.
+2. **Vinpearl Nam Hội An** — Resort & golf gần Hội An, VinWonders Nam Hội An, river safari.
+3. **Vinpearl Phú Quốc** — Tổ hợp all-in-one tại Bãi Dài với VinWonders, Safari, Grand World.
+4. **Melia Vinpearl Cửa Sót Beach Resort (Hà Tĩnh)** — Villa biển yên tĩnh, công viên nước nội khu.
+5. **Vinpearl Hotel Bắc Ninh** — Khách sạn 5 sao trung tâm, phù hợp công tác và MICE.
+6. **Melia Vinpearl Cửa Hội Beach Resort (Nghệ An)** — Resort biển Cửa Hội/Cửa Lò cho gia đình và cặp đôi.
+7. **Vinpearl Resort & Spa Hạ Long** — Resort đảo riêng trên Đảo Rều, view vịnh Hạ Long.
 
 ---
 
@@ -94,7 +95,7 @@ Cấu hình các thông số tối thiểu:
 ### 4. Chạy Ứng Dụng
 Khởi động server FastAPI phục vụ cả Backend API và Frontend SPA:
 ```bash
-uvicorn app.main:app --reload --port 8000
+uv run uvicorn app.main:app --reload --port 8000
 ```
 Truy cập ứng dụng tại địa chỉ: **[http://localhost:8000](http://localhost:8000)**.
 *Tài khoản đăng ký đầu tiên trên hệ thống sẽ tự động được cấp quyền **Admin**.*

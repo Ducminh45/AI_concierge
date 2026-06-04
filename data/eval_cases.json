@@ -1,142 +1,217 @@
 [
   {
     "id": 1,
-    "query": "What amenities does the resort have?",
-    "expected_tool": null,
-    "expected_keywords": ["pool", "spa", "restaurant"],
+    "query": "Vinpearl Nha Trang có gì nổi bật?",
+    "expected_tool": "search_amenities",
+    "expected_keywords": [
+      "Vinpearl Nha Trang",
+      "VinWonders",
+      "Hòn Tre"
+    ],
     "category": "knowledge_retrieval"
   },
   {
     "id": 2,
-    "query": "Book a room for John Smith at The Mummy Resort",
-    "expected_tool": "book_room",
-    "expected_keywords": ["booking", "confirmed"],
-    "category": "tool_use"
+    "query": "Gia đình có trẻ em nên chọn Vinpearl nào?",
+    "expected_tool": "search_amenities",
+    "expected_keywords": [
+      "Phú Quốc",
+      "Nha Trang",
+      "Nam Hội An"
+    ],
+    "category": "recommendation"
   },
   {
     "id": 3,
-    "query": "What's the checkout time?",
-    "expected_tool": null,
-    "expected_keywords": ["checkout", "time", "11"],
+    "query": "Vinpearl Phú Quốc có Safari không?",
+    "expected_tool": "search_amenities",
+    "expected_keywords": [
+      "Safari",
+      "VinWonders",
+      "Phú Quốc"
+    ],
     "category": "knowledge_retrieval"
   },
   {
     "id": 4,
-    "query": "Do you have a swimming pool?",
+    "query": "Check-in ở Melia Vinpearl Cửa Hội mấy giờ?",
     "expected_tool": "search_amenities",
-    "expected_keywords": ["pool", "swim"],
-    "category": "knowledge_retrieval"
+    "expected_keywords": [
+      "15:00",
+      "12:00",
+      "Cửa Hội"
+    ],
+    "category": "policy"
   },
   {
     "id": 5,
-    "query": "Look up booking BK-001",
-    "expected_tool": "get_booking",
-    "expected_keywords": ["booking", "BK-001"],
+    "query": "Tôi muốn đặt phòng Vinpearl Hạ Long cho 2 người",
+    "expected_tool": "book_room",
+    "expected_keywords": [
+      "booking",
+      "check-in",
+      "guest"
+    ],
     "category": "tool_use"
   },
   {
     "id": 6,
-    "query": "Hello! How are you?",
-    "expected_tool": null,
-    "expected_keywords": ["hello", "welcome", "help"],
-    "category": "chitchat"
+    "query": "Vinpearl Hotel Bắc Ninh phù hợp công tác không?",
+    "expected_tool": "search_amenities",
+    "expected_keywords": [
+      "business",
+      "MICE",
+      "Bắc Ninh"
+    ],
+    "category": "recommendation"
   },
   {
     "id": 7,
-    "query": "Tell me about the Werewolf Lodge",
+    "query": "Giá tham khảo Vinpearl Phú Quốc bao nhiêu?",
     "expected_tool": "search_amenities",
-    "expected_keywords": ["werewolf", "lodge"],
-    "category": "knowledge_retrieval"
+    "expected_keywords": [
+      "1.350.000",
+      "5.000.000",
+      "VND"
+    ],
+    "category": "pricing"
   },
   {
     "id": 8,
-    "query": "I need a room with a coffin bed at Vampire Manor",
-    "expected_tool": "book_room",
-    "expected_keywords": ["vampire", "manor", "coffin", "room"],
-    "category": "tool_use"
+    "query": "Có được mang đồ ăn vào VinWonders không?",
+    "expected_tool": "search_amenities",
+    "expected_keywords": [
+      "không được mang",
+      "đồ ăn",
+      "VinWonders"
+    ],
+    "category": "policy"
   },
   {
     "id": 9,
-    "query": "What restaurants are available?",
+    "query": "Resort nào ở đảo riêng Hạ Long?",
     "expected_tool": "search_amenities",
-    "expected_keywords": ["restaurant", "dining", "food"],
+    "expected_keywords": [
+      "Đảo Rều",
+      "Hạ Long",
+      "bãi biển riêng"
+    ],
     "category": "knowledge_retrieval"
   },
   {
     "id": 10,
-    "query": "Cancel booking BK-999",
-    "expected_tool": "cancel_booking",
-    "expected_keywords": ["cancel", "booking"],
-    "category": "tool_use"
-  },
-  {
-    "id": 11,
-    "query": "Is there Wi-Fi in the rooms?",
-    "expected_tool": "search_amenities",
-    "expected_keywords": ["wifi", "wi-fi", "internet"],
-    "category": "knowledge_retrieval"
-  },
-  {
-    "id": 12,
-    "query": "What's the weather like there?",
+    "query": "Hello, can you help me choose a Vinpearl resort?",
     "expected_tool": null,
-    "expected_keywords": ["weather", "sorry"],
+    "expected_keywords": [
+      "help",
+      "Vinpearl"
+    ],
     "category": "chitchat"
   },
   {
-    "id": 13,
-    "query": "How do I get to Castle Frankenstein?",
+    "id": 11,
+    "query": "Compare Vinpearl Nha Trang and Vinpearl Phu Quoc for kids",
     "expected_tool": "search_amenities",
-    "expected_keywords": ["castle", "frankenstein", "directions"],
+    "expected_keywords": [
+      "VinWonders",
+      "Safari",
+      "family"
+    ],
+    "category": "comparison"
+  },
+  {
+    "id": 12,
+    "query": "Melia Vinpearl Cửa Sót có công viên nước không?",
+    "expected_tool": "search_amenities",
+    "expected_keywords": [
+      "công viên nước",
+      "Cửa Sót"
+    ],
     "category": "knowledge_retrieval"
   },
   {
-    "id": 14,
-    "query": "Book a suite for Dracula from Oct 31 to Nov 2",
-    "expected_tool": "book_room",
-    "expected_keywords": ["suite", "booking", "confirmed"],
+    "id": 13,
+    "query": "Tôi cần thêm khăn và nước suối lên phòng",
+    "expected_tool": "create_service_request",
+    "expected_keywords": [
+      "towels",
+      "water",
+      "room"
+    ],
     "category": "tool_use"
   },
   {
-    "id": 15,
-    "query": "Do you allow pets? I have a three-headed dog",
+    "id": 14,
+    "query": "Có shuttle sân bay ở Phú Quốc không?",
     "expected_tool": "search_amenities",
-    "expected_keywords": ["pet", "policy"],
+    "expected_keywords": [
+      "airport",
+      "shuttle",
+      "Phú Quốc"
+    ],
+    "category": "transportation"
+  },
+  {
+    "id": 15,
+    "query": "Vinpearl Nam Hội An có river safari không?",
+    "expected_tool": "search_amenities",
+    "expected_keywords": [
+      "river safari",
+      "Nam Hội An"
+    ],
     "category": "knowledge_retrieval"
   },
   {
     "id": 16,
-    "query": "What's the scariest room you offer?",
+    "query": "Which Vinpearl has the highest rating in the mock data?",
     "expected_tool": "search_amenities",
-    "expected_keywords": ["room", "scare"],
-    "category": "knowledge_retrieval"
+    "expected_keywords": [
+      "Cửa Sót",
+      "9.6"
+    ],
+    "category": "rating"
   },
   {
     "id": 17,
-    "query": "Thanks for your help!",
+    "query": "Can you guarantee the room price today?",
     "expected_tool": null,
-    "expected_keywords": ["welcome", "glad", "help"],
-    "category": "chitchat"
+    "expected_keywords": [
+      "cannot",
+      "verify",
+      "reservation"
+    ],
+    "category": "guardrail"
   },
   {
     "id": 18,
-    "query": "Is room service available after midnight?",
+    "query": "Room service có phục vụ sau 22:00 không?",
     "expected_tool": "search_amenities",
-    "expected_keywords": ["room service", "midnight"],
-    "category": "knowledge_retrieval"
+    "expected_keywords": [
+      "22:00",
+      "late-night",
+      "limited"
+    ],
+    "category": "service"
   },
   {
     "id": 19,
-    "query": "What are the check-in hours?",
+    "query": "Vinpearl Hạ Long ăn sáng mấy giờ?",
     "expected_tool": "search_amenities",
-    "expected_keywords": ["check-in", "hours"],
-    "category": "knowledge_retrieval"
+    "expected_keywords": [
+      "6:00",
+      "10:30",
+      "Hạ Long"
+    ],
+    "category": "dining"
   },
   {
     "id": 20,
-    "query": "I want to book Zombie Bed and Breakfast for the whole family",
-    "expected_tool": "book_room",
-    "expected_keywords": ["zombie", "booking", "family"],
-    "category": "tool_use"
+    "query": "Tôi có chó nhỏ, có ở Vinpearl được không?",
+    "expected_tool": "search_amenities",
+    "expected_keywords": [
+      "pets",
+      "not allowed"
+    ],
+    "category": "policy"
   }
 ]

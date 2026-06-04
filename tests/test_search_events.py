@@ -59,7 +59,7 @@ class TestFilterByHotel:
     """2. Filter by hotel_name — only events from that hotel returned."""
 
     def test_single_hotel(self):
-        hotel = "The Werewolf Lodge: Moon & Moor"
+        hotel = MOCK_EVENTS[0]["hotel_name"]
         result = search_events(hotel_name=hotel)
         assert result["total"] > 0
         for event in result["events"]:
@@ -75,7 +75,7 @@ class TestFilterByEventType:
     """3. Filter by event_type — only matching event types."""
 
     def test_single_type(self):
-        etype = "full_moon_party"
+        etype = MOCK_EVENTS[0]["event_type"]
         result = search_events(event_type=etype)
         assert result["total"] > 0
         for event in result["events"]:
@@ -199,7 +199,8 @@ class TestCombinedFilters:
     """11. Combined filters — hotel + date range + tags together."""
 
     def test_hotel_date_tags(self):
-        hotel = "The Werewolf Lodge: Moon & Moor"
+        sample = next(e for e in MOCK_EVENTS if "music" in e["tags"])
+        hotel = sample["hotel_name"]
         result = search_events(
             hotel_name=hotel,
             start_after="2026-01-01",
@@ -294,9 +295,8 @@ class TestNegativeOffset:
 def _make_registry():
     """Build a ToolRegistry with mock dependencies."""
     db = MagicMock()
-    pdf = MagicMock()
     rag = MagicMock(return_value=[])
-    return make_registry(db, pdf, rag)
+    return make_registry(db, rag)
 
 
 def _run(coro):
@@ -310,22 +310,22 @@ class TestEventTypeNormalisation:
     def test_spaces_to_underscores(self):
         reg = _make_registry()
         result = _run(reg.async_execute_with_timing(
-            "search_events", event_type="full moon party",
+            "search_events", event_type="full moon festival",
         ))
         assert result["ok"] is True
         assert result["total"] > 0
         for e in result["events"]:
-            assert e["event_type"] == "full_moon_party"
+            assert e["event_type"] == "full_moon_festival"
 
     def test_mixed_case_event_type(self):
         reg = _make_registry()
         result = _run(reg.async_execute_with_timing(
-            "search_events", event_type="Haunted Tour",
+            "search_events", event_type="Full Moon Festival",
         ))
         assert result["ok"] is True
         assert result["total"] > 0
         for e in result["events"]:
-            assert e["event_type"] == "haunted_tour"
+            assert e["event_type"] == "full_moon_festival"
 
 
 class TestTagsNormalisation:
@@ -445,12 +445,12 @@ class TestTagBleedDetection:
     def test_valid_event_type_stays(self):
         reg = _make_registry()
         result = _run(reg.async_execute_with_timing(
-            "search_events", event_type="full_moon_party",
+            "search_events", event_type="full_moon_festival",
         ))
         assert result["ok"] is True
         assert result["total"] > 0
         for e in result["events"]:
-            assert e["event_type"] == "full_moon_party"
+            assert e["event_type"] == "full_moon_festival"
 
     def test_unknown_event_type_removed(self):
         """Unknown event_type is dropped so results aren't silently empty."""

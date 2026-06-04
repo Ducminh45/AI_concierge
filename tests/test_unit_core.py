@@ -1,7 +1,6 @@
 from app.config import Settings
 from app.core.tools import make_registry
 from app.core.memory import MemoryStore
-from app.services.pdf_generator import PDFGenerator
 from app.rag.vector_rag import VectorRAG
 from app.database.db import DatabaseManager
 
@@ -14,14 +13,26 @@ def test_settings_load():
     assert s.rag_collection
 
 
+def test_settings_accept_mrc_prefix_aliases(monkeypatch):
+    """Docker Compose still uses the legacy MRC_ prefix."""
+    monkeypatch.delenv("RC_DATABASE_URL", raising=False)
+    monkeypatch.delenv("RC_API_KEY", raising=False)
+    monkeypatch.setenv("MRC_DATABASE_URL", "sqlite:///./mrc_alias.db")
+    monkeypatch.setenv("MRC_API_KEY", "legacy-api-key")
+
+    s = Settings()
+
+    assert s.database_url == "sqlite:///./mrc_alias.db"
+    assert s.api_key == "legacy-api-key"
+
+
 def test_tool_registry():
     """Test tool registry initialization and basic operations."""
     db = DatabaseManager(Settings())
-    pdf = PDFGenerator("./test_pdfs")
     rag = VectorRAG("./.rag_store", "test_collection")
 
     reg = make_registry(
-        db=db, pdf=pdf,
+        db=db,
         rag_search_fn=lambda q, k=5: rag.search(q, k)
     )
     tools = reg.list()

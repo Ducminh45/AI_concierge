@@ -131,8 +131,6 @@ class MemoryStore:
         intents = []
         entities = []
         for line in lines:
-            if re.search(r"\b(book|reserve|cancel)\b", line, re.I):
-                intents.append("booking")
             if re.search(r"\b(invoice|receipt|pdf)\b", line, re.I):
                 intents.append("invoice")
             entities.extend(re.findall(r"\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*\b", line))

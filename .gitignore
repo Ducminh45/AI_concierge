@@ -38,7 +38,7 @@ stress_test.py
 test_chat.sh
 test_embeddings_tokens.py
 rag_eval.ipynb
-main.py
+/main.py
 notebooks/practice.ipynb
 CHAT_UI_GUIDE.md
 FEATURES_GUIDE.md
