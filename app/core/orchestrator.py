@@ -433,6 +433,7 @@ class ConciergeOrchestrator:
         "book", "reserve", "reservation", "cancel", "booking",
         "my booking", "booking id", "check my", "look up",
         "đặt phòng", "đặt lịch", "đặt bàn", "đặt spa", "đặt tour",
+        "weather", "thời tiết", "nhiệt độ",
     ])
 
     # Temporal / filter phrases that signal an event query needs search_events
@@ -716,6 +717,20 @@ class ConciergeOrchestrator:
                 return (
                     False,
                     "Blocked: offset must be >= 0.",
+                )
+        elif tool_name == "get_weather":
+            location = tool_args.get("location", "")
+            if not location or not location.strip():
+                return False, "Blocked: location cannot be empty."
+            if len(location) > 100:
+                return (
+                    False,
+                    "Blocked: location exceeds 100 character limit.",
+                )
+            if ConciergeOrchestrator._DANGEROUS_PATH_RE.search(location):
+                return (
+                    False,
+                    "Blocked: location contains invalid characters.",
                 )
         else:
             logger.warning(

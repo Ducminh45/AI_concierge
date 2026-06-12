@@ -61,59 +61,12 @@ class RoleUpdate(BaseModel):
 
 @router.post("/auth/register")
 async def register_user(request: Request, body: UserRegister):
-    db: DatabaseManager = request.app.state.db
-    
-    # Check if user already exists
-    existing = db.get_user(body.username)
-    if existing:
-        raise HTTPException(status_code=400, detail="Tên đăng nhập đã tồn tại / Username already exists")
-        
-    pwd_hash = hash_password(body.password)
-    
-    # Auto-assign 'admin' role to first user, otherwise 'guest'
-    all_users = db.get_all_users()
-    role = "admin" if len(all_users) == 0 else "guest"
-    
-    try:
-        user_dict = db.create_user(
-            username=body.username,
-            password_hash=pwd_hash,
-            email=body.email,
-            full_name=body.full_name,
-            role=role
-        )
-        # Auto-login after registration
-        token = create_access_token(body.username, role)
-        return {
-            "ok": True,
-            "message": "Đăng ký tài khoản thành công / Registration successful",
-            "token": token,
-            "user": user_dict
-        }
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Registration failed: {e}")
+    raise HTTPException(status_code=404, detail="Registration is disabled in login-less mode")
 
 
 @router.post("/auth/login")
 async def login_user(request: Request, body: UserLogin):
-    db: DatabaseManager = request.app.state.db
-    
-    user = db.get_user(body.username)
-    if not user or not verify_password(body.password, user["password_hash"]):
-        raise HTTPException(status_code=401, detail="Tài khoản hoặc mật khẩu không chính xác / Incorrect username or password")
-        
-    token = create_access_token(user["username"], user["role"])
-    
-    return {
-        "ok": True,
-        "token": token,
-        "user": {
-            "username": user["username"],
-            "email": user["email"],
-            "full_name": user["full_name"],
-            "role": user["role"]
-        }
-    }
+    raise HTTPException(status_code=404, detail="Login is disabled in login-less mode")
 
 
 @router.get("/auth/me")

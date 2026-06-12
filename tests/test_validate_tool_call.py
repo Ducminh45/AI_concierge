@@ -155,6 +155,35 @@ class TestSearchAmenities:
         assert ok is True
 
 
+class TestGetWeather:
+    def test_valid_location(self):
+        ok, reason = _validate_tool_call("get_weather", {
+            "location": "Da Nang",
+        })
+        assert ok is True
+
+    def test_empty_location(self):
+        ok, reason = _validate_tool_call("get_weather", {
+            "location": "",
+        })
+        assert ok is False
+        assert "empty" in reason.lower()
+
+    def test_location_too_long(self):
+        ok, reason = _validate_tool_call("get_weather", {
+            "location": "A" * 101,
+        })
+        assert ok is False
+        assert "100" in reason
+
+    def test_location_path_traversal(self):
+        ok, reason = _validate_tool_call("get_weather", {
+            "location": "../../etc/passwd",
+        })
+        assert ok is False
+        assert "invalid characters" in reason.lower()
+
+
 class TestUnknownTool:
     def test_unknown_tool_passes(self):
         ok, reason = _validate_tool_call("nonexistent_tool", {})

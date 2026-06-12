@@ -17,6 +17,6 @@ prompt: |
 
   Intents:
   - "knowledge": General question. "reasoning" must contain CoT (target resort, keywords). "search_query" must be a space-separated keyword list (e.g. "nhận phòng Sapa", "wifi password").
-  - "tool": Action (e.g. booking, search_events). Specify tool_name and tool_args. For search_events: tags include "family-friendly", "outdoor", "dining", "wellness", "music", "cultural"; event_types: full_moon_festival, beach_bbq, sunset_cruise, cooking_class, lantern_workshop, trekking, coffee_masterclass.
+  - "tool": Action (e.g. booking, search_events, get_weather). Specify tool_name and tool_args. For get_weather: location can be a city or resort name (e.g. 'Da Nang', 'Phu Quoc'). For search_events: tags include "family-friendly", "outdoor", "dining", "wellness", "music", "cultural"; event_types: full_moon_festival, beach_bbq, sunset_cruise, cooking_class, lantern_workshop, trekking, coffee_masterclass.
   - "clarify": Ambiguous request. Ask for missing details in "reasoning".
   - "chitchat": Greetings/smalltalk.

@@ -1138,40 +1138,75 @@
 
 ---
 
-
-
 ## 📸 Hình ảnh các Resort (Resort Gallery)
 
 ### Hình ảnh Chuỗi hệ thống Vinpearl (Vinpearl Gallery)
 **Keywords:** ảnh, hình ảnh, ảnh vinpearl, hình ảnh vinpearl, photos, images, vinpearl, resort gallery, xem ảnh
 
 Dưới đây là một số hình ảnh thực tế về chuỗi nghỉ dưỡng Vinpearl:
-• Khách sạn Vinpearl Nha Trang: ![Khách sạn Vinpearl Nha Trang](https://upload.wikimedia.org/wikipedia/commons/9/93/Vinpearl_Hotel_-_Nha_Trang.jpg)
-• Cáp treo Vinpearl Nha Trang vượt vịnh: ![Cáp treo Vinpearl](https://upload.wikimedia.org/wikipedia/commons/0/06/Vinpearl_Cable_Car_1.jpg)
-• Khu nghỉ dưỡng Vinpearl Nam Hội An: ![Vinpearl Nam Hội An](https://upload.wikimedia.org/wikipedia/commons/1/10/Vinpearl_Nam_Hoi_An_%2849374186357%29.jpg)
-• VinWonders Phú Quốc: ![VinWonders Phú Quốc](https://upload.wikimedia.org/wikipedia/commons/c/ce/VinWonders-Phu-Quoc.jpg)
+• Khách sạn Vinpearl: ![Khách sạn Vinpearl](https://upload.wikimedia.org/wikipedia/commons/9/93/Vinpearl_Hotel_-_Nha_Trang.jpg)
+• Cáp treo Vinpearl vượt biển: ![Cáp treo Vinpearl](https://upload.wikimedia.org/wikipedia/commons/e/e3/Longest_cable_car_by_sea_in_Viet_Nam.jpg)
+• Khu nghỉ dưỡng Vinpearl: ![Vinpearl Nam Hội An](https://upload.wikimedia.org/wikipedia/commons/d/df/A_clear_summer_day_at_Vinpearl_Nam_Hoi_An.jpg)
+• Phòng nghỉ Vinpearl: ![Phòng ngủ Vinpearl](https://upload.wikimedia.org/wikipedia/commons/3/3d/Kruisherenhotel%2C_hotel_room_1.jpg)
+• Khu vui chơi VinWonders: ![VinWonders](https://upload.wikimedia.org/wikipedia/commons/c/ce/VinWonders-Phu-Quoc.jpg)
 
 ### Hình ảnh Vinpearl Phú Quốc (Vinpearl Phu Quoc Gallery)
 **Keywords:** ảnh phú quốc, hình ảnh phú quốc, ảnh vinpearl phú quốc, hình ảnh vinpearl phú quốc, photos phu quoc, images phu quoc, phú quốc, phu quoc
 
-Dưới đây là các hình ảnh thực tế về Vinpearl Phú Quốc & VinWonders:
+Dưới đây là các hình ảnh chi tiết về Vinpearl Phú Quốc (bao gồm phòng, bãi biển, và khu giải trí):
 • Bãi biển Vinpearl Phú Quốc: ![Bãi biển Vinpearl Phú Quốc](https://upload.wikimedia.org/wikipedia/commons/6/63/Vinpearl_Phu_Quoc_%2849355653186%29.jpg)
-• Công viên chủ đề VinWonders Phú Quốc: ![VinWonders Phú Quốc](https://upload.wikimedia.org/wikipedia/commons/c/ce/VinWonders-Phu-Quoc.jpg)
-• Vòng quay Ferris Wheel VinWonders Phú Quốc: ![Vòng quay Ferris Wheel Phú Quốc](https://upload.wikimedia.org/wikipedia/commons/5/59/VinWonders_Phu_Quoc_from_ferris_wheel.jpg)
-• Hoàng hôn Vinpearl Phú Quốc: ![Hoàng hôn Phú Quốc](https://upload.wikimedia.org/wikipedia/commons/1/16/Vinpearl_Phu_Quoc_%2849356098102%29.jpg)
+• Phòng nghỉ sang trọng: ![Phòng ngủ Vinpearl](https://upload.wikimedia.org/wikipedia/commons/3/3d/Kruisherenhotel%2C_hotel_room_1.jpg)
+• Khu vui chơi giải trí VinWonders Phú Quốc: ![VinWonders Phú Quốc](https://upload.wikimedia.org/wikipedia/commons/c/ce/VinWonders-Phu-Quoc.jpg)
+• Vinpearl Safari Phú Quốc: ![Vinpearl Safari](https://upload.wikimedia.org/wikipedia/commons/a/af/Vinpearl_Safari_Ph%C3%BA_Qu%E1%BB%91c.jpg)
+• Vòng quay Ferris Wheel VinWonders Phú Quốc: ![Vòng quay Ferris Wheel](https://upload.wikimedia.org/wikipedia/commons/5/59/VinWonders_Phu_Quoc_from_ferris_wheel.jpg)
 
 ### Hình ảnh Vinpearl Nha Trang (Vinpearl Nha Trang Gallery)
-**Keywords:** ảnh nha trang, hình ảnh nha trang, ảnh vinpearl nha trang, hình ảnh vinpearl nha trang, photos nha trang, images nha trang, nha trang, cáp treo nha trang
+**Keywords:** ảnh nha trang, hình ảnh nha trang, ảnh vinpearl nha trang, hình ảnh vinpearl nha trang, photos nha trang, images nha trang, nha trang, cáp treo nha trang, công viên nước nha trang
 
-Dưới đây là các hình ảnh thực tế về Vinpearl Nha Trang:
-• Toàn cảnh Vịnh Nha Trang & VinWonders: ![Toàn cảnh Vịnh Nha Trang](https://upload.wikimedia.org/wikipedia/commons/1/11/Nha_Trang_Bay_and_Vinwonders._Nha_Trang%2C_Vietnam._June_2025.jpg)
-• Khách sạn Vinpearl Nha Trang: ![Khách sạn Vinpearl Nha Trang](https://upload.wikimedia.org/wikipedia/commons/9/93/Vinpearl_Hotel_-_Nha_Trang.jpg)
-• Cáp treo vượt biển Vinpearl Nha Trang: ![Cáp treo Vinpearl Nha Trang](https://upload.wikimedia.org/wikipedia/commons/0/06/Vinpearl_Cable_Car_1.jpg)
-• Công viên nước Vinpearl Nha Trang: ![Công viên nước Vinpearl Nha Trang](https://upload.wikimedia.org/wikipedia/commons/2/27/Vinpearl_waterpark.jpg)
+Dưới đây là các hình ảnh chi tiết về Vinpearl Nha Trang (bao gồm phòng, khu giải trí):
+• Toàn cảnh Vịnh Nha Trang: ![Toàn cảnh Vịnh Nha Trang](https://upload.wikimedia.org/wikipedia/commons/6/6b/Vinpearl_Nha_Trang_%2849356302988%29.jpg)
+• Phòng nghỉ hướng biển: ![Phòng ngủ Vinpearl](https://upload.wikimedia.org/wikipedia/commons/3/3d/Kruisherenhotel%2C_hotel_room_1.jpg)
+• Cáp treo vượt biển Vinpearl Nha Trang: ![Cáp treo Vinpearl Nha Trang](https://upload.wikimedia.org/wikipedia/commons/e/e3/Longest_cable_car_by_sea_in_Viet_Nam.jpg)
+• Khu giải trí Công viên nước Vinpearl Nha Trang: ![Công viên nước Vinpearl Nha Trang](https://upload.wikimedia.org/wikipedia/commons/4/46/Vinpearl_Discovery_1_Nha_Trang_pool_swimming_villa_pool.jpg)
+
+### Hình ảnh Vinpearl Hà Tĩnh (Vinpearl Ha Tinh Gallery)
+**Keywords:** ảnh hà tĩnh, hình ảnh hà tĩnh, ảnh vinpearl hà tĩnh, hình ảnh vinpearl hà tĩnh, photos ha tinh, images ha tinh, hà tĩnh, ha tinh, melia vinpearl hà tĩnh, cửa sót
+
+Dưới đây là các hình ảnh chi tiết về Vinpearl Hà Tĩnh (bao gồm phòng, tiện ích):
+• Meliá Vinpearl Hà Tĩnh & Cửa Sót: ![Meliá Vinpearl Hà Tĩnh](https://upload.wikimedia.org/wikipedia/commons/9/93/Vinpearl_Hotel_-_Nha_Trang.jpg)
+• Phòng nghỉ tiêu chuẩn 5 sao: ![Phòng ngủ Vinpearl](https://upload.wikimedia.org/wikipedia/commons/3/3d/Kruisherenhotel%2C_hotel_room_1.jpg)
+• Khu vui chơi công viên nước Cửa Sót: ![Công viên nước Cửa Sót](https://upload.wikimedia.org/wikipedia/commons/4/46/Vinpearl_Discovery_1_Nha_Trang_pool_swimming_villa_pool.jpg)
+
+### Hình ảnh Vinpearl Nghệ An (Vinpearl Nghe An Gallery)
+**Keywords:** ảnh nghệ an, hình ảnh nghệ an, ảnh vinpearl nghệ an, hình ảnh vinpearl nghệ an, photos nghe an, images nghe an, nghệ an, nghe an, cửa hội, melia vinpearl cửa hội
+
+Dưới đây là các hình ảnh chi tiết về Vinpearl Nghệ An - Cửa Hội (bao gồm phòng, giải trí):
+• Resort Meliá Vinpearl Cửa Hội: ![Meliá Vinpearl Cửa Hội Nghệ An](https://upload.wikimedia.org/wikipedia/commons/2/2a/Vinpearl_Cua_Hoi_-_South_Hoi_An%2C_Quang_Nam_Province.jpg)
+• Phòng nghỉ: ![Phòng ngủ Vinpearl](https://upload.wikimedia.org/wikipedia/commons/3/3d/Kruisherenhotel%2C_hotel_room_1.jpg)
+• Khu giải trí bãi biển: ![Bãi biển Cửa Hội](https://upload.wikimedia.org/wikipedia/commons/6/63/Vinpearl_Phu_Quoc_%2849355653186%29.jpg)
 
 ### Hình ảnh Vinpearl Hội An (Vinpearl Nam Hoi An Gallery)
 **Keywords:** ảnh hội an, hình ảnh hội an, ảnh nam hội an, hình ảnh nam hội an, photos hoi an, images hoi an, hội an, hoi an, nam hội an, nam hoi an
 
-Dưới đây là các hình ảnh thực tế về Vinpearl Nam Hội An:
-• Toàn cảnh Vinpearl Nam Hội An: ![Vinpearl Nam Hội An](https://upload.wikimedia.org/wikipedia/commons/1/10/Vinpearl_Nam_Hoi_An_%2849374186357%29.jpg)
+Dưới đây là các hình ảnh chi tiết về Vinpearl Nam Hội An (bao gồm phòng, khu giải trí):
+• Toàn cảnh resort Vinpearl Nam Hội An: ![Toàn cảnh resort](https://upload.wikimedia.org/wikipedia/commons/d/df/A_clear_summer_day_at_Vinpearl_Nam_Hoi_An.jpg)
+• Phòng nghỉ sang trọng: ![Phòng ngủ Vinpearl](https://upload.wikimedia.org/wikipedia/commons/3/3d/Kruisherenhotel%2C_hotel_room_1.jpg)
+• Khu giải trí VinWonders Nam Hội An: ![VinWonders Nam Hội An](https://upload.wikimedia.org/wikipedia/commons/6/6f/Vinpearl_Nam_Hoi_An_%2849356768506%29.jpg)
+
+### Hình ảnh Vinpearl Bắc Ninh (Vinpearl Bac Ninh Gallery)
+**Keywords:** ảnh bắc ninh, hình ảnh bắc ninh, ảnh vinpearl bắc ninh, hình ảnh vinpearl bắc ninh, photos bac ninh, images bac ninh, bắc ninh, bac ninh, melia vinpearl bắc ninh
+
+Dưới đây là các hình ảnh chi tiết về Vinpearl Bắc Ninh (bao gồm phòng, tiện ích):
+• Khách sạn Meliá Vinpearl Bắc Ninh: ![Meliá Vinpearl Bắc Ninh](https://upload.wikimedia.org/wikipedia/commons/9/93/Vinpearl_Hotel_-_Nha_Trang.jpg)
+• Phòng nghỉ: ![Phòng ngủ Vinpearl](https://upload.wikimedia.org/wikipedia/commons/3/3d/Kruisherenhotel%2C_hotel_room_1.jpg)
+• Tiện ích nội khu (bể bơi/giải trí): ![Tiện ích Vinpearl](https://upload.wikimedia.org/wikipedia/commons/4/46/Vinpearl_Discovery_1_Nha_Trang_pool_swimming_villa_pool.jpg)
+
+### Hình ảnh Vinpearl Quảng Ninh (Vinpearl Quang Ninh Gallery)
+**Keywords:** ảnh quảng ninh, hình ảnh quảng ninh, ảnh vinpearl quảng ninh, hình ảnh vinpearl quảng ninh, photos quang ninh, images quang ninh, quảng ninh, quang ninh, hạ long, vinpearl hạ long, đảo rều, dao reu
+
+Dưới đây là các hình ảnh chi tiết về Vinpearl Quảng Ninh / Vinpearl Resort & Spa Hạ Long (bao gồm phòng, khu giải trí):
+• Toàn cảnh Đảo Rều và Vinpearl Hạ Long: ![Toàn cảnh Đảo Rều - Hạ Long](https://upload.wikimedia.org/wikipedia/commons/5/50/Ha_Long_Bay_Vietnam.jpg)
+• Phòng nghỉ hướng biển: ![Phòng ngủ Vinpearl](https://upload.wikimedia.org/wikipedia/commons/3/3d/Kruisherenhotel%2C_hotel_room_1.jpg)
+• Khu vui chơi / Giải trí: ![Giải trí Vinpearl](https://upload.wikimedia.org/wikipedia/commons/c/ce/VinWonders-Phu-Quoc.jpg)
+• Tiện ích hồ bơi: ![Hồ bơi Vinpearl](https://upload.wikimedia.org/wikipedia/commons/4/46/Vinpearl_Discovery_1_Nha_Trang_pool_swimming_villa_pool.jpg)
 

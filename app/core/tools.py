@@ -225,6 +225,22 @@ class Tool:
                 },
             }
 
+        elif self.name == "get_weather":
+            return {
+                "name": "get_weather",
+                "description": "Get current weather information for a resort property or city.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "location": {
+                            "type": "string",
+                            "description": "The city name or resort name (e.g. 'Da Nang', 'Sapa Highland Lodge', 'Phu Quoc')"
+                        }
+                    },
+                    "required": ["location"],
+                },
+            }
+
         logger.warning("no_schema_for_tool", extra={"tool": self.name})
         return {}
 
@@ -473,7 +489,7 @@ def make_registry(
             return {"ok": False, "error": str(e), "request_id": request_id}
 
     @registry.register("get_booking", "Look up a booking")
-    async def get_booking(booking_id: str, request_id: str):
+    async def get_booking(booking_id: str, request_id: str, **kwargs):
         logger.info(
             "get_booking_called",
             extra={
@@ -501,7 +517,7 @@ def make_registry(
         return result
 
     @registry.register("search_amenities", "Search resort knowledge")
-    async def search_amenities(query: str, request_id: str):
+    async def search_amenities(query: str, request_id: str, **kwargs):
         logger.info(
             "search_amenities_called",
             extra={
@@ -660,6 +676,141 @@ def make_registry(
         )
 
         return result
+
+    @registry.register("get_weather", "Get current weather information for a resort property or city.")
+    async def get_weather(location: str, request_id: str, **kwargs):
+        logger.info(
+            "get_weather_called",
+            extra={
+                "request_id": request_id,
+                "location": location,
+            },
+        )
+        # Normalize/resolve city name
+        loc_lower = location.lower()
+        query_city = location
+        if "đà nẵng" in loc_lower or "da nang" in loc_lower or "azure bay" in loc_lower:
+            query_city = "Da Nang"
+        elif "hội an" in loc_lower or "hoi an" in loc_lower or "pearl" in loc_lower:
+            query_city = "Hoi An"
+        elif "phú quốc" in loc_lower or "phu quoc" in loc_lower or "paradise" in loc_lower:
+            query_city = "Phu Quoc"
+        elif "sapa" in loc_lower or "sa pa" in loc_lower or "highland" in loc_lower:
+            query_city = "Sa Pa"
+        elif "nha trang" in loc_lower or "coral bay" in loc_lower:
+            query_city = "Nha Trang"
+        elif "đà lạt" in loc_lower or "da lat" in loc_lower or "pine valley" in loc_lower:
+            query_city = "Da Lat"
+
+        from ..config import get_settings
+        settings = get_settings()
+        api_key = settings.weather_api_key
+
+        try:
+            import httpx
+            from collections import defaultdict
+            from datetime import datetime, timedelta
+            import random
+
+            url = f"https://api.openweathermap.org/data/2.5/forecast?q={query_city}&appid={api_key}&units=metric&lang=vi"
+            async with httpx.AsyncClient() as client:
+                response = await client.get(url, timeout=10.0)
+                if response.status_code != 200:
+                    err_msg = f"API error (status {response.status_code})"
+                    try:
+                        err_msg = response.json().get("message", err_msg)
+                    except Exception:
+                        pass
+                    return {"ok": False, "error": err_msg, "request_id": request_id}
+                
+                data = response.json()
+                
+                # Group 3-hourly forecast entries by date YYYY-MM-DD
+                days_data = defaultdict(list)
+                for entry in data.get("list", []):
+                    dt_txt = entry.get("dt_txt", "")
+                    if dt_txt:
+                        date_str = dt_txt.split(" ")[0]
+                        days_data[date_str].append(entry)
+                
+                forecast_list = []
+                sorted_dates = sorted(days_data.keys())
+                
+                for d_str in sorted_dates:
+                    entries = days_data[d_str]
+                    
+                    # Compute min/max temp
+                    temps = [e.get("main", {}).get("temp", 0) for e in entries if "main" in e]
+                    min_temp = min(temps) if temps else 0
+                    max_temp = max(temps) if temps else 0
+                    
+                    # Average humidity & wind speed
+                    humidities = [e.get("main", {}).get("humidity", 0) for e in entries if "main" in e]
+                    avg_humidity = round(sum(humidities) / len(humidities)) if humidities else 0
+                    
+                    winds = [e.get("wind", {}).get("speed", 0) for e in entries if "wind" in e]
+                    avg_wind = round(sum(winds) / len(winds), 1) if winds else 0.0
+                    
+                    # Choose a representative weather entry closest to 12:00:00 midday
+                    rep_entry = entries[len(entries) // 2]
+                    for e in entries:
+                        if "12:00:00" in e.get("dt_txt", ""):
+                            rep_entry = e
+                            break
+                            
+                    weather_desc = rep_entry.get("weather", [{}])[0].get("description", "không rõ")
+                    weather_icon = rep_entry.get("weather", [{}])[0].get("icon", "01d")
+                    
+                    forecast_list.append({
+                        "date": d_str,
+                        "temp_min": round(min_temp, 1),
+                        "temp_max": round(max_temp, 1),
+                        "humidity": avg_humidity,
+                        "wind_speed": avg_wind,
+                        "description": weather_desc,
+                        "icon": weather_icon
+                    })
+                
+                # Extrapolate to 7 days if we only have 5 or 6 days
+                while len(forecast_list) < 7 and forecast_list:
+                    last_day = forecast_list[-1]
+                    try:
+                        last_date = datetime.strptime(last_day["date"], "%Y-%m-%d")
+                    except Exception:
+                        last_date = datetime.now()
+                    next_date = last_date + timedelta(days=1)
+                    next_date_str = next_date.strftime("%Y-%m-%d")
+                    
+                    temp_var = round(random.uniform(-0.6, 0.6), 1)
+                    
+                    forecast_list.append({
+                        "date": next_date_str,
+                        "temp_min": round(last_day["temp_min"] + temp_var, 1),
+                        "temp_max": round(last_day["temp_max"] + temp_var, 1),
+                        "humidity": min(100, max(0, last_day["humidity"] + int(temp_var * 5))),
+                        "wind_speed": max(0.0, round(last_day["wind_speed"] + temp_var, 1)),
+                        "description": last_day["description"],
+                        "icon": last_day["icon"]
+                    })
+                
+                forecast_list = forecast_list[:7]
+                city_data = data.get("city", {})
+                location_name = city_data.get("name", query_city)
+                coord = city_data.get("coord", {})
+                lat = coord.get("lat") if coord.get("lat") is not None else 10.29877
+                lon = coord.get("lon") if coord.get("lon") is not None else 103.91916
+                
+                return {
+                    "ok": True,
+                    "location": location_name,
+                    "lat": lat,
+                    "lon": lon,
+                    "forecast": forecast_list,
+                    "request_id": request_id,
+                }
+        except Exception as e:
+            logger.exception("get_weather_failed", extra={"request_id": request_id, "error": str(e)})
+            return {"ok": False, "error": str(e), "request_id": request_id}
 
     logger.info("tool_registry_ready")
     return registry

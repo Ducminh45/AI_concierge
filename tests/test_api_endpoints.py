@@ -14,12 +14,12 @@ def test_health_endpoint(client):
     assert "app" in data
 
 
-def test_chat_endpoint_requires_auth(client):
-    """Test chat endpoint rejects unauthenticated requests"""
+def test_chat_endpoint_allows_fallback_auth(client):
+    """Test chat endpoint allows requests using default fallback auth"""
     response = client.post(
         "/chat", json={"message": "Hello"}
     )
-    assert response.status_code in [401, 403]
+    assert response.status_code == 200
 
 
 def test_chat_endpoint_requires_message(client):

@@ -3,6 +3,7 @@ services:
   - type: web
     name: ai-resort-concierge
     env: python
+    plan: free
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     envVars:
@@ -23,8 +24,4 @@ services:
       - key: RC_API_KEY
         generateValue: true
       - key: RC_DATABASE_URL
-        value: sqlite:////opt/render/project/src/resort_concierge.db
-    disk:
-      name: sqlite-data
-      mountPath: /opt/render/project/src
-      sizeGB: 1
+        value: sqlite:///./resort_concierge.db

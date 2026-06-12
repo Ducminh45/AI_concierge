@@ -10,6 +10,206 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Weather Forecast Styling */
+        .weather-header-tab {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(200, 151, 62, 0.2);
+        }
+        .weather-title-wrapper-tab {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: #C8973E;
+        }
+        .weather-icon-header {
+            font-size: 24px;
+            color: #C8973E;
+        }
+        .weather-forecast-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 480px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+        .no-weather {
+            text-align: center;
+            color: #888;
+            font-style: italic;
+            padding: 40px 20px;
+            font-size: 14px;
+        }
+        .weather-row {
+            display: grid;
+            grid-template-columns: 1.8fr 1.2fr 2.2fr 1.8fr;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(200, 151, 62, 0.1);
+            border-radius: 8px;
+            padding: 10px 14px;
+            transition: all 0.2s ease;
+        }
+        .weather-row:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(200, 151, 62, 0.3);
+            transform: translateY(-1px);
+        }
+        .weather-row-day {
+            font-weight: 600;
+            color: #e2e8f0;
+            font-size: 14px;
+        }
+        .weather-row-icon {
+            display: flex;
+            justify-content: center;
+            font-size: 20px;
+            color: #C8973E;
+        }
+        .weather-row-desc {
+            color: #94a3b8;
+            font-size: 13px;
+            text-transform: capitalize;
+            padding-left: 8px;
+        }
+        .weather-row-temp {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+            font-size: 13px;
+        }
+        .temp-max {
+            color: #f43f5e;
+            font-weight: 600;
+        }
+        .temp-min {
+            color: #38bdf8;
+        }
+        .weather-details-mini {
+            display: flex;
+            gap: 12px;
+            font-size: 11px;
+            color: #64748b;
+            grid-column: 1 / -1;
+            margin-top: 6px;
+            padding-top: 6px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.05);
+        }
+        .weather-details-mini span i {
+            color: #C8973E;
+            margin-right: 4px;
+        }
+
+        /* Inline Chat Weather Card */
+        .chat-weather-card {
+            background: #ffffff;
+            border: 1px solid rgba(196, 162, 129, 0.3);
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 12px;
+            box-shadow: 0 4px 12px rgba(110, 83, 57, 0.04);
+            max-width: 100%;
+            text-align: left;
+        }
+        .chat-weather-top {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 16px;
+        }
+        .chat-weather-left {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 80px;
+        }
+        .chat-weather-main-icon {
+            font-size: 44px;
+            color: #e67e30; /* Use orange accent for primary weather state */
+            margin-bottom: 6px;
+            filter: drop-shadow(0 2px 6px rgba(230, 126, 48, 0.25));
+        }
+        .chat-weather-temp-large {
+            font-size: 28px;
+            font-weight: 700;
+            color: #4a3e3d;
+            font-family: 'Inter', sans-serif;
+        }
+        .chat-weather-right {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .chat-weather-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: #4a3e3d;
+        }
+        .chat-weather-coords {
+            font-size: 12px;
+            color: #8c7b7a;
+            font-family: 'Inter', sans-serif;
+        }
+        .chat-weather-divider {
+            border-top: 1px solid rgba(196, 162, 129, 0.2);
+            margin: 12px 0;
+        }
+        .chat-weather-forecast {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 6px;
+        }
+        .chat-weather-forecast::-webkit-scrollbar {
+            height: 4px;
+        }
+        .chat-weather-forecast::-webkit-scrollbar-thumb {
+            background: rgba(196, 162, 129, 0.3);
+            border-radius: 2px;
+        }
+        .chat-weather-day-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            flex: 1;
+            min-width: 55px;
+        }
+        .chat-weather-day-name {
+            font-size: 12px;
+            font-weight: 500;
+            color: #8c7b7a;
+            margin-bottom: 6px;
+            line-height: 1.2;
+        }
+        .chat-weather-day-icon {
+            font-size: 18px;
+            color: #c8973e; /* Gold color for forecast icons */
+            margin-bottom: 6px;
+        }
+        .chat-weather-day-temp {
+            font-size: 12px;
+            color: #a39695;
+            font-family: 'Inter', sans-serif;
+        }
+        .chat-weather-day-temp strong {
+            color: #4a3e3d;
+            font-weight: 600;
+            margin-right: 2px;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
@@ -21,11 +221,7 @@
                     <span class="topbar-greeting"><i class="fa-regular fa-bell"></i> Xin chào, <strong id="topbar-user-name">Guest</strong></span>
                 </div>
                 <div class="topbar-right">
-                    <a href="#" id="topbar-login-link" class="topbar-link"><i class="fa-solid fa-magnifying-glass"></i></a>
-                    <span class="topbar-sep">·</span>
                     <span class="topbar-lang">🇻🇳 VIE ›</span>
-                    <span class="topbar-sep">·</span>
-                    <button id="logout-btn" class="topbar-link topbar-btn" title="Đăng xuất"><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</button>
                 </div>
             </div>
         </div>
@@ -69,164 +265,111 @@
         <!-- ========== PAGES ========== -->
         <main id="main-content">
 
-            <!-- ===== 1. LOGIN PAGE — Full-screen Hero ===== -->
-            <section id="login-page" class="page-view">
-                <div class="hero">
-                    <div class="hero-img"></div>
-                    <div class="hero-dim"></div>
-
-                    <div class="hero-text">
-                        <p class="hero-eyebrow">Welcome to</p>
-                        <h1 class="hero-heading"><em>Chào mừng đến với</em><br>Vietnam Luxury Resorts</h1>
-                        <p class="hero-desc">Đánh thức mọi giác quan với hệ sinh thái nghỉ dưỡng ven biển đẳng cấp của Vietnam Luxury Resorts</p>
-                        <a href="#login" class="hero-btn" id="hero-explore-btn">Khám phá<span class="hero-btn-arrow">→</span></a>
-                    </div>
-
-                    <!-- Booking-bar style login -->
-                    <div class="hero-bottom-bar">
-                        <div class="bottom-bar-wrap">
-                            <div class="login-card">
-                                <div class="login-card-header">
-                                    <div class="login-icon-ring"><i class="fa-solid fa-hotel"></i></div>
-                                    <div>
-                                        <h2>AI Concierge 24/7</h2>
-                                        <p>Đăng nhập để trải nghiệm dịch vụ cao cấp</p>
-                                    </div>
-                                </div>
-                                <form id="login-form" class="login-form">
-                                    <div class="field">
-                                        <label for="login-username">Tên đăng nhập</label>
-                                        <div class="field-input">
-                                            <i class="fa-regular fa-user"></i>
-                                            <input type="text" id="login-username" required placeholder="Nhập tên đăng nhập...">
-                                        </div>
-                                    </div>
-                                    <div class="field">
-                                        <label for="login-password">Mật khẩu</label>
-                                        <div class="field-input">
-                                            <i class="fa-solid fa-lock"></i>
-                                            <input type="password" id="login-password" required placeholder="Nhập mật khẩu...">
-                                        </div>
-                                    </div>
-                                    <div id="login-error" class="alert-error hidden"></div>
-                                    <button type="submit" class="btn-primary">Đăng Nhập</button>
-                                </form>
-                                <p class="login-card-footer">Chưa có tài khoản? <a href="#register">Đăng ký ngay</a></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ===== 2. REGISTER PAGE ===== -->
-            <section id="register-page" class="page-view hidden">
-                <div class="hero">
-                    <div class="hero-img"></div>
-                    <div class="hero-dim"></div>
-                    <div class="hero-text">
-                        <p class="hero-eyebrow">Create Account</p>
-                        <h1 class="hero-heading"><em>Tạo tài khoản</em><br>Trải nghiệm đẳng cấp</h1>
-                        <p class="hero-desc">Đăng ký để sử dụng AI Concierge &amp; đặt dịch vụ 5 sao</p>
-                    </div>
-                    <div class="hero-bottom-bar">
-                        <div class="bottom-bar-wrap">
-                            <div class="login-card register-card">
-                                <div class="login-card-header">
-                                    <div class="login-icon-ring"><i class="fa-solid fa-key"></i></div>
-                                    <div>
-                                        <h2>Đăng Ký Tài Khoản</h2>
-                                        <p>Tạo tài khoản mới</p>
-                                    </div>
-                                </div>
-                                <form id="register-form" class="login-form">
-                                    <div class="field-row">
-                                        <div class="field">
-                                            <label for="register-username">Tên đăng nhập *</label>
-                                            <div class="field-input">
-                                                <i class="fa-regular fa-user"></i>
-                                                <input type="text" id="register-username" required minlength="3" placeholder="Từ 3 ký tự...">
-                                            </div>
-                                        </div>
-                                        <div class="field">
-                                            <label for="register-fullname">Họ và tên</label>
-                                            <div class="field-input">
-                                                <i class="fa-regular fa-id-card"></i>
-                                                <input type="text" id="register-fullname" placeholder="Họ và tên...">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="field-row">
-                                        <div class="field">
-                                            <label for="register-email">Email</label>
-                                            <div class="field-input">
-                                                <i class="fa-regular fa-envelope"></i>
-                                                <input type="email" id="register-email" placeholder="example@resort.com">
-                                            </div>
-                                        </div>
-                                        <div class="field">
-                                            <label for="register-password">Mật khẩu *</label>
-                                            <div class="field-input">
-                                                <i class="fa-solid fa-lock"></i>
-                                                <input type="password" id="register-password" required minlength="6" placeholder="Từ 6 ký tự...">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="register-error" class="alert-error hidden"></div>
-                                    <button type="submit" class="btn-primary">Đăng Ký &amp; Đăng Nhập</button>
-                                </form>
-                                <p class="login-card-footer">Đã có tài khoản? <a href="#login">Đăng nhập</a></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ===== 3. CHAT PAGE (Light Theme Redesign) ===== -->
+            <!-- ===== 3. CHAT PAGE (Overhauled Two-Column UI) ===== -->
             <section id="chat-page" class="page-view hidden">
-                <div class="chat-light-wrap">
-                    <header class="chat-light-header">
-                        <div class="chat-header-left">
-                            <div class="header-avatar"><i class="fa-solid fa-robot"></i></div>
-                            <div class="header-info">
-                                <h2>AI Concierge</h2>
-                                <span class="status-text"><span class="status-dot"></span> Trực tuyến · phản hồi tức thì</span>
+                <div class="chat-container-card">
+                    
+                    <!-- Left Column: Chat Pane -->
+                    <div class="chat-left-pane">
+                        <header class="chat-pane-header">
+                            <span class="chat-pane-title">StayMate AI Concierge</span>
+                            <i class="fa-solid fa-wand-magic-sparkles sparkles-icon" title="Trợ lý AI thông minh"></i>
+                        </header>
+
+                        <div id="chat-messages" class="chat-messages-container">
+                            <!-- Welcome Screen (Visible by default) -->
+                            <div id="chat-welcome-screen" class="chat-welcome-screen">
+                                <h1 class="welcome-heading">StayMate Xin Chào</h1>
+                                <p class="welcome-subtext">
+                                    Khám phá hệ sinh thái Vinpearl trên toàn quốc. Tìm kiếm địa điểm, kiểm tra phòng trống, hoặc tra cứu thời tiết ngay tại đây.
+                                </p>
+                                <div class="suggestion-chips-container">
+                                    <button class="suggestion-chip" data-msg="Cho tôi xem Vinpearl Phú Quốc">Cho tôi xem Vinpearl Phú Quốc</button>
+                                    <button class="suggestion-chip" data-msg="Tôi muốn đi Vinpearl Nha Trang">Tôi muốn đi Vinpearl Nha Trang</button>
+                                    <button class="suggestion-chip" data-msg="Vinpearl nào phù hợp cho gia đình có trẻ nhỏ?">Vinpearl nào phù hợp cho gia đình có trẻ nhỏ?</button>
+                                    <button class="suggestion-chip" data-msg="Tôi muốn đi Vinpearl nhưng chưa biết địa điểm">Tôi muốn đi Vinpearl nhưng chưa biết địa điểm</button>
+                                </div>
+                            </div>
+
+                            <!-- Chat History Log (Hidden initially, shown after user sends message) -->
+                            <div id="chat-history-log" class="chat-history-log hidden">
+                                <!-- Message rows will be appended here dynamically -->
                             </div>
                         </div>
-                        <div class="chat-header-right">
-                            <select class="lang-select">
-                                <option>VN Tiếng Việt</option>
-                                <option>EN English</option>
-                            </select>
-                        </div>
-                    </header>
 
-                    <div id="chat-messages" class="chat-light-body">
-                        <div class="chat-date-separator">Hôm nay · Phòng 1208</div>
-                        
-                        <div class="message-row bot">
-                            <div class="avatar"><i class="fa-solid fa-robot"></i></div>
-                            <div class="message-content-wrapper">
-                                <div class="message-bubble">
-                                    <p>Xin chào! Tôi là trợ lý concierge của resort. Tôi có thể giúp bạn đặt nhà hàng, spa, dọn phòng, hỏi giờ tiện ích hay gợi ý hoạt động. Bạn cần gì ạ?</p>
+                        <!-- Chat Input Box -->
+                        <div class="chat-pane-footer">
+                            <form id="chat-form" class="chat-input-wrapper">
+                                <!-- Attachment input -->
+                                <button type="button" id="attachment-btn" class="attachment-btn" title="Đính kèm hình ảnh/tài liệu">
+                                    <i class="fa-solid fa-paperclip"></i>
+                                </button>
+                                <input type="file" id="attachment-file-input" class="hidden" accept="image/*,application/pdf,text/*">
+
+                                <input type="text" id="chat-input" placeholder="Nhập tin nhắn của bạn tại đây..." required autocomplete="off">
+                                
+                                <button type="submit" class="send-btn" title="Gửi tin nhắn">
+                                    <i class="fa-solid fa-paper-plane"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Media/Tools Pane -->
+                    <div class="media-right-pane">
+                        <!-- Tabs Toggle -->
+                        <div class="media-tabs-toggle">
+                            <button id="tab-gallery-btn" class="media-tab-btn active">Thư viện ảnh</button>
+                            <button id="tab-map-btn" class="media-tab-btn">Bản đồ</button>
+                            <button id="tab-weather-btn" class="media-tab-btn">Thời tiết</button>
+                        </div>
+
+                        <!-- Tab Content: Gallery -->
+                        <div id="media-gallery-content" class="media-tab-content">
+                            <div class="gallery-header">
+                                <span class="gallery-title-wrapper">
+                                    <i class="fa-regular fa-image gallery-icon"></i>
+                                    <span>Hình ảnh thực tế</span>
+                                </span>
+                                <a href="#" id="view-all-photos-btn" class="view-all-photos-link">Tất cả ảnh</a>
+                            </div>
+
+                            <!-- Image Grid -->
+                            <div class="gallery-grid" id="gallery-grid">
+                                <div class="gallery-item left-span" id="gallery-img-left">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/63/Vinpearl_Phu_Quoc_%2849355653186%29.jpg" alt="Vinpearl Resort & Spa">
                                 </div>
-                                <div class="quick-actions-row">
-                                    <button class="qa-chip" data-msg="Tôi muốn đặt phòng nghỉ dưỡng">🏨 Đặt phòng</button>
-                                    <button class="qa-chip" data-msg="Cho tôi xem một số hình ảnh thực tế của resort">📸 Xem hình ảnh</button>
-                                    <button class="qa-chip" data-msg="Tôi muốn kiểm tra thông tin đặt phòng của mình">🔍 Tra cứu booking</button>
-                                    <button class="qa-chip" data-msg="Có sự kiện hay hoạt động thú vị nào sắp diễn ra không?">🔥 Hoạt động & Sự kiện</button>
+                                <div class="gallery-item" id="gallery-img-right-top">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Restaurant_table_at_Amantaka_luxury_Resort_%26_Hotel_in_Luang_Prabang_Laos.jpg" alt="Ẩm thực cao cấp">
+                                    <div class="image-overlay-text">Ẩm thực cao cấp</div>
                                 </div>
+                                <div class="gallery-item" id="gallery-img-right-bottom">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/46/Vinpearl_Discovery_1_Nha_Trang_pool_swimming_villa_pool.jpg" alt="Khu nghỉ dưỡng">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tab Content: Map (Hidden by default) -->
+                        <div id="media-map-content" class="media-tab-content hidden">
+                            <div class="map-container">
+                                <iframe id="map-iframe" src="https://maps.google.com/maps?q=Vinpearl%20Phu%20Quoc&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                            </div>
+                        </div>
+
+                        <!-- Tab Content: Weather (Hidden by default) -->
+                        <div id="media-weather-content" class="media-tab-content hidden">
+                            <div class="weather-header-tab">
+                                <span class="weather-title-wrapper-tab">
+                                    <i class="fa-solid fa-cloud-sun weather-icon-header"></i>
+                                    <span id="weather-location-title">Thời tiết hiện tại</span>
+                                </span>
+                            </div>
+                            <div id="weather-forecast-container" class="weather-forecast-container">
+                                <div class="no-weather">Hãy hỏi trợ lý về thời tiết để xem dự báo 7 ngày.</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="chat-light-footer">
-                        <form id="chat-form" class="chat-input-container">
-                            <input type="text" id="chat-input" placeholder="Nhập tin nhắn... (đa ngôn ngữ)" required autocomplete="off">
-                            <button type="button" id="voice-btn" class="btn-voice" title="Ghi âm giọng nói"><i class="fa-solid fa-microphone"></i></button>
-                            <button type="submit" class="btn-send"><i class="fa-solid fa-paper-plane"></i></button>
-                        </form>
-                        <p class="chat-disclaimer">AI có thể sai sót. Yêu cầu quan trọng sẽ được chuyển tới nhân viên.</p>
-                    </div>
                 </div>
             </section>
 
@@ -329,7 +472,6 @@
     </div>
 
     <script src="js/app.js"></script>
-    <script src="js/auth.js"></script>
     <script src="js/chat.js"></script>
     <script src="js/services.js"></script>
     <script src="js/admin.js"></script>

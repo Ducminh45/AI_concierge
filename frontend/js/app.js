@@ -29,28 +29,24 @@ class APIClient {
 const api = new APIClient();
 
 // --- Auth State ---
-function isAuthenticated() { return !!localStorage.getItem('rc_token'); }
+function isAuthenticated() { return true; }
 function getUser() {
-    const s = localStorage.getItem('rc_user');
-    return s ? JSON.parse(s) : null;
+    return {
+        username: "staymate_admin",
+        full_name: "StayMate Admin",
+        role: "admin"
+    };
 }
-function saveAuthState(token, user) {
-    localStorage.setItem('rc_token', token);
-    localStorage.setItem('rc_user', JSON.stringify(user));
-}
+function saveAuthState(token, user) {}
 function clearAuthState() {
-    localStorage.removeItem('rc_token');
-    localStorage.removeItem('rc_user');
     localStorage.removeItem('rc_session_id');
 }
 
 // --- Router ---
 const routes = {
-    '#login':    { view: 'login-page',    auth: false, init: () => {} },
-    '#register': { view: 'register-page', auth: false, init: () => {} },
     '#chat':     { view: 'chat-page',     auth: false, init: () => initChatView() },
-    '#services': { view: 'services-page', auth: true,  init: () => loadServicesView() },
-    '#admin':    { view: 'admin-page',    auth: true,  init: () => loadAdminView() }
+    '#services': { view: 'services-page', auth: false, init: () => loadServicesView() },
+    '#admin':    { view: 'admin-page',    auth: false, init: () => loadAdminView() }
 };
 function navigateTo(hash) { window.location.hash = hash; }
 
@@ -64,47 +60,28 @@ function updateNavigation() {
     const navbar = document.getElementById('navbar');
     const topbar = document.getElementById('topbar');
     const user = getUser();
+    const currentHash = window.location.hash || '#chat';
 
-    // Always show topbar and navbar
-    if (navbar) navbar.classList.remove('hidden');
-    if (topbar) topbar.classList.remove('hidden');
+    // Show topbar and navbar on non-chat pages, hide on chat page to match screenshot layout
+    if (currentHash === '#chat') {
+        if (navbar) navbar.classList.add('hidden');
+        if (topbar) topbar.classList.add('hidden');
+    } else {
+        if (navbar) navbar.classList.remove('hidden');
+        if (topbar) topbar.classList.remove('hidden');
+    }
 
-    const logoutBtn = document.getElementById('logout-btn');
-    const loginLink = document.getElementById('topbar-login-link');
     const userNameSpan = document.getElementById('topbar-user-name');
     const servicesTab = document.getElementById('nav-services');
     const adminTab = document.getElementById('nav-admin');
 
-    if (!isAuthenticated() || !user) {
-        // Guest mode
-        if (userNameSpan) userNameSpan.innerText = 'Guest';
-        if (logoutBtn) logoutBtn.classList.add('hidden');
-        if (loginLink) {
-            loginLink.style.display = 'inline-flex';
-            loginLink.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Đăng nhập';
-            loginLink.href = '#login';
-            loginLink.style.textDecoration = 'none';
-            loginLink.style.color = '#c9a84c';
-            loginLink.style.fontWeight = '600';
-        }
-        if (servicesTab) servicesTab.classList.add('hidden');
-        if (adminTab) adminTab.classList.add('hidden');
-    } else {
-        // Authenticated user mode
-        if (userNameSpan) userNameSpan.innerText = `${user.full_name || user.username} (${user.role.toUpperCase()})`;
-        if (logoutBtn) logoutBtn.classList.remove('hidden');
-        if (loginLink) loginLink.style.display = 'none';
-        if (servicesTab) servicesTab.classList.remove('hidden');
-        
-        if (user.role === 'admin' || user.role === 'staff') {
-            if (adminTab) adminTab.classList.remove('hidden');
-        } else {
-            if (adminTab) adminTab.classList.add('hidden');
-        }
+    if (userNameSpan) {
+        userNameSpan.innerText = `${user.full_name || user.username} (${user.role.toUpperCase()})`;
     }
+    if (servicesTab) servicesTab.classList.remove('hidden');
+    if (adminTab) adminTab.classList.remove('hidden');
 
     // Active nav
-    const currentHash = window.location.hash || '#chat';
     document.querySelectorAll('.nav-link[href^="#"]').forEach(link => {
         link.classList.remove('active');
         if (link.getAttribute('href') === currentHash) link.classList.add('active');
@@ -115,8 +92,6 @@ async function router() {
     const hash = window.location.hash || '#chat';
     const route = routes[hash];
     if (!route) { navigateTo('#chat'); return; }
-    if (route.auth && !isAuthenticated()) { navigateTo('#login'); return; }
-    if ((hash === '#login' || hash === '#register') && isAuthenticated()) { navigateTo('#chat'); return; }
     showPage(route.view);
     updateNavigation();
     route.init();
@@ -132,12 +107,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Book now
     const bookBtn = document.getElementById('btn-book-now');
     if (bookBtn) bookBtn.addEventListener('click', e => { e.preventDefault(); navigateTo('#chat'); });
-
-    // Logout
-    document.getElementById('logout-btn').addEventListener('click', () => {
-        clearAuthState();
-        navigateTo('#login');
-    });
 
     // Mobile hamburger toggle
     const hamburger = document.getElementById('nav-hamburger-btn');

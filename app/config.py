@@ -102,6 +102,12 @@ class Settings(BaseSettings):
         description="Token required for RAG ingestion operations",
     )
 
+    # Weather API (OpenWeatherMap)
+    weather_api_key: str = Field(
+        default="6f1b7c5bee037d2097dd5c189ae6ea39",
+        description="API key for OpenWeatherMap current weather API",
+    )
+
     # PDFs
     pdf_output_dir: str = "./generated_pdfs"
 
